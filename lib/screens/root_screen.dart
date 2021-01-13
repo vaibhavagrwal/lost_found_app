@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/screens/chat_rooms_screen.dart';
 import 'package:lost_found_app/screens/tab_navigator.dart';
 
 class RootScreen extends StatefulWidget {
@@ -60,6 +62,50 @@ class _RootScreenState extends State<RootScreen> {
       },
       child: SafeArea(
         child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(60),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Color.fromRGBO(26, 80, 152, 0.1),
+                    offset: Offset(0.0, 5.0),
+                    blurRadius: 3.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: AppBar(
+                elevation: 1,
+                backgroundColor: Colors.white,
+                iconTheme: IconThemeData(
+                  color: Color.fromRGBO(44, 62, 80, 1),
+                ),
+                title: Text(
+                  "  " + _currentPage,
+                  style: GoogleFonts.roboto(
+                      color: Color.fromRGBO(44, 62, 80, 1),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatRoomsListScreen()));
+                    },
+                    icon: FaIcon(
+                      FontAwesomeIcons.facebookMessenger,
+                      size: 20,
+                      color: Color.fromRGBO(44, 62, 80, 1),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           body: Stack(children: <Widget>[
             _buildOffstageNavigator("Home"),
             _buildOffstageNavigator("CreateAd"),
