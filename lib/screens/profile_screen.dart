@@ -1,5 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/util/constants.dart';
+import 'package:lost_found_app/util/screen_size.dart';
+
+import '../main.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -10,22 +15,132 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 1,
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Color.fromRGBO(44, 62, 80, 1),
-        ),
-        title: Text(
-          " My Profile ",
-          style: GoogleFonts.roboto(
-              color: Color.fromRGBO(44, 62, 80, 1),
-              fontSize: 20,
-              fontWeight: FontWeight.w600),
+      body: Container(
+        color: Colors.white,
+        child: Stack(
+          children: [
+            profilePageAppBar(),
+            profileDataList(
+              userEmail: user.email,
+              userName: user.name,
+              userPhone: "",
+            ),
+          ],
         ),
       ),
-      body: Center(
-        child: Text('Profile'),
+    );
+  }
+
+  Widget profilePageAppBar() {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize:
+            Size.fromHeight(221.0 * ScreenSize.heightMultiplyingFactor),
+        child: appBarOverall(heading: 'Profile', searchThere: false),
+      ),
+    );
+  }
+
+  Widget profileDataList(
+      {String userName = '',
+      String userEmail = '',
+      String userPhone = '',
+      String userImageAsset = ''}) {
+    return Positioned(
+      top: 135.0 * ScreenSize.heightMultiplyingFactor,
+      left: 1,
+      right: 1,
+      child: Center(
+        child: Column(
+          children: [
+            Container(
+              width: 335.0 * ScreenSize.widthMultiplyingFactor,
+              height: 262.0 * ScreenSize.heightMultiplyingFactor,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25.0),
+                  ),
+                ),
+                elevation: 3.0 * ScreenSize.heightMultiplyingFactor,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 50.0,
+                      backgroundImage: CachedNetworkImageProvider(
+                        user.imageUrl == ""
+                            ? "https://i.pinimg.com/474x/67/c3/d6/67c3d63e215e034e01d45c8256d720d3.jpg"
+                            : user.imageUrl,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 11.0 * ScreenSize.heightMultiplyingFactor,
+                    ),
+                    Text(
+                      userName,
+                      style: TextStyle(
+                        fontFamily: 'Poppins-Medium',
+                        fontSize: 18.0 * ScreenSize.heightMultiplyingFactor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 36.0 * ScreenSize.heightMultiplyingFactor,
+            ),
+            smallBox(Icons.mail_outline, userEmail),
+            SizedBox(
+              height: 20.0 * ScreenSize.heightMultiplyingFactor,
+            ),
+            smallBox(Icons.phone, userPhone),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget smallBox(IconData iconDataPrefix, String title) {
+    return Container(
+      width: 335.0 * ScreenSize.widthMultiplyingFactor,
+      padding: EdgeInsets.fromLTRB(
+        22.0 * ScreenSize.widthMultiplyingFactor,
+        15.0 * ScreenSize.heightMultiplyingFactor,
+        22.0 * ScreenSize.widthMultiplyingFactor,
+        15.0 * ScreenSize.heightMultiplyingFactor,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50.0),
+        border: Border.all(
+          color: Color(0xFFE9E9E9),
+          width: 1.0,
+        ),
+        color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            iconDataPrefix,
+            color: Color.fromRGBO(19, 60, 109, 1),
+            size: 23.0 * ScreenSize.heightMultiplyingFactor,
+          ),
+          SizedBox(
+            width: 13.0 * ScreenSize.widthMultiplyingFactor,
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'Poppins-Regular',
+              fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
+            ),
+          ),
+        ],
       ),
     );
   }
