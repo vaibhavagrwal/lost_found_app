@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/chat_rooms_screen.dart';
 import 'package:lost_found_app/main.dart';
+import 'package:lost_found_app/screens/drawer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerScreen(),
       appBar: AppBar(
         elevation: 1,
         backgroundColor: Colors.white,

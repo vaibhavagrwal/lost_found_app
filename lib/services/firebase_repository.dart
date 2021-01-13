@@ -69,9 +69,9 @@ class FirebaseRepository {
   // }
 
   Future<void> signout(BuildContext context) async {
-    _auth.signOut();
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref = null;
+    await pref.remove('userData');
+    await _auth.signOut();
 
     Navigator.of(context, rootNavigator: true).pushReplacement(
       MaterialPageRoute(

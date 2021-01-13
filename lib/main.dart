@@ -15,11 +15,9 @@ Future<void> main() async {
   Firebase.initializeApp();
   SharedPreferences pref = await SharedPreferences.getInstance();
   if (pref.getString('userData') != null) {
+    print(pref.getString('userData'));
     Map json = jsonDecode(pref.getString('userData'));
-    print(json);
     user = UserModel.fromJson(json);
-    print(user.name);
-    print(user.userId);
   }
 
   runApp(MyApp(

@@ -35,7 +35,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   image_picker: ^0.6.7+21
   firebase_storage: ^6.0.0
-  flutter_image_compress: ^0.7.0
+  cached_network_image: ^2.5.0
 
 dev_dependencies:
   flutter_test:
