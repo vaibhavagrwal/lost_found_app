@@ -7,6 +7,7 @@ import 'package:lost_found_app/main.dart';
 import 'package:lost_found_app/screens/drawer_screen.dart';
 import 'package:lost_found_app/screens/found_items_screen.dart';
 import 'package:lost_found_app/screens/lost_items_screen.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -22,6 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: DrawerScreen(),
         appBar: AppBar(
           elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+            ),
+          ),
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(
             color: Color.fromRGBO(44, 62, 80, 1),
@@ -34,6 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontWeight: FontWeight.w600),
           ),
           bottom: TabBar(
+            indicatorSize: TabBarIndicatorSize.values[1],
+            indicatorPadding: EdgeInsets.only(
+              bottom: 10.0 * ScreenSize.heightMultiplyingFactor,
+              right: 15.0 * ScreenSize.widthMultiplyingFactor,
+            ),
             indicatorColor: Color.fromRGBO(19, 60, 109, 1),
             labelColor: Color.fromRGBO(19, 60, 109, 1),
             unselectedLabelColor: Color.fromRGBO(23, 23, 23, 1),

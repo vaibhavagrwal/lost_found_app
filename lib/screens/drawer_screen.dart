@@ -51,7 +51,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     radius: 150,
                     backgroundImage: CachedNetworkImageProvider(
                       user.imageUrl == ""
-                          ? "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                          ? "https://i.pinimg.com/474x/67/c3/d6/67c3d63e215e034e01d45c8256d720d3.jpg"
                           : user.imageUrl,
                     ),
                     // backgroundImage: AdvancedNetworkImage(
