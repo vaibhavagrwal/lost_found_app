@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/chat_rooms_screen.dart';
 import 'package:lost_found_app/main.dart';
-import 'package:lost_found_app/screens/root_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
