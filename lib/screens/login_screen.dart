@@ -105,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.fromLTRB(24, 8, 24, 14),
                             width: 328,
                             child: TextFormField(
+                              focusNode: _emailFocusNode,
                               keyboardType: TextInputType.emailAddress,
                               onFieldSubmitted: (_) {
                                 FocusScope.of(context)
