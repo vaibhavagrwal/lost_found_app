@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/screens/root_screen.dart';
 import 'package:lost_found_app/screens/signup_screen.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
@@ -44,6 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       isLoading = true;
     });
+    Navigator.of(context, rootNavigator: true).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => RootScreen(),
+      ),
+    );
 
     // await FirebaseRepository().signIn(
     //     _authDataMap['email'], _authDataMap['password'], _scaffoldKey, context);
@@ -111,13 +117,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 FocusScope.of(context)
                                     .requestFocus(_passwordFocusNode);
                               },
-                              validator: (val) {
-                                return RegExp(
-                                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                        .hasMatch(val)
-                                    ? null
-                                    : "Enter valid email address";
-                              },
+                              // validator: (val) {
+                              //   return RegExp(
+                              //               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              //           .hasMatch(val)
+                              //       ? null
+                              //       : "Enter valid email address";
+                              // },
                               onSaved: (val) {
                                 _authDataMap['email'] = val.trim();
                               },
@@ -156,12 +162,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onSaved: (val) {
                                     _authDataMap['password'] = val;
                                   },
-                                  validator: (val) {
-                                    if (val.length < 3)
-                                      return "Password too short";
+                                  // validator: (val) {
+                                  //   if (val.length < 3)
+                                  //     return "Password too short";
 
-                                    return null;
-                                  },
+                                  //   return null;
+                                  // },
                                   obscureText: _obscureText,
                                   decoration: InputDecoration(
                                     fillColor: Color.fromRGBO(242, 245, 250, 1),
