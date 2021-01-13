@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/login_screen.dart';
+import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
 
@@ -75,6 +76,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       isLoading = true;
     });
 
+    FirebaseRepository _repository = FirebaseRepository();
+    await _repository.signUp(_authDataMap['name'], _authDataMap['email'],
+        _authDataMap['password'], _scaffoldKey);
     setState(() {
       isLoading = false;
     });
