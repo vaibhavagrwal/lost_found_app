@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/screens/login_screen.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
 
@@ -236,6 +237,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     _obscureText1
                                         ? Icons.visibility
                                         : Icons.visibility_off,
+                                    color: Color.fromRGBO(19, 60, 109, 1),
                                   ),
                                 ),
                                 fillColor: Color.fromRGBO(242, 245, 250, 1),
@@ -286,6 +288,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     _obscureText2
                                         ? Icons.visibility
                                         : Icons.visibility_off,
+                                    color: Color.fromRGBO(19, 60, 109, 1),
                                   ),
                                 ),
                                 fillColor: Color.fromRGBO(242, 245, 250, 1),
@@ -340,11 +343,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => LoginScreen(),
-                            //     ));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ));
                           },
                           child: Text(
                             'Log In Here',
