@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:lost_found_app/models/user_model.dart';
+import 'package:lost_found_app/screens/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -16,57 +17,68 @@ import '../screens/root_screen.dart';
 class FirebaseRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Future<void> updateUserInfo(File _image, String description, _scaffoldKey,
-  //     BuildContext context) async {
-  //   try {
-  //     if (_image != null) {
-  //       firebase_storage.FirebaseStorage storage =
-  //           firebase_storage.FirebaseStorage.instance;
+  Future<void> updateUserInfo(File _image, String name, String phone,
+      _scaffoldKey, BuildContext context) async {
+    try {
+      if (_image != null) {
+        firebase_storage.FirebaseStorage storage =
+            firebase_storage.FirebaseStorage.instance;
 
-  //       firebase_storage.Reference ref = firebase_storage
-  //           .FirebaseStorage.instance
-  //           .ref()
-  //           .child('user_images')
-  //           .child(user.userId + '.jpg');
-  //       await ref.putFile(
-  //         _image,
-  //       );
+        firebase_storage.Reference ref = firebase_storage
+            .FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child(user.userId + '.jpg');
+        await ref.putFile(
+          _image,
+        );
 
-  //       String url = await ref.getDownloadURL();
+        String url = await ref.getDownloadURL();
 
-  //       await FirebaseFirestore.instance
-  //           .collection('users')
-  //           .doc(user.userId)
-  //           .update({
-  //         'medical_description': description,
-  //         'image_url': url,
-  //       });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.userId)
+            .update({
+          'name': name,
+          'phone': phone,
+          'image_url': url,
+        });
 
-  //       user.imageUrl = url;
-  //       user.medicalDescription = description;
-  //     } else {
-  //       await FirebaseFirestore.instance
-  //           .collection('users')
-  //           .doc(user.userId)
-  //           .update({
-  //         'medical_description': description,
-  //       });
-  //     }
-  //     user.medicalDescription = description;
-  //     _scaffoldKey.currentState.showSnackBar(
-  //       SnackBar(content: Text("Profile Updated")),
-  //     );
-  //     Navigator.of(context, rootNavigator: true).pushReplacement(
-  //       MaterialPageRoute(
-  //         builder: (context) => RootScreen(),
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     _scaffoldKey.currentState.showSnackBar(
-  //       SnackBar(content: Text(e.toString())),
-  //     );
-  //   }
-  // }
+        user.imageUrl = url;
+        user.name = name;
+        user.phone = phone;
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        String user1 = jsonEncode(user);
+        pref.setString('userData', user1);
+      } else {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.userId)
+            .update({
+          'name': name,
+          'phone': phone,
+        });
+      }
+      user.name = name;
+      user.phone = phone;
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String user1 = jsonEncode(user);
+      pref.setString('userData', user1);
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(content: Text("Profile Updated")),
+      );
+      // Navigator.of(context, rootNavigator: true).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) => ProfileScreen(),
+      //   ),
+      // );
+      // Navigator.of(context).pop();
+    } catch (e) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
+  }
 
   Future<void> signout(BuildContext context) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -98,6 +110,7 @@ class FirebaseRepository {
           name: snapshot.data()['name'],
           email: snapshot.data()['email'],
           imageUrl: snapshot.data()['image_url'],
+          phone: snapshot.data()['phone'],
         );
 
         String user1 = jsonEncode(user);
@@ -140,6 +153,7 @@ class FirebaseRepository {
           'name': name,
           'email': email,
           'image_url': "",
+          'phone': "",
         });
         _scaffoldKey.currentState.showSnackBar(
           SnackBar(

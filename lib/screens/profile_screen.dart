@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/models/user_model.dart';
+import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 
@@ -97,7 +99,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 20.0 * ScreenSize.heightMultiplyingFactor,
             ),
-            smallBox(Icons.phone, userPhone),
+            smallBox(
+              Icons.phone,
+              user.phone == ""
+                  ? "Update Your Phone No."
+                  : "+91 - " + user.phone,
+            ),
+            SizedBox(
+              height: 30.0 * ScreenSize.heightMultiplyingFactor,
+            ),
+            MaterialButton(
+              onPressed: () async {
+                UserModel user1 = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfileScreen(),
+                    ));
+                setState(() {
+                  user.name = user1.name;
+                  user.imageUrl = user1.imageUrl;
+                  user.phone = user1.phone;
+                });
+              },
+              child: Container(
+                width: 150.0 * ScreenSize.widthMultiplyingFactor,
+                padding: EdgeInsets.fromLTRB(
+                  10.0 * ScreenSize.widthMultiplyingFactor,
+                  5.0 * ScreenSize.heightMultiplyingFactor,
+                  10.0 * ScreenSize.widthMultiplyingFactor,
+                  5.0 * ScreenSize.heightMultiplyingFactor,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50.0),
+                  border: Border.all(
+                    color: Color(0xFFE9E9E9),
+                    width: 1.0,
+                  ),
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.edit_outlined,
+                      color: Color.fromRGBO(19, 60, 109, 1),
+                      size: 23.0 * ScreenSize.heightMultiplyingFactor,
+                    ),
+                    SizedBox(
+                      width: 13.0 * ScreenSize.widthMultiplyingFactor,
+                    ),
+                    Text(
+                      "Edit Profile",
+                      style: TextStyle(
+                        fontFamily: 'Poppins-Regular',
+                        fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
