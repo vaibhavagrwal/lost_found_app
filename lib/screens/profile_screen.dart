@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/models/user_model.dart';
 import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
@@ -98,17 +99,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 20.0 * ScreenSize.heightMultiplyingFactor,
             ),
-            smallBox(Icons.phone, userPhone),
+            smallBox(
+              Icons.phone,
+              user.phone == ""
+                  ? "Update Your Phone No."
+                  : "+91 - " + user.phone,
+            ),
             SizedBox(
               height: 30.0 * ScreenSize.heightMultiplyingFactor,
             ),
             MaterialButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                UserModel user1 = await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditProfileScreen(),
                     ));
+                setState(() {
+                  user.name = user1.name;
+                  user.imageUrl = user1.imageUrl;
+                  user.phone = user1.phone;
+                });
               },
               child: Container(
                 width: 150.0 * ScreenSize.widthMultiplyingFactor,

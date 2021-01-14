@@ -5,6 +5,7 @@ class UserModel {
   String name;
   String email;
   String imageUrl;
+  String phone;
 
   DocumentReference reference;
   UserModel({
@@ -12,21 +13,23 @@ class UserModel {
     this.name,
     this.email,
     this.imageUrl,
+    this.phone,
   });
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      userId: json['id'],
-      email: json['email'],
-      name: json['name'],
-      imageUrl: json['image_url'],
-    );
+        userId: json['id'],
+        email: json['email'],
+        name: json['name'],
+        imageUrl: json['image_url'],
+        phone: json['phone']);
   }
 
   UserModel.fromMap(Map<String, dynamic> map)
       : userId = map["id"],
         name = map["name"],
         imageUrl = map['image_url'],
-        email = map['email'];
+        email = map['email'],
+        phone = map['phone'];
 
   Map<String, dynamic> toJson() {
     return {
@@ -34,6 +37,7 @@ class UserModel {
       "email": this.email,
       "name": this.name,
       "image_url": this.imageUrl,
+      "phone": this.phone,
     };
   }
 }
