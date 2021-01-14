@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/models/user_model.dart';
+import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 
 import '../main.dart';
@@ -82,13 +84,19 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           fontSize: 17,
                           fontWeight: FontWeight.w600),
                     ),
-                    onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => EditProfileScreen(),
-                      //   ),
-                      // );
+                    onTap: () async {
+                      UserModel user1 = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfileScreen(),
+                        ),
+                      );
+
+                      setState(() {
+                        user.imageUrl = user1.imageUrl;
+                        user.name = user1.name;
+                        user.email = user1.email;
+                      });
                     },
                   ),
                   ListTile(
