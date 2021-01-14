@@ -390,7 +390,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
-                    // _status = true;
+                    Navigator.pop(context, user);
                     FocusScope.of(context).requestFocus(new FocusNode());
                   });
                 },
