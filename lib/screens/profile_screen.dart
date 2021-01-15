@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             profileDataList(
               userEmail: user.email,
               userName: user.name,
-              userPhone: "",
+              userPhone: '',
             ),
           ],
         ),
@@ -44,10 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget profileDataList(
-      {String userName = '',
-      String userEmail = '',
-      String userPhone = '',
-      String userImageAsset = ''}) {
+      {String userName, String userEmail, String userPhone}) {
     return Positioned(
       top: 135.0 * ScreenSize.heightMultiplyingFactor,
       left: 1,
@@ -103,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Icons.phone,
               user.phone == ""
                   ? "Update Your Phone No."
-                  : "+91 - " + user.phone,
+                  : ("+91 - " + user.phone),
             ),
             SizedBox(
               height: 30.0 * ScreenSize.heightMultiplyingFactor,
