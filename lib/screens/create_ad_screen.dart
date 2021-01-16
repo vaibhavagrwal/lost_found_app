@@ -150,19 +150,40 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                               ),
                             ),
                           )
-                        : Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white10,
-                              borderRadius: BorderRadius.circular(
-                                20,
-                              ),
-                              image: DecorationImage(
-                                // fit: BoxFit.cover,
-                                image: FileImage(
-                                  _image,
+                        : Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white10,
+                                  borderRadius: BorderRadius.circular(
+                                    20,
+                                  ),
+                                  image: DecorationImage(
+                                    // fit: BoxFit.cover,
+                                    image: FileImage(
+                                      _image,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 90.0, right: 100.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    clearImage();
+                                  },
+                                  child: new CircleAvatar(
+                                    backgroundColor: primaryColour,
+                                    radius: 25.0,
+                                    child: new Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                   ),
                 ),
