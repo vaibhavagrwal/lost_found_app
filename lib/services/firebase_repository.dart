@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:lost_found_app/models/user_model.dart';
-import 'package:lost_found_app/screens/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -21,9 +20,6 @@ class FirebaseRepository {
       _scaffoldKey, BuildContext context) async {
     try {
       if (_image != null) {
-        firebase_storage.FirebaseStorage storage =
-            firebase_storage.FirebaseStorage.instance;
-
         firebase_storage.Reference ref = firebase_storage
             .FirebaseStorage.instance
             .ref()
