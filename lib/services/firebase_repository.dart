@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:image/image.dart' as Im;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
@@ -168,6 +168,118 @@ class FirebaseRepository {
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(content: Text(e.toString())),
       );
+    }
+  }
+
+  Future<void> createPost(
+    File _image,
+    int type,
+    String heading,
+    String category,
+    String description,
+    String place,
+    DateTime dateTime,
+    BuildContext context,
+  ) async {
+    assert(DateTime != null);
+    DateTime timeStamp = DateTime.now();
+    final String postId = timeStamp.microsecondsSinceEpoch.toString();
+    try {
+      if (_image != null) {
+        final tempDir = await getTemporaryDirectory();
+        final path = tempDir.path;
+        Im.Image imageFile = Im.decodeImage(_image.readAsBytesSync());
+        final compressedImageFile = File("$path/img_$postId.jpg")
+          ..writeAsBytesSync(
+            Im.encodeJpg(imageFile, quality: 60),
+          );
+        _image = compressedImageFile;
+
+        firebase_storage.Reference ref = firebase_storage
+            .FirebaseStorage.instance
+            .ref()
+            .child('post_images')
+            .child(postId + '.jpg');
+        await ref.putFile(
+          _image,
+        );
+
+        String url = await ref.getDownloadURL();
+        if (type == 0) {
+          await FirebaseFirestore.instance
+              .collection('lostItems')
+              .doc(user.userId)
+              .collection('myLostItems')
+              .doc(postId)
+              .set({
+            'date': dateTime.toIso8601String(),
+            'desciption': description,
+            'image_url': url,
+            'location': place,
+            'ownerId': user.userId,
+            'postId': postId,
+            'timeStamp': timeStamp,
+          });
+        } else {
+          await FirebaseFirestore.instance
+              .collection('FoundItems')
+              .doc(user.userId)
+              .collection('myFoundItems')
+              .doc(postId)
+              .set({
+            'date': dateTime.toIso8601String(),
+            'desciption': description,
+            'image_url': url,
+            'location': place,
+            'ownerId': user.userId,
+            'postId': postId,
+            'timeStamp': timeStamp,
+          });
+        }
+      } else {
+        if (type == 0) {
+          await FirebaseFirestore.instance
+              .collection('lostItems')
+              .doc(user.userId)
+              .collection('myLostItems')
+              .doc(postId)
+              .set({
+            'date': dateTime.toIso8601String(),
+            'desciption': description,
+            'image_url': "",
+            'location': place,
+            'ownerId': user.userId,
+            'postId': postId,
+            'timeStamp': timeStamp,
+          });
+        } else {
+          await FirebaseFirestore.instance
+              .collection('FoundItems')
+              .doc(user.userId)
+              .collection('myFoundItems')
+              .doc(postId)
+              .set({
+            'date': dateTime.toIso8601String(),
+            'desciption': description,
+            'image_url': "",
+            'location': place,
+            'ownerId': user.userId,
+            'postId': postId,
+            'timeStamp': timeStamp,
+          });
+        }
+        // CoolAlert.show(
+        //   context: context,
+        //   type: CoolAlertType.success,
+        //   text: "Post Added!",
+        // );
+      }
+    } catch (e) {
+      // CoolAlert.show(
+      //   context: context,
+      //   type: CoolAlertType.error,
+      //   text: "Something went wrong..Please try again!",
+      // );
     }
   }
 }
