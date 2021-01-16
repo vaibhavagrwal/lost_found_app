@@ -121,8 +121,30 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                     aspectRatio: 12 / 7,
                     child: _image == null
                         ? Container(
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.touch_app,
+                                    size: MediaQuery.of(context).size.height *
+                                        0.1,
+                                    color: primaryColour,
+                                  ),
+                                  Text(
+                                    'Select a photo',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 25,
+                                      color: primaryColour,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                             decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: Colors.white10,
+                              border: Border.all(
+                                color: primaryColour,
+                              ),
                               borderRadius: BorderRadius.circular(
                                 20,
                               ),
