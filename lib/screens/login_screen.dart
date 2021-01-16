@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lost_found_app/screens/root_screen.dart';
 import 'package:lost_found_app/screens/signup_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
