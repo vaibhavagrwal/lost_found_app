@@ -32,18 +32,154 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
       setState(() {
         isLoading = true;
       });
-      await _repository.createPost(_image, type, heading, category, description,
-          where, selectedDate, context);
-      setState(() {
-        isLoading = false;
-        _image = null;
-        type = 0;
-        headingController.text = "";
-        descriptionController.text = "";
-        categoryController.text = "";
-        placeController.text = "";
-        selectedDate = DateTime.now();
-      });
+
+      int res = await _repository.createPost(_image, type, heading, category,
+          description, where, selectedDate, context);
+
+      if (res == 0) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return StatefulBuilder(
+              builder: (context, StateSetter _setState) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                  title: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.checkCircle,
+                      size: 80,
+                      color: Colors.green,
+                    ),
+                  ),
+                  content: Container(
+                    height: 110,
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'SUCCESS',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'Your Post has been created!',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                          color: primaryColour,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+        setState(() {
+          isLoading = false;
+          _image = null;
+          type = 0;
+          headingController.text = "";
+          descriptionController.text = "";
+          categoryController.text = "";
+          placeController.text = "";
+          selectedDate = DateTime.now();
+        });
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return StatefulBuilder(
+              builder: (context, StateSetter _setState) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(32.0))),
+                  title: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.exclamationCircle,
+                      size: 80,
+                      color: Colors.red,
+                    ),
+                  ),
+                  content: Container(
+                    height: 110,
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'ERROR',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'Please try again!',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                          color: primaryColour,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -162,7 +298,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                                       child: Column(
                                         children: [
                                           Icon(
-                                            Icons.touch_app,
+                                            Icons.camera_alt,
                                             size: MediaQuery.of(context)
                                                     .size
                                                     .height *

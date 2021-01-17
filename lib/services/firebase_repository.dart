@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:lost_found_app/models/user_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image/image.dart' as Im;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
-import 'package:lost_found_app/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -171,7 +171,7 @@ class FirebaseRepository {
     }
   }
 
-  Future<void> createPost(
+  Future<int> createPost(
     File _image,
     int type,
     String heading,
@@ -268,18 +268,10 @@ class FirebaseRepository {
             'timeStamp': timeStamp,
           });
         }
-        // CoolAlert.show(
-        //   context: context,
-        //   type: CoolAlertType.success,
-        //   text: "Post Added!",
-        // );
       }
+      return 0;
     } catch (e) {
-      // CoolAlert.show(
-      //   context: context,
-      //   type: CoolAlertType.error,
-      //   text: "Something went wrong..Please try again!",
-      // );
+      return 1;
     }
   }
 }

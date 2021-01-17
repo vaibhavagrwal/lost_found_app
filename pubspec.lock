@@ -660,7 +660,7 @@ packages:
     source: hosted
     version: "1.3.0-nullsafety.5"
   uuid:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: uuid
       url: "https://pub.dartlang.org"
