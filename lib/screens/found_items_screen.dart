@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lost_found_app/widgets/found_Items_list.dart';
 
 class FoundItemsScreen extends StatefulWidget {
   @override
@@ -8,10 +9,6 @@ class FoundItemsScreen extends StatefulWidget {
 class _FoundItemsScreenState extends State<FoundItemsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Found'),
-      ),
-    );
+    return FoundItemsList();
   }
 }
