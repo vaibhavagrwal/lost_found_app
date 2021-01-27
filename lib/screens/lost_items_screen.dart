@@ -12,14 +12,17 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: firebaseFirestore.collection("LostItemsList").snapshots(),
+      stream: firebaseFirestore
+          .collection("LostItemsList")
+          .orderBy('date', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           // snapshot.data.docs.forEach((item) {});
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 10,
+              crossAxisSpacing: 5,
               mainAxisSpacing: 0,
             ),
             itemCount: snapshot.data.docs.length,

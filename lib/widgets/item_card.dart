@@ -35,6 +35,7 @@ class ItemCard extends StatelessWidget {
                         ? "https://axiomoptics.com/wp-content/uploads/2019/08/placeholder-images-image_large.png"
                         : imageUrl,
                   ),
+                  fit: BoxFit.cover,
                 ),
               ),
               child: Transform.translate(

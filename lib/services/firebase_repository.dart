@@ -228,6 +228,7 @@ class FirebaseRepository {
               .set({
             'heading': heading,
             'image_url': url,
+            'date': dateTime.toIso8601String(),
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
@@ -255,6 +256,7 @@ class FirebaseRepository {
               .set({
             'heading': heading,
             'image_url': url,
+            'date': dateTime.toIso8601String(),
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
@@ -284,6 +286,7 @@ class FirebaseRepository {
             'heading': heading,
             'image_url': "",
             'location': place,
+            'date': dateTime.toIso8601String(),
             'ownerId': user.userId,
             'postId': postId,
           });
@@ -309,6 +312,7 @@ class FirebaseRepository {
               .set({
             'heading': heading,
             'image_url': "",
+            'date': dateTime.toIso8601String(),
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
