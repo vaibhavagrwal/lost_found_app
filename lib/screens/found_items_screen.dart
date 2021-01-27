@@ -9,6 +9,6 @@ class FoundItemsScreen extends StatefulWidget {
 class _FoundItemsScreenState extends State<FoundItemsScreen> {
   @override
   Widget build(BuildContext context) {
-    return FoundItemsList();
+    return Container();
   }
 }

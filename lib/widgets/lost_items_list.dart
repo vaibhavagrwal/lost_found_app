@@ -22,27 +22,28 @@ class _LostItemsListState extends State<LostItemsList> {
   Widget build(BuildContext context) {
     return Expanded(
         child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 0,
-          children: _listItem
-              .map((item) => GestureDetector(
-              onTap: (){
+      crossAxisCount: 2,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 0,
+      children: _listItem
+          .map(
+            (item) => GestureDetector(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => LostItemDetailScreen(),
                     settings: RouteSettings(
-
                       arguments: item,
                     ),
                   ),
                 );
               },
-              child : Card(
-                  color: Colors.transparent,
-                  elevation: 0,
-                  child: Column(children: <Widget>[
+              child: Card(
+                color: Colors.transparent,
+                elevation: 0,
+                child: Column(
+                  children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
                           color: Color.fromRGBO(19, 60, 109, 0.8),
@@ -55,8 +56,8 @@ class _LostItemsListState extends State<LostItemsList> {
                       child: Transform.translate(
                         offset: Offset(50, -50),
                         child: Container(
-                          margin:
-                          EdgeInsets.symmetric(horizontal: 65, vertical: 63),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 65, vertical: 63),
                         ),
                       ),
                     ),
@@ -108,8 +109,12 @@ class _LostItemsListState extends State<LostItemsList> {
                         ],
                       ),
                     )
-                  ]))))
-              .toList(),
-        ));
+                  ],
+                ),
+              ),
+            ),
+          )
+          .toList(),
+    ));
   }
 }
