@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lost_found_app/screens/item_detail_screen.dart';
+import 'package:lost_found_app/screens/lost_item_detail_screen.dart';
 import 'package:lost_found_app/widgets/item_card.dart';
 
 class LostItemsScreen extends StatefulWidget {
@@ -31,7 +33,28 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
                 itemName: snapshot.data.docs[index].get('heading'),
                 location: snapshot.data.docs[index].get('location'),
                 imageUrl: snapshot.data.docs[index].get('image_url'),
-                onPressed: () {},
+                onPressed: () {
+                  String ownerId = snapshot.data.docs[index].get('ownerId');
+                  String postId = snapshot.data.docs[index].get('postId');
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => ItemDetailScreen(
+                  //       ownerId: ownerId,
+                  //       postId: postId,
+                  //     ),
+                  //   ),
+                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PostDetailsScreen(
+                         ownerId: ownerId,
+                        postId: postId,
+                      ),
+                    ),
+                  );
+                },
               );
             },
           );
