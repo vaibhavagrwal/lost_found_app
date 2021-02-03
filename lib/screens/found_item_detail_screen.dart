@@ -1,155 +1,361 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:lost_found_app/models/post_model.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:slider_button/slider_button.dart';
 
 class FoundItemDetailScreen extends StatefulWidget {
+  final String ownerId;
+  final String postId;
+
+  const FoundItemDetailScreen({Key key, this.ownerId, this.postId})
+      : super(key: key);
   @override
   _FoundItemDetailScreenState createState() => _FoundItemDetailScreenState();
 }
 
 class _FoundItemDetailScreenState extends State<FoundItemDetailScreen> {
+  var myFormat = DateFormat('yMMMd');
+  PostModel currentPost;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+
+    super.initState();
+  }
+
+  _asyncMethod() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    currentPost = PostModel.fromSnapshot(await firebaseFirestore
+        .collection("FoundItems")
+        .doc(widget.ownerId)
+        .collection("myFoundItems")
+        .doc(widget.postId)
+        .get());
+    setState(() {
+      print(currentPost.postId);
+      print(currentPost.postLocation);
+      print(currentPost.postDescription);
+      print(currentPost.postName);
+      print(currentPost.imageUrl);
+      print(currentPost.ownerName);
+      print(currentPost.postDate);
+      isLoading = false;
+    });
+    print(isLoading);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: <Widget>[
-        Container(
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
+    Widget _buildSwiper() {
+      return Hero(
+        tag: 'post-image-}',
+        child: Container(
+          margin: EdgeInsets.all(16.0 * height * 0.002),
           height: 300,
-          color: Color.fromRGBO(19, 60, 109, 0.8),
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image(
-              image: AssetImage('lib/assets/bag.jpg'),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.0 * height * 0.002),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: Offset(0, 10),
+              )
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12.0 * height * 0.002),
+            child: Swiper(
+              itemCount: 1,
+              itemBuilder: (_, index) {
+                return InkWell(
+                  onTap: () {
+                    // if (currentPost.imageUrl != "" && currentPost.imageUrl!=null)
+                    //   showDialogFunc(context, currentPost.imageUrl,
+                    //       currentPost.postName, "LOST");
+                  },
+                  child: currentPost == null
+                      ? Container()
+                      : Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: CachedNetworkImageProvider(
+                              currentPost.imageUrl == ""
+                                  ? "https://axiomoptics.com/wp-content/uploads/2019/08/placeholder-images-image_large.png"
+                                  : currentPost.imageUrl,
+                            ),
+                          )),
+                        ),
+                );
+              },
+              loop: true,
+              pagination: SwiperPagination(),
             ),
           ),
         ),
-        Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Adidas Backpack\n',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(19, 60, 109, 1),
-                              ),
-                            ),
-                            TextSpan(
-                                text: "Found",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(19, 60, 109, 1),
-                                  fontSize: 20,
-                                ))
-                          ],
-                        ),
+      );
+    }
+
+    Widget _buildContentContainer() {
+      return Container(
+        padding: EdgeInsets.fromLTRB(
+          12.0 * width * 0.002,
+          12.0 * height * 0.002,
+          12.0 * width * 0.002,
+          32.0 * height * 0.002,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 16.0 * width * 0.002),
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: Color.fromRGBO(19, 60, 109, 0.8),
+                    width: 3,
+                  ),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.0 * width * 0.003,
+                      vertical: 4.0 * height * 0.003,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(24.0 * height * 0.002),
+                      color: Color.fromRGBO(19, 60, 109, 0.8),
+                    ),
+                    child: Text(
+                      "FOUND".toUpperCase(),
+                      style: textTheme.overline.copyWith(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: 8.0 * height * 0.002),
+                  Text(
+                    currentPost == null ? "" : currentPost.postName,
+                    style: textTheme.headline,
+                  ),
+                  SizedBox(height: 8.0 * height * 0.002),
+                  Text('Found By : ' +
+                      (currentPost == null ? "" : currentPost.ownerName)),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: 12.0 * height * 0.002),
+                    width: 50,
+                    height: 2,
+                    color: Color.fromRGBO(19, 60, 109, 0.8),
+                  ),
+                  SizedBox(height: 8.0 * height * 0.002),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on_outlined,
+                        size: 18,
+                      ),
+                      SizedBox(width: 8.0 * height * 0.002),
+                      Text(
+                        "LOCATION",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        RichText(
-                            text: TextSpan(
-                                text: "Found on",
-                                style: TextStyle(
-                                  color: Color.fromRGBO(19, 60, 109, 1),
-                                  fontSize: 15,
-                                ))),
-                        Row(
-                          children: [
-                            Icon(Icons.date_range),
-                            Text("23-02-20",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(19, 60, 109, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold))
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 120,
-                    ),
-                    Column(
-                      children: [
-                        Text("Found at",
-                            style: TextStyle(
-                              color: Color.fromRGBO(19, 60, 109, 1),
-                              fontSize: 15,
-                            )),
-                        Row(
-                          children: [
-                            Icon(Icons.place),
-                            Text("OAT",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(19, 60, 109, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold))
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: "Description\n",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(19, 60, 109, 1),
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text:
-                                    'bhot saara description\nbhot saara description\nbhot saara description\nbhot saara description\nbhot saara description\n',
-                                style: TextStyle(
-                                  color: Color.fromRGBO(19, 60, 109, 1),
-                                  fontSize: 20,
-                                ))
-                          ],
-                        ),
+                  SizedBox(height: 12.0 * height * 0.001),
+                  Row(
+                    children: <Widget>[
+                      Text(currentPost == null ? "" : currentPost.postLocation),
+                    ],
+                  ),
+                  SizedBox(height: 18.0 * height * 0.002),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        FontAwesomeIcons.mapPin,
+                        size: 18,
+                      ),
+                      SizedBox(width: 8.0 * height * 0.002),
+                      Text(
+                        'TIME',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  color: Color.fromRGBO(19, 60, 109, 1),
-                  height: 45,
-                  minWidth: 300,
-                  child: Text("CLAIM",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      )),
-                )
+                  SizedBox(height: 12.0 * height * 0.001),
+                  Row(
+                    children: <Widget>[
+                      // '${DateFormat.jm().format(homeworkData.items[index].dueDate)}',
+                      // Text(currentPost==null?"":currentPost.postDate.toString(),),
+                      Text(currentPost == null
+                          ? ""
+                          : '${myFormat.format(currentPost.postDate)}'),
+                    ],
+                  ),
+                  SizedBox(height: 24.0 * height * 0.002),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Additional Details'.toUpperCase(),
+                        style: textTheme.overline,
+                      ),
+                      SizedBox(height: 8.0 * height * 0.001),
+                      Text(
+                        currentPost == null ? "" : currentPost.postDescription,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.only(
+                  start: width * 0.18, top: height * 0.05),
+              child: ClaimButton(),
+            )
+          ],
+        ),
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Item Details"),
+        automaticallyImplyLeading: true,
+        backgroundColor: Color.fromRGBO(19, 60, 109, 0.8),
+        iconTheme: IconThemeData.fallback(),
+      ),
+      body: isLoading
+          ? Shimmer.fromColors(
+              baseColor: Colors.grey[300],
+              highlightColor: Colors.grey[100],
+              enabled: true,
+              child: ListView(
+                children: <Widget>[
+                  _buildSwiper(),
+                  _buildContentContainer(),
+                ],
+              ),
+            )
+          : ListView(
+              children: <Widget>[
+                _buildSwiper(),
+                _buildContentContainer(),
               ],
-            ))
-      ]),
+            ),
     );
   }
+}
+
+showDialogFunc(context, img, title, desc) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15),
+              height: 320,
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: CachedNetworkImageProvider(
+                          img,
+                        ),
+                      )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    // width: 200,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: FlatButton(
+                        onPressed: () {},
+                        color: Color.fromRGBO(19, 60, 109, 1),
+                        height: 15,
+                        minWidth: 100,
+                        child: Text("CLAIM",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            )),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+Widget ClaimButton() {
+  return SliderButton(
+    action: () {},
+    label: Text(
+      "Message",
+      style: TextStyle(
+          color: Colors.white, fontWeight: FontWeight.w500, fontSize: 25),
+    ),
+    vibrationFlag: false,
+    icon: Center(
+        child: Icon(
+      Icons.message,
+      color: Color.fromRGBO(19, 60, 109, 1),
+      size: 40.0,
+      semanticLabel: 'Text to announce in accessibility modes',
+    )),
+    width: 230,
+    radius: 50,
+    height: 60,
+    buttonSize: 50,
+    buttonColor: Colors.white,
+    backgroundColor: Color.fromRGBO(19, 60, 109, 1),
+    highlightedColor: Colors.white,
+    baseColor: Colors.white,
+  );
 }

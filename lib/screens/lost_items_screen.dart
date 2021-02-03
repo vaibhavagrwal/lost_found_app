@@ -36,15 +36,7 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
                 onPressed: () {
                   String ownerId = snapshot.data.docs[index].get('ownerId');
                   String postId = snapshot.data.docs[index].get('postId');
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => ItemDetailScreen(
-                  //       ownerId: ownerId,
-                  //       postId: postId,
-                  //     ),
-                  //   ),
-                  // );
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

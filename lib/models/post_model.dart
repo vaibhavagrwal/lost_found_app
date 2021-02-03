@@ -11,7 +11,6 @@ class PostModel {
   String ownerId;
   String ownerName;
 
-
   PostModel({
     this.postId,
     this.postName,
@@ -32,8 +31,7 @@ class PostModel {
     this.imageUrl = snapshot.data()['image_url'];
     this.ownerId = snapshot.data()['ownerId'];
     this.postLocation = snapshot.data()['location'];
-    this.ownerName=snapshot.data()['by'];
-    this.postDate=DateTime.parse(snapshot.data()['timeStamp'].toDate().toString());
-    
+    this.ownerName = snapshot.data()['by'];
+    this.postDate = DateTime.parse(snapshot.data()['date'].toDate().toString());
   }
 }

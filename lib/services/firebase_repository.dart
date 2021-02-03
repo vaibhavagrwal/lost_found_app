@@ -213,14 +213,14 @@ class FirebaseRepository {
               .doc(postId)
               .set({
             'heading': heading,
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'description': description,
             'image_url': url,
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
-            'by':user.name,
+            'by': user.name,
           });
 
           await FirebaseFirestore.instance
@@ -229,11 +229,11 @@ class FirebaseRepository {
               .set({
             'heading': heading,
             'image_url': url,
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
-            'by':user.name,
+            'by': user.name,
           });
         } else {
           await FirebaseFirestore.instance
@@ -243,14 +243,14 @@ class FirebaseRepository {
               .doc(postId)
               .set({
             'heading': heading,
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'description': description,
             'image_url': url,
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
-            'by':user.name,
+            'by': user.name,
           });
 
           await FirebaseFirestore.instance
@@ -259,11 +259,11 @@ class FirebaseRepository {
               .set({
             'heading': heading,
             'image_url': url,
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
-            'by':user.name,
+            'by': user.name,
           });
         }
       } else {
@@ -275,14 +275,14 @@ class FirebaseRepository {
               .doc(postId)
               .set({
             'heading': heading,
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'description': description,
             'image_url': "",
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
-            'by':user.name,
+            'by': user.name,
           });
           await FirebaseFirestore.instance
               .collection('LostItemsList')
@@ -291,10 +291,10 @@ class FirebaseRepository {
             'heading': heading,
             'image_url': "",
             'location': place,
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'ownerId': user.userId,
             'postId': postId,
-            'by':user.name,
+            'by': user.name,
           });
         } else {
           await FirebaseFirestore.instance
@@ -304,14 +304,14 @@ class FirebaseRepository {
               .doc(postId)
               .set({
             'heading': heading,
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'description': description,
             'image_url': "",
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
-            'by':user.name,
+            'by': user.name,
           });
           await FirebaseFirestore.instance
               .collection('FoundItemsList')
@@ -319,11 +319,11 @@ class FirebaseRepository {
               .set({
             'heading': heading,
             'image_url': "",
-            'date': dateTime.toIso8601String(),
+            'date': dateTime,
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
-            'by':user.name,
+            'by': user.name,
           });
         }
       }
