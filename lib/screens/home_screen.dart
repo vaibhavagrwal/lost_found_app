@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lost_found_app/screens/all_items_screen.dart';
 import 'package:lost_found_app/screens/chat_rooms_screen.dart';
 import 'package:lost_found_app/main.dart';
 import 'package:lost_found_app/screens/drawer_screen.dart';
@@ -18,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         drawer: DrawerScreen(),
         appBar: AppBar(
@@ -50,15 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
             labelColor: Color.fromRGBO(19, 60, 109, 1),
             unselectedLabelColor: Color.fromRGBO(23, 23, 23, 1),
             tabs: [
-              Tab(
-                child: Text(
-                  'ALL',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+              // Tab(
+              //   child: Text(
+              //     'ALL',
+              //     style: GoogleFonts.roboto(
+              //       fontSize: 18,
+              //       fontWeight: FontWeight.w600,
+              //     ),
+              //   ),
+              // ),
               Tab(
                 child: Text(
                   'LOST',
@@ -95,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: TabBarView(
           children: [
-            AllItemsScreen(),
+            // AllItemsScreen(),
             LostItemsScreen(),
             FoundItemsScreen(),
           ],

@@ -212,13 +212,28 @@ class FirebaseRepository {
               .collection('myLostItems')
               .doc(postId)
               .set({
-            'date': dateTime.toIso8601String(),
-            'desciption': description,
+            'heading': heading,
+            'date': dateTime,
+            'description': description,
             'image_url': url,
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
+            'by': user.name,
+          });
+
+          await FirebaseFirestore.instance
+              .collection('LostItemsList')
+              .doc(postId)
+              .set({
+            'heading': heading,
+            'image_url': url,
+            'date': dateTime,
+            'location': place,
+            'ownerId': user.userId,
+            'postId': postId,
+            'by': user.name,
           });
         } else {
           await FirebaseFirestore.instance
@@ -227,13 +242,28 @@ class FirebaseRepository {
               .collection('myFoundItems')
               .doc(postId)
               .set({
-            'date': dateTime.toIso8601String(),
-            'desciption': description,
+            'heading': heading,
+            'date': dateTime,
+            'description': description,
             'image_url': url,
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
+            'by': user.name,
+          });
+
+          await FirebaseFirestore.instance
+              .collection('FoundItemsList')
+              .doc(postId)
+              .set({
+            'heading': heading,
+            'image_url': url,
+            'date': dateTime,
+            'location': place,
+            'ownerId': user.userId,
+            'postId': postId,
+            'by': user.name,
           });
         }
       } else {
@@ -244,13 +274,27 @@ class FirebaseRepository {
               .collection('myLostItems')
               .doc(postId)
               .set({
-            'date': dateTime.toIso8601String(),
-            'desciption': description,
+            'heading': heading,
+            'date': dateTime,
+            'description': description,
             'image_url': "",
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
+            'by': user.name,
+          });
+          await FirebaseFirestore.instance
+              .collection('LostItemsList')
+              .doc(postId)
+              .set({
+            'heading': heading,
+            'image_url': "",
+            'location': place,
+            'date': dateTime,
+            'ownerId': user.userId,
+            'postId': postId,
+            'by': user.name,
           });
         } else {
           await FirebaseFirestore.instance
@@ -259,13 +303,27 @@ class FirebaseRepository {
               .collection('myFoundItems')
               .doc(postId)
               .set({
-            'date': dateTime.toIso8601String(),
-            'desciption': description,
+            'heading': heading,
+            'date': dateTime,
+            'description': description,
             'image_url': "",
             'location': place,
             'ownerId': user.userId,
             'postId': postId,
             'timeStamp': timeStamp,
+            'by': user.name,
+          });
+          await FirebaseFirestore.instance
+              .collection('FoundItemsList')
+              .doc(postId)
+              .set({
+            'heading': heading,
+            'image_url': "",
+            'date': dateTime,
+            'location': place,
+            'ownerId': user.userId,
+            'postId': postId,
+            'by': user.name,
           });
         }
       }

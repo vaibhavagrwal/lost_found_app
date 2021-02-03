@@ -39,6 +39,9 @@ dependencies:
   intl: ^0.16.1
   path_provider: ^1.6.27
   flutter_spinkit: ^4.1.2+1
+  flutter_swiper: ^1.1.6
+  slider_button: ^0.6.0
+  shimmer: ^1.1.2
 
 dev_dependencies:
   flutter_test:
