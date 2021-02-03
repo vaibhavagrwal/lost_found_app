@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lost_found_app/screens/item_detail_screen.dart';
 import 'package:lost_found_app/screens/lost_item_detail_screen.dart';
 import 'package:lost_found_app/widgets/item_card.dart';
 

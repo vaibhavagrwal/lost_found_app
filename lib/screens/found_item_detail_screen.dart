@@ -8,8 +8,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lost_found_app/models/post_model.dart';
+import 'package:lost_found_app/widgets/claim_button.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:slider_button/slider_button.dart';
 
 class FoundItemDetailScreen extends StatefulWidget {
   final String ownerId;
@@ -156,7 +156,7 @@ class _FoundItemDetailScreenState extends State<FoundItemDetailScreen> {
                   SizedBox(height: 8.0 * height * 0.002),
                   Text(
                     currentPost == null ? "" : currentPost.postName,
-                    style: textTheme.headline,
+                    style: textTheme.headline6,
                   ),
                   SizedBox(height: 8.0 * height * 0.002),
                   Text('Found By : ' +
@@ -331,31 +331,4 @@ showDialogFunc(context, img, title, desc) {
           ),
         );
       });
-}
-
-Widget ClaimButton() {
-  return SliderButton(
-    action: () {},
-    label: Text(
-      "Message",
-      style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.w500, fontSize: 25),
-    ),
-    vibrationFlag: false,
-    icon: Center(
-        child: Icon(
-      Icons.message,
-      color: Color.fromRGBO(19, 60, 109, 1),
-      size: 40.0,
-      semanticLabel: 'Text to announce in accessibility modes',
-    )),
-    width: 230,
-    radius: 50,
-    height: 60,
-    buttonSize: 50,
-    buttonColor: Colors.white,
-    backgroundColor: Color.fromRGBO(19, 60, 109, 1),
-    highlightedColor: Colors.white,
-    baseColor: Colors.white,
-  );
 }
