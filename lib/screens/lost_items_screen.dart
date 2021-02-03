@@ -48,8 +48,8 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PostDetailsScreen(
-                         ownerId: ownerId,
+                      builder: (context) => LostItemDetailScreen(
+                        ownerId: ownerId,
                         postId: postId,
                       ),
                     ),

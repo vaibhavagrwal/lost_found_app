@@ -6,20 +6,23 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:lost_found_app/models/post_model.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:slider_button/slider_button.dart';
 
-class PostDetailsScreen extends StatefulWidget {
+class LostItemDetailScreen extends StatefulWidget {
   final String ownerId;
   final String postId;
 
-  const PostDetailsScreen({Key key, this.ownerId, this.postId})
+  const LostItemDetailScreen({Key key, this.ownerId, this.postId})
       : super(key: key);
   @override
-  _PostDetailsScreenState createState() => _PostDetailsScreenState();
+  _LostItemDetailScreenState createState() => _LostItemDetailScreenState();
 }
 
-class _PostDetailsScreenState extends State<PostDetailsScreen> {
+class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
+  var myFormat = DateFormat('yMMMd');
   PostModel currentPost;
   bool isLoading = true;
 
@@ -33,9 +36,6 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   }
 
   _asyncMethod() async {
-    setState(() {
-      isLoading = true;
-    });
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     currentPost = PostModel.fromSnapshot(await firebaseFirestore
         .collection("lostItems")
@@ -49,10 +49,11 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
       print(currentPost.postDescription);
       print(currentPost.postName);
       print(currentPost.imageUrl);
-       print(currentPost.ownerName);
-       print(currentPost.postDate);
+      print(currentPost.ownerName);
+      print(currentPost.postDate);
       isLoading = false;
     });
+    print(isLoading);
   }
 
   @override
@@ -90,16 +91,18 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                     //   showDialogFunc(context, currentPost.imageUrl,
                     //       currentPost.postName, "LOST");
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        currentPost.imageUrl == ""
-                            ? "https://axiomoptics.com/wp-content/uploads/2019/08/placeholder-images-image_large.png"
-                            : currentPost.imageUrl,
-                      ),
-                    )),
-                  ),
+                  child: currentPost == null
+                      ? Container()
+                      : Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: CachedNetworkImageProvider(
+                              currentPost.imageUrl == ""
+                                  ? "https://axiomoptics.com/wp-content/uploads/2019/08/placeholder-images-image_large.png"
+                                  : currentPost.imageUrl,
+                            ),
+                          )),
+                        ),
                 );
               },
               loop: true,
@@ -137,8 +140,8 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 12.0 * width * 0.002,
-                      vertical: 4.0 * height * 0.002,
+                      horizontal: 12.0 * width * 0.003,
+                      vertical: 4.0 * height * 0.003,
                     ),
                     decoration: BoxDecoration(
                       borderRadius:
@@ -152,11 +155,12 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                   ),
                   SizedBox(height: 8.0 * height * 0.002),
                   Text(
-                    currentPost.postName,
+                    currentPost == null ? "" : currentPost.postName,
                     style: textTheme.headline,
                   ),
                   SizedBox(height: 8.0 * height * 0.002),
-                  Text('Lost By : '+currentPost.ownerName),
+                  Text('Lost By : ' +
+                      (currentPost == null ? "" : currentPost.ownerName)),
                   Container(
                     margin:
                         EdgeInsets.symmetric(vertical: 12.0 * height * 0.002),
@@ -178,10 +182,10 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12.0 * height * 0.002),
+                  SizedBox(height: 12.0 * height * 0.001),
                   Row(
                     children: <Widget>[
-                      Text(currentPost.postLocation),
+                      Text(currentPost == null ? "" : currentPost.postLocation),
                     ],
                   ),
                   SizedBox(height: 18.0 * height * 0.002),
@@ -198,10 +202,14 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12.0 * height * 0.002),
+                  SizedBox(height: 12.0 * height * 0.001),
                   Row(
                     children: <Widget>[
-                      Text(currentPost.postDate.toString()),
+                      // '${DateFormat.jm().format(homeworkData.items[index].dueDate)}',
+                      // Text(currentPost==null?"":currentPost.postDate.toString(),),
+                      Text(currentPost == null
+                          ? ""
+                          : '${myFormat.format(currentPost.postDate)}'),
                     ],
                   ),
                   SizedBox(height: 24.0 * height * 0.002),
@@ -212,9 +220,9 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                         'Additional Details'.toUpperCase(),
                         style: textTheme.overline,
                       ),
-                      SizedBox(height: 8.0 * height * 0.002),
+                      SizedBox(height: 8.0 * height * 0.001),
                       Text(
-                        currentPost.postDescription,
+                        currentPost == null ? "" : currentPost.postDescription,
                       ),
                     ],
                   ),
@@ -232,25 +240,35 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Item Details"),
-          automaticallyImplyLeading: true,
-          backgroundColor: Color.fromRGBO(19, 60, 109, 0.8),
-          iconTheme: IconThemeData.fallback(),
-        ),
-        body: isLoading
-            ? CircularProgressIndicator()
-            : ListView(
+      appBar: AppBar(
+        title: Text("Item Details"),
+        automaticallyImplyLeading: true,
+        backgroundColor: Color.fromRGBO(19, 60, 109, 0.8),
+        iconTheme: IconThemeData.fallback(),
+      ),
+      body: isLoading
+          ? Shimmer.fromColors(
+              baseColor: Colors.grey[300],
+              highlightColor: Colors.grey[100],
+              enabled: true,
+              child: ListView(
                 children: <Widget>[
                   _buildSwiper(),
                   _buildContentContainer(),
                 ],
-              ));
+              ),
+            )
+          : ListView(
+              children: <Widget>[
+                _buildSwiper(),
+                _buildContentContainer(),
+              ],
+            ),
+    );
   }
 }
 
 showDialogFunc(context, img, title, desc) {
-
   return showDialog(
       context: context,
       builder: (context) {
@@ -326,7 +344,7 @@ Widget ClaimButton() {
     vibrationFlag: false,
     icon: Center(
         child: Icon(
-      Icons.thumb_up_alt,
+      Icons.message,
       color: Color.fromRGBO(19, 60, 109, 1),
       size: 40.0,
       semanticLabel: 'Text to announce in accessibility modes',
