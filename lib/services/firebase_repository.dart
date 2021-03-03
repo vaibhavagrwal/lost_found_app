@@ -332,4 +332,216 @@ class FirebaseRepository {
       return 1;
     }
   }
+
+  // chat work
+  Future<bool> addChatRoom(chatRoom, chatRoomId) {
+    FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(chatRoomId)
+        .set(chatRoom,SetOptions(merge : true))
+        .catchError((e) {
+      print(e);
+
+    });
+  }
+
+
+  // ignore: non_constant_identifier_names
+  Future<bool> addChatPeople(UserName,UserID) {
+    FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(user.userId)
+        .collection(user.userId)
+        .doc(UserID)
+         .set(
+      {
+        'user_name' : UserName,
+        'user_ID' : UserID,
+      },SetOptions(merge : true)
+    )
+        .catchError((e) {
+      print(e);
+    });
+
+    FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(UserID)
+        .collection(UserID)
+        .doc(user.userId)
+        .set(
+        {
+          'user_name' : user.name,
+          'user_ID' : user.userId,
+        },SetOptions(merge : true)
+    )
+        .catchError((e) {
+      print(e);
+    });
+    //for easiness otherwise we can remove this one
+    FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(user.userId)
+        .set(
+        {
+          'user_name' : user.name,
+          'user_ID' : user.userId,
+        }
+    )
+        .catchError((e) {
+      print(e);
+    });
+    FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(UserID)
+        .set(
+        {
+          'user_name' : UserName,
+          'user_ID' : UserID,
+        }
+    )
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+
+  getChats(String chatRoomId) async{
+    return FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .orderBy('time',descending: true)
+        .snapshots();
+  }
+
+
+  Future<void> addMessage(String chatRoomId, chatMessageData,String personID,String personName){
+
+    FirebaseFirestore.instance.collection("ChatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .doc(chatMessageData['time'].toString())
+        .set(chatMessageData).catchError((e){
+      print(e.toString());
+    });
+
+    //last message
+     //sender data base
+    FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(user.userId)
+        .collection(user.userId)
+        .doc(personID)
+        .update(
+        {
+          'user_name' : personName,
+          'user_ID' : personID,
+          'sender_name' : user.name,
+          'lastMessage' : chatMessageData['message'],
+          'lastMessage_sendBy' : chatMessageData['sendBy'],
+          'lastMessageTime' : chatMessageData['time'],
+          'read' : 0,
+        }
+    )
+        .catchError((e) {
+      print(e);
+    });
+
+    //otherperson data base
+
+    FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(personID)
+        .collection(personID)
+        .doc(user.userId)
+        .update(
+        {
+          //'user_name' : user_name,
+          'user_name' : user.name,
+          'user_ID' : user.userId,
+          'sender_name' : user.name,
+          'lastMessage' : chatMessageData['message'],
+          'lastMessage_sendBy' : chatMessageData['sendBy'],
+          'lastMessageTime' : chatMessageData['time'],
+          //'read' : 0,
+        }
+    )
+        .catchError((e) {
+      print(e);
+    });
+
+  }
+
+  getUserChats(String itIsMyName) async {
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .where('users', arrayContains: itIsMyName)
+        .snapshots();
+  }
+  getUserPeople() async {
+    return await FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(user.userId)
+        .collection(user.userId)
+        .orderBy('lastMessageTime')
+        .snapshots();
+  }
+
+  Future<void> readUserMessages (String chatRoomId,String userId) async
+  {
+    QuerySnapshot unreadDocs = await FirebaseFirestore.instance.collection(
+        "ChatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .where('sendBy' ,isEqualTo :  userId)
+        .where('read' ,isEqualTo: 0)
+        .get()
+        .catchError((e) {
+      print(e.toString());
+    });
+    List unreadList=unreadDocs.docs;
+    for( DocumentSnapshot i in unreadList)
+      {
+        FirebaseFirestore.instance.collection(
+            "ChatRoom")
+            .doc(chatRoomId)
+            .collection("chats")
+            .doc(i['MessageId'].toString())
+            .update({
+          'read' : 1 },
+        ).catchError((e) {
+          print(e.toString());
+        });
+        print(i['read'].toString());
+
+      }
+
+    FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(userId)
+        .collection(userId)
+        .doc(user.userId)
+        .update(
+        {
+          'read' : 1,
+        }
+    )
+        .catchError((e) {
+      print(e);
+    });
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
 }

@@ -42,6 +42,10 @@ dependencies:
   flutter_swiper: ^1.1.6
   slider_button: ^0.6.0
   shimmer: ^1.1.2
+  swipe_to: 0.0.1+8
+  flutter_neumorphic: ^3.0.4+1
+  emoji_picker: ^0.1.0
+  flutter_keyboard_visibility: ^3.2.2
 
 dev_dependencies:
   flutter_test:

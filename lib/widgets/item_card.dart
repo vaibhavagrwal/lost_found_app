@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ItemCard extends StatelessWidget {
   final String itemName;
@@ -60,10 +62,11 @@ class ItemCard extends StatelessWidget {
                   ),
                   Text(
                     itemName,
-                    style: TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 17,
+                      fontSize: 16,
                     ),
                   ),
                   SizedBox(
@@ -81,11 +84,11 @@ class ItemCard extends StatelessWidget {
                       ),
                       Text(
                         location,
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: 12,
                         ),
                       ),
                     ],

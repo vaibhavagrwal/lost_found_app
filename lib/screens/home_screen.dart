@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               onPressed: () {
                 navigatorKey.currentState.push(MaterialPageRoute(
-                    builder: (context) => ChatRoomsListScreen()));
+                    builder: (context) => ChatRoom()));
               },
               icon: FaIcon(
                 FontAwesomeIcons.facebookMessenger,
