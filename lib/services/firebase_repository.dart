@@ -206,10 +206,26 @@ class FirebaseRepository {
 
         String url = await ref.getDownloadURL();
         if (type == 0) {
+          // await FirebaseFirestore.instance
+          //     .collection('lostItems')
+          //     .doc(user.userId)
+          //     .collection('myLostItems')
+          //     .doc(postId)
+          //     .set({
+          //   'heading': heading,
+          //   'date': dateTime,
+          //   'description': description,
+          //   'image_url': url,
+          //   'location': place,
+          //   'ownerId': user.userId,
+          //   'postId': postId,
+          //   'timeStamp': timeStamp,
+          //   'by': user.name,
+          // });
           await FirebaseFirestore.instance
-              .collection('lostItems')
+              .collection('AllItems')
               .doc(user.userId)
-              .collection('myLostItems')
+              .collection('myItems')
               .doc(postId)
               .set({
             'heading': heading,
@@ -221,6 +237,8 @@ class FirebaseRepository {
             'postId': postId,
             'timeStamp': timeStamp,
             'by': user.name,
+            'status': "Lost",
+            'isVerified': false,
           });
 
           await FirebaseFirestore.instance
@@ -234,12 +252,29 @@ class FirebaseRepository {
             'ownerId': user.userId,
             'postId': postId,
             'by': user.name,
+            'isVerified': false,
           });
         } else {
+          // await FirebaseFirestore.instance
+          //     .collection('FoundItems')
+          //     .doc(user.userId)
+          //     .collection('myFoundItems')
+          //     .doc(postId)
+          //     .set({
+          //   'heading': heading,
+          //   'date': dateTime,
+          //   'description': description,
+          //   'image_url': url,
+          //   'location': place,
+          //   'ownerId': user.userId,
+          //   'postId': postId,
+          //   'timeStamp': timeStamp,
+          //   'by': user.name,
+          // });
           await FirebaseFirestore.instance
-              .collection('FoundItems')
+              .collection('AllItems')
               .doc(user.userId)
-              .collection('myFoundItems')
+              .collection('myItems')
               .doc(postId)
               .set({
             'heading': heading,
@@ -251,6 +286,8 @@ class FirebaseRepository {
             'postId': postId,
             'timeStamp': timeStamp,
             'by': user.name,
+            'status': "Found",
+            'isVerified': false,
           });
 
           await FirebaseFirestore.instance
@@ -264,14 +301,15 @@ class FirebaseRepository {
             'ownerId': user.userId,
             'postId': postId,
             'by': user.name,
+            'isVerified': false,
           });
         }
       } else {
         if (type == 0) {
           await FirebaseFirestore.instance
-              .collection('lostItems')
+              .collection('AllItems')
               .doc(user.userId)
-              .collection('myLostItems')
+              .collection('myItems')
               .doc(postId)
               .set({
             'heading': heading,
@@ -283,7 +321,26 @@ class FirebaseRepository {
             'postId': postId,
             'timeStamp': timeStamp,
             'by': user.name,
+            'status': "Lost",
+            'isVerified': false,
           });
+
+          // await FirebaseFirestore.instance
+          //     .collection('lostItems')
+          //     .doc(user.userId)
+          //     .collection('myLostItems')
+          //     .doc(postId)
+          //     .set({
+          //   'heading': heading,
+          //   'date': dateTime,
+          //   'description': description,
+          //   'image_url': "",
+          //   'location': place,
+          //   'ownerId': user.userId,
+          //   'postId': postId,
+          //   'timeStamp': timeStamp,
+          //   'by': user.name,
+          // });
           await FirebaseFirestore.instance
               .collection('LostItemsList')
               .doc(postId)
@@ -295,12 +352,13 @@ class FirebaseRepository {
             'ownerId': user.userId,
             'postId': postId,
             'by': user.name,
+            'isVerified': false,
           });
         } else {
           await FirebaseFirestore.instance
-              .collection('FoundItems')
+              .collection('AllItems')
               .doc(user.userId)
-              .collection('myFoundItems')
+              .collection('myItems')
               .doc(postId)
               .set({
             'heading': heading,
@@ -312,7 +370,26 @@ class FirebaseRepository {
             'postId': postId,
             'timeStamp': timeStamp,
             'by': user.name,
+            'status': "Found",
+            'isVerified': false,
           });
+
+          // await FirebaseFirestore.instance
+          //     .collection('FoundItems')
+          //     .doc(user.userId)
+          //     .collection('myFoundItems')
+          //     .doc(postId)
+          //     .set({
+          //   'heading': heading,
+          //   'date': dateTime,
+          //   'description': description,
+          //   'image_url': "",
+          //   'location': place,
+          //   'ownerId': user.userId,
+          //   'postId': postId,
+          //   'timeStamp': timeStamp,
+          //   'by': user.name,
+          // });
           await FirebaseFirestore.instance
               .collection('FoundItemsList')
               .doc(postId)
@@ -324,6 +401,7 @@ class FirebaseRepository {
             'ownerId': user.userId,
             'postId': postId,
             'by': user.name,
+            'isVerified': false,
           });
         }
       }
@@ -338,28 +416,23 @@ class FirebaseRepository {
     FirebaseFirestore.instance
         .collection("ChatRoom")
         .doc(chatRoomId)
-        .set(chatRoom,SetOptions(merge : true))
+        .set(chatRoom, SetOptions(merge: true))
         .catchError((e) {
       print(e);
-
     });
   }
 
-
   // ignore: non_constant_identifier_names
-  Future<bool> addChatPeople(UserName,UserID) {
+  Future<bool> addChatPeople(UserName, UserID) {
     FirebaseFirestore.instance
         .collection("UserChatPeople")
         .doc(user.userId)
         .collection(user.userId)
         .doc(UserID)
-         .set(
-      {
-        'user_name' : UserName,
-        'user_ID' : UserID,
-      },SetOptions(merge : true)
-    )
-        .catchError((e) {
+        .set({
+      'user_name': UserName,
+      'user_ID': UserID,
+    }, SetOptions(merge: true)).catchError((e) {
       print(e);
     });
 
@@ -368,82 +441,67 @@ class FirebaseRepository {
         .doc(UserID)
         .collection(UserID)
         .doc(user.userId)
-        .set(
-        {
-          'user_name' : user.name,
-          'user_ID' : user.userId,
-        },SetOptions(merge : true)
-    )
-        .catchError((e) {
+        .set({
+      'user_name': user.name,
+      'user_ID': user.userId,
+    }, SetOptions(merge: true)).catchError((e) {
       print(e);
     });
     //for easiness otherwise we can remove this one
     FirebaseFirestore.instance
         .collection("UserChatPeople")
         .doc(user.userId)
-        .set(
-        {
-          'user_name' : user.name,
-          'user_ID' : user.userId,
-        }
-    )
-        .catchError((e) {
+        .set({
+      'user_name': user.name,
+      'user_ID': user.userId,
+    }).catchError((e) {
       print(e);
     });
-    FirebaseFirestore.instance
-        .collection("UserChatPeople")
-        .doc(UserID)
-        .set(
-        {
-          'user_name' : UserName,
-          'user_ID' : UserID,
-        }
-    )
-        .catchError((e) {
+    FirebaseFirestore.instance.collection("UserChatPeople").doc(UserID).set({
+      'user_name': UserName,
+      'user_ID': UserID,
+    }).catchError((e) {
       print(e);
     });
   }
 
-
-  getChats(String chatRoomId) async{
+  getChats(String chatRoomId) async {
     return FirebaseFirestore.instance
         .collection("ChatRoom")
         .doc(chatRoomId)
         .collection("chats")
-        .orderBy('time',descending: true)
+        .orderBy('time', descending: true)
         .snapshots();
   }
 
-
-  Future<void> addMessage(String chatRoomId, chatMessageData,String personID,String personName){
-
-    FirebaseFirestore.instance.collection("ChatRoom")
+  Future<void> addMessage(
+      String chatRoomId, chatMessageData, String personID, String personName) {
+    FirebaseFirestore.instance
+        .collection("ChatRoom")
         .doc(chatRoomId)
         .collection("chats")
         .doc(chatMessageData['time'].toString())
-        .set(chatMessageData).catchError((e){
+        .set(chatMessageData)
+        .catchError((e) {
       print(e.toString());
     });
 
     //last message
-     //sender data base
+    //sender data base
     FirebaseFirestore.instance
         .collection("UserChatPeople")
         .doc(user.userId)
         .collection(user.userId)
         .doc(personID)
-        .update(
-        {
-          'user_name' : personName,
-          'user_ID' : personID,
-          'sender_name' : user.name,
-          'lastMessage' : chatMessageData['message'],
-          'lastMessage_sendBy' : chatMessageData['sendBy'],
-          'lastMessageTime' : chatMessageData['time'],
-          'read' : 0,
-        }
-    )
-        .catchError((e) {
+        .update({
+      'user_name': personName,
+      'user_ID': personID,
+      'sender_name': user.name,
+      'lastMessage': chatMessageData['message'],
+      'lastMessage_sendBy': chatMessageData['sendBy'],
+      'lastMessageTime': chatMessageData['time'],
+      'read': 0,
+    }).catchError((e) {
       print(e);
     });
 
@@ -454,22 +512,18 @@ class FirebaseRepository {
         .doc(personID)
         .collection(personID)
         .doc(user.userId)
-        .update(
-        {
-          //'user_name' : user_name,
-          'user_name' : user.name,
-          'user_ID' : user.userId,
-          'sender_name' : user.name,
-          'lastMessage' : chatMessageData['message'],
-          'lastMessage_sendBy' : chatMessageData['sendBy'],
-          'lastMessageTime' : chatMessageData['time'],
-          //'read' : 0,
-        }
-    )
-        .catchError((e) {
+        .update({
+      //'user_name' : user_name,
+      'user_name': user.name,
+      'user_ID': user.userId,
+      'sender_name': user.name,
+      'lastMessage': chatMessageData['message'],
+      'lastMessage_sendBy': chatMessageData['sendBy'],
+      'lastMessageTime': chatMessageData['time'],
+      //'read' : 0,
+    }).catchError((e) {
       print(e);
     });
-
   }
 
   getUserChats(String itIsMyName) async {
@@ -478,6 +532,7 @@ class FirebaseRepository {
         .where('users', arrayContains: itIsMyName)
         .snapshots();
   }
+
   getUserPeople() async {
     return await FirebaseFirestore.instance
         .collection("UserChatPeople")
@@ -487,61 +542,41 @@ class FirebaseRepository {
         .snapshots();
   }
 
-  Future<void> readUserMessages (String chatRoomId,String userId) async
-  {
-    QuerySnapshot unreadDocs = await FirebaseFirestore.instance.collection(
-        "ChatRoom")
+  Future<void> readUserMessages(String chatRoomId, String userId) async {
+    QuerySnapshot unreadDocs = await FirebaseFirestore.instance
+        .collection("ChatRoom")
         .doc(chatRoomId)
         .collection("chats")
-        .where('sendBy' ,isEqualTo :  userId)
-        .where('read' ,isEqualTo: 0)
+        .where('sendBy', isEqualTo: userId)
+        .where('read', isEqualTo: 0)
         .get()
         .catchError((e) {
       print(e.toString());
     });
-    List unreadList=unreadDocs.docs;
-    for( DocumentSnapshot i in unreadList)
-      {
-        FirebaseFirestore.instance.collection(
-            "ChatRoom")
-            .doc(chatRoomId)
-            .collection("chats")
-            .doc(i['MessageId'].toString())
-            .update({
-          'read' : 1 },
-        ).catchError((e) {
-          print(e.toString());
-        });
-        print(i['read'].toString());
-
-      }
+    List unreadList = unreadDocs.docs;
+    for (DocumentSnapshot i in unreadList) {
+      FirebaseFirestore.instance
+          .collection("ChatRoom")
+          .doc(chatRoomId)
+          .collection("chats")
+          .doc(i['MessageId'].toString())
+          .update(
+        {'read': 1},
+      ).catchError((e) {
+        print(e.toString());
+      });
+      print(i['read'].toString());
+    }
 
     FirebaseFirestore.instance
         .collection("UserChatPeople")
         .doc(userId)
         .collection(userId)
         .doc(user.userId)
-        .update(
-        {
-          'read' : 1,
-        }
-    )
-        .catchError((e) {
+        .update({
+      'read': 1,
+    }).catchError((e) {
       print(e);
     });
-
-
-
-
-
-
-
-
-
-
   }
-
-
-
-
 }

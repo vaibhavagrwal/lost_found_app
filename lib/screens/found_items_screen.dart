@@ -15,6 +15,7 @@ class _FoundItemsScreenState extends State<FoundItemsScreen> {
     return StreamBuilder<QuerySnapshot>(
       stream: firebaseFirestore
           .collection("FoundItemsList")
+          .where("isVerified", isEqualTo: true)
           .orderBy('date', descending: true)
           .snapshots(),
       builder: (context, snapshot) {

@@ -15,6 +15,7 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
     return StreamBuilder<QuerySnapshot>(
       stream: firebaseFirestore
           .collection("LostItemsList")
+          .where("isVerified", isEqualTo: true)
           .orderBy('date', descending: true)
           .snapshots(),
       builder: (context, snapshot) {

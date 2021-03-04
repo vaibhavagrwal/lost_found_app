@@ -16,15 +16,10 @@ import 'chat_screen.dart';
 import 'package:lost_found_app/main.dart';
 
 import '../main.dart';
+
 class LostItemDetailScreen extends StatefulWidget {
-
-
-
-
   final String ownerId;
   final String postId;
-
-
 
   const LostItemDetailScreen({Key key, this.ownerId, this.postId})
       : super(key: key);
@@ -39,35 +34,29 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
 
   FirebaseRepository databaseMethods = new FirebaseRepository(); //sameer
   sendMessage(String userName) async {
-    List<String> users = [user.name,currentPost.ownerName];
+    List<String> users = [user.name, currentPost.ownerName];
 
-    String chatRoomId = getChatRoomId(user.userId,currentPost.ownerId);
+    String chatRoomId = getChatRoomId(user.userId, currentPost.ownerId);
 
     Map<String, dynamic> chatRoom = {
       "users": users,
-      "chatRoomId" : chatRoomId,
+      "chatRoomId": chatRoomId,
     };
 
-
-
-
     databaseMethods.addChatRoom(chatRoom, chatRoomId);
-    databaseMethods.addChatPeople(currentPost.ownerName,currentPost.ownerId);
+    databaseMethods.addChatPeople(currentPost.ownerName, currentPost.ownerId);
 
     Future.delayed(Duration.zero, () {
-      navigatorKey.currentState.push( MaterialPageRoute(
+      navigatorKey.currentState.push(MaterialPageRoute(
           builder: (context) => Chat(
-            chatRoomId: chatRoomId,
-            username : userName,
-            personID: currentPost.ownerId,
-            personName: currentPost.ownerName,
-          )
-      ));
+                chatRoomId: chatRoomId,
+                username: userName,
+                personID: currentPost.ownerId,
+                personName: currentPost.ownerName,
+              )));
     });
-
-
-
   }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -80,9 +69,9 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
   _asyncMethod() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     currentPost = PostModel.fromSnapshot(await firebaseFirestore
-        .collection("lostItems")
+        .collection("AllItems")
         .doc(widget.ownerId)
-        .collection("myLostItems")
+        .collection("myItems")
         .doc(widget.postId)
         .get());
     setState(() {
@@ -104,9 +93,6 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
     final textTheme = theme.textTheme;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
-
-
 
     Widget _buildSwiper() {
       return Hero(
@@ -305,7 +291,11 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                 Padding(
                   padding: EdgeInsetsDirectional.only(
                       start: width * 0.18, top: height * 0.05),
-                  child: FloatingActionButton(onPressed:(){ sendMessage(user.name);},),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      sendMessage(user.name);
+                    },
+                  ),
                 )
               ],
             ),

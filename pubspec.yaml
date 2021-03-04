@@ -46,6 +46,7 @@ dependencies:
   flutter_neumorphic: ^3.0.4+1
   emoji_picker: ^0.1.0
   flutter_keyboard_visibility: ^3.2.2
+  async: ^2.5.0
 
 dev_dependencies:
   flutter_test:

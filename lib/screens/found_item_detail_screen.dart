@@ -38,9 +38,9 @@ class _FoundItemDetailScreenState extends State<FoundItemDetailScreen> {
   _asyncMethod() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     currentPost = PostModel.fromSnapshot(await firebaseFirestore
-        .collection("FoundItems")
+        .collection("AllItems")
         .doc(widget.ownerId)
-        .collection("myFoundItems")
+        .collection("myItems")
         .doc(widget.postId)
         .get());
     setState(() {
