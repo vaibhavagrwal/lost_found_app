@@ -282,7 +282,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           //   image: Image.asset('assets/facebook.png'),
                           // ),
                           RoundButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              await FirebaseRepository()
+                                  .signInGoogle(context, _scaffoldKey);
+                            },
                             image: Image.asset(
                               'lib/assets/google.png',
                               width: 50,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lost_found_app/models/user_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -80,6 +81,9 @@ class FirebaseRepository {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.remove('userData');
     await _auth.signOut();
+
+    GoogleSignIn _googleSignIn = GoogleSignIn();
+    _googleSignIn.disconnect();
 
     Navigator.of(context, rootNavigator: true).pushReplacement(
       MaterialPageRoute(
@@ -578,5 +582,60 @@ class FirebaseRepository {
     }).catchError((e) {
       print(e);
     });
+  }
+
+  Future<void> signInGoogle(BuildContext context, _scaffoldKey) async {
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) return;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    bool isNewUser = userCredential.additionalUserInfo.isNewUser;
+    if (isNewUser) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user.uid)
+          .set({
+        'id': userCredential.user.uid,
+        'name': userCredential.user.displayName,
+        'email': userCredential.user.email,
+        'image_url': userCredential.user.photoURL,
+        'phone': userCredential.user.phoneNumber ?? "",
+      });
+    }
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser.uid)
+          .get();
+      user = UserModel(
+        userId: snapshot.data()['id'],
+        name: snapshot.data()['name'],
+        email: snapshot.data()['email'],
+        imageUrl: snapshot.data()['image_url'],
+        phone: snapshot.data()['phone'],
+      );
+
+      String user1 = jsonEncode(user);
+      pref.setString('userData', user1);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RootScreen(),
+        ),
+      );
+    } catch (e) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
   }
 }
