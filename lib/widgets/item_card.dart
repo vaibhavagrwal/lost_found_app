@@ -27,6 +27,13 @@ class ItemCard extends StatelessWidget {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Color.fromRGBO(29, 60, 89, 0.2),
+                    offset: Offset(6.0, 6.0),
+                    blurRadius: 3.0,
+                  ),
+                ],
                 color: Color.fromRGBO(19, 60, 109, 0.8),
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -49,7 +56,20 @@ class ItemCard extends StatelessWidget {
             ),
             Container(
               height: 50,
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.only(
+              //       bottomLeft: Radius.circular(20),
+              //       bottomRight: Radius.circular(20)),
+              //   color: Color.fromRGBO(19, 60, 109, 1),
+              // ),
               decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Color.fromRGBO(29, 60, 89, 0.2),
+                    offset: Offset(6.0, 6.0),
+                    blurRadius: 3.0,
+                  ),
+                ],
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20)),
@@ -62,6 +82,7 @@ class ItemCard extends StatelessWidget {
                   ),
                   Text(
                     itemName,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
@@ -73,6 +94,7 @@ class ItemCard extends StatelessWidget {
                     height: 3,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
                         width: 15,
@@ -87,7 +109,7 @@ class ItemCard extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           fontSize: 12,
                         ),
                       ),

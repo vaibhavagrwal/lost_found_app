@@ -55,166 +55,10 @@ class _MyAdScreenState extends State<MyAdScreen> {
         ),
       ),
       body: MyList(),
-      // body: Column(
-      //   children: [
-      //     Container(
-      //       height: MediaQuery.of(context).size.height * 0.4,
-      //       child: MyLostList(),
-      //     ),
-      //     Expanded(
-      //       child: MyFoundList(),
-      //     ),
-      //   ],
-      // ),
-      // body: StreamBuilder<QuerySnapshot>(
-      //   stream: getData(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {
-      //       // snapshot.data.docs.forEach((item) {});
-      //       return ListView.builder(
-      //         itemCount: snapshot.data.docs.length,
-      //         itemBuilder: (context, index) {
-      //           return ItemTile(
-      //             imageUrl: snapshot.data.docs[index].get('image_url'),
-      //             title: snapshot.data.docs[index].get('heading'),
-      //             description: snapshot.data.docs[index].get('description'),
-      //             status: "Found",
-      //           );
-      //         },
-      //       );
-      //     }
-      //   },
-      // ),
-      // body: StreamBuilder(
-      //     stream: getData(),
-      //     builder: (BuildContext context,
-      //         AsyncSnapshot<List<QuerySnapshot>> snapshot1) {
-      //       List<QuerySnapshot> querySnapshotData = snapshot1.data.toList();
-      //       List dataList = [];
-
-      //       //copy document snapshots from second stream to first so querySnapshotData[0].documents will have all documents from both query snapshots
-
-      //       dataList.addAll(querySnapshotData[0].docs);
-      //       dataList.addAll(querySnapshotData[1].docs);
-      //       // querySnapshotData[0].docs.addAll(querySnapshotData[1].docs);
-      //       print(dataList.length);
-      //       if (dataList.isEmpty)
-      //         return Column(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: <Widget>[
-      //             Center(
-      //               child: CircularProgressIndicator(),
-      //             )
-      //           ],
-      //         );
-      //       if (dataList.length == 0)
-      //         return const Center(
-      //           child: Text(
-      //             "Not Available",
-      //             style: TextStyle(fontSize: 30.0, color: Colors.grey),
-      //           ),
-      //         );
-
-      //       // return new ListView(
-      //       //     children:
-      //       //         querySnapshotData[0].docs.map((DocumentSnapshot document) {
-      //       //   // put your logic here. You will have access to document from both streams as "document" here
-      //       //   return new ListCard(document);
-      //       // }).toList());
-      //       return ListView.builder(
-      //         itemBuilder: (context, index) {
-      //           return ItemTile(
-      //             imageUrl: dataList[index].get("image_url"),
-      //             title: dataList[index].get("heading"),
-      //             description: dataList[index].get("description"),
-      //             status: dataList[index].get("status"),
-      //           );
-      //         },
-      //         itemCount: dataList.length,
-      //       );
-      //       // return new ListView(
-      //       //     children:
-      //       //         querySnapshotData[0].docs.map((DocumentSnapshot document) {
-      //       //   return ItemTile(
-      //       //     imageUrl: document.get("image_url"),
-      //       //     title: document.get("heading"),
-      //       //     description: document.get("description"),
-      //       //   );
-      //       // }).toList());
-      //     }),
     );
   }
 }
 
-// class MyFoundList extends StatefulWidget {
-//   @override
-//   _MyFoundListState createState() => _MyFoundListState();
-// }
-
-// class _MyFoundListState extends State<MyFoundList> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder<QuerySnapshot>(
-//       stream: FirebaseFirestore.instance
-//           .collection("FoundItems")
-//           .doc(user.userId)
-//           .collection("myFoundItems")
-//           .orderBy('date', descending: true)
-//           .snapshots(),
-//       builder: (context, snapshot) {
-//         if (snapshot.hasData) {
-//           // snapshot.data.docs.forEach((item) {});
-//           return ListView.builder(
-//             itemCount: snapshot.data.docs.length,
-//             itemBuilder: (context, index) {
-//               return ItemTile(
-//                 imageUrl: snapshot.data.docs[index].get('image_url'),
-//                 title: snapshot.data.docs[index].get('heading'),
-//                 description: snapshot.data.docs[index].get('description'),
-//                 status: "Found",
-//               );
-//             },
-//           );
-//         }
-//       },
-//     );
-//   }
-// }
-
-// class MyLostList extends StatefulWidget {
-//   @override
-//   _MyLostListState createState() => _MyLostListState();
-// }
-
-// class _MyLostListState extends State<MyLostList> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder<QuerySnapshot>(
-//       stream: FirebaseFirestore.instance
-//           .collection("lostItems")
-//           .doc(user.userId)
-//           .collection("myLostItems")
-//           .orderBy('date', descending: true)
-//           .snapshots(),
-//       builder: (context, snapshot) {
-//         if (snapshot.hasData) {
-//           // snapshot.data.docs.forEach((item) {});
-//           return ListView.builder(
-//             itemCount: snapshot.data.docs.length,
-//             itemBuilder: (context, index) {
-//               return ItemTile(
-//                 imageUrl: snapshot.data.docs[index].get('image_url'),
-//                 title: snapshot.data.docs[index].get('heading'),
-//                 description: snapshot.data.docs[index].get('description'),
-//                 status: "Lost",
-//               );
-//             },
-//           );
-//         }
-//       },
-//     );
-//   }
-// }
 class MyList extends StatefulWidget {
   @override
   _MyListState createState() => _MyListState();
@@ -223,7 +67,6 @@ class MyList extends StatefulWidget {
 class _MyListState extends State<MyList> {
   @override
   Widget build(BuildContext context) {
-    print("OKOKOKOKOKOKOK");
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("AllItems")
@@ -237,18 +80,104 @@ class _MyListState extends State<MyList> {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 if (snapshot.data.docs[index].get('isVerified') == true)
-                  return ItemTile(
-                    imageUrl: snapshot.data.docs[index].get('image_url'),
-                    title: snapshot.data.docs[index].get('heading'),
-                    description: snapshot.data.docs[index].get('description'),
-                    status: snapshot.data.docs[index].get('status'),
+                  return Dismissible(
+                    direction: DismissDirection.startToEnd,
+                    resizeDuration: Duration(milliseconds: 200),
+                    key: ObjectKey(snapshot.data.docs.elementAt(index)),
+                    onDismissed: (direction) async {
+                      try {
+                        await FirebaseFirestore.instance
+                            .collection("AllItems")
+                            .doc(user.userId)
+                            .collection("myItems")
+                            .doc(snapshot.data.docs[index].get('postId'))
+                            .delete();
+                        if (snapshot.data.docs[index].get('status') == "Lost")
+                          await FirebaseFirestore.instance
+                              .collection("LostItemsList")
+                              .doc(snapshot.data.docs[index].get('postId'))
+                              .delete();
+                        else if (snapshot.data.docs[index].get('status') ==
+                            "Found")
+                          await FirebaseFirestore.instance
+                              .collection("FoundItemsList")
+                              .doc(snapshot.data.docs[index].get('postId'))
+                              .delete();
+                        setState(() {
+                          snapshot.data.docs.removeAt(index);
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Item deleted successfully..!!")));
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
+                      }
+                    },
+                    background: Container(
+                      padding: EdgeInsets.only(left: 28.0),
+                      alignment: AlignmentDirectional.centerStart,
+                      color: Colors.red,
+                      child: Icon(
+                        Icons.delete_forever,
+                        color: Colors.white,
+                      ),
+                    ),
+                    child: ItemTile(
+                      imageUrl: snapshot.data.docs[index].get('image_url'),
+                      title: snapshot.data.docs[index].get('heading'),
+                      description: snapshot.data.docs[index].get('description'),
+                      status: snapshot.data.docs[index].get('status'),
+                    ),
                   );
                 else
-                  return ItemTile(
-                    imageUrl: snapshot.data.docs[index].get('image_url'),
-                    title: snapshot.data.docs[index].get('heading'),
-                    description: snapshot.data.docs[index].get('description'),
-                    status: "Under Review",
+                  return Dismissible(
+                    direction: DismissDirection.startToEnd,
+                    resizeDuration: Duration(milliseconds: 200),
+                    key: ObjectKey(snapshot.data.docs.elementAt(index)),
+                    onDismissed: (direction) async {
+                      try {
+                        await FirebaseFirestore.instance
+                            .collection("AllItems")
+                            .doc(user.userId)
+                            .collection("myItems")
+                            .doc(snapshot.data.docs[index].get('postId'))
+                            .delete();
+                        if (snapshot.data.docs[index].get('status') == "Lost")
+                          await FirebaseFirestore.instance
+                              .collection("LostItemsList")
+                              .doc(snapshot.data.docs[index].get('postId'))
+                              .delete();
+                        else if (snapshot.data.docs[index].get('status') ==
+                            "Found")
+                          await FirebaseFirestore.instance
+                              .collection("FoundItemsList")
+                              .doc(snapshot.data.docs[index].get('postId'))
+                              .delete();
+                        setState(() {
+                          snapshot.data.docs.removeAt(index);
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Item deleted successfully..!!")));
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
+                      }
+                    },
+                    background: Container(
+                      padding: EdgeInsets.only(left: 28.0),
+                      alignment: AlignmentDirectional.centerStart,
+                      color: Colors.red,
+                      child: Icon(
+                        Icons.delete_forever,
+                        color: Colors.white,
+                      ),
+                    ),
+                    child: ItemTile(
+                      imageUrl: snapshot.data.docs[index].get('image_url'),
+                      title: snapshot.data.docs[index].get('heading'),
+                      description: snapshot.data.docs[index].get('description'),
+                      status: "Under Review",
+                    ),
                   );
               },
             );
