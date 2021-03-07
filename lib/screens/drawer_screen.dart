@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/models/user_model.dart';
 import 'package:lost_found_app/screens/edit_profile_screen.dart';
+import 'package:lost_found_app/screens/moderator_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 
 import '../main.dart';
@@ -99,6 +100,29 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       });
                     },
                   ),
+                  user.isModerator == true
+                      ? ListTile(
+                          leading: Icon(
+                            Icons.person,
+                            color: Color.fromRGBO(19, 60, 109, 1),
+                          ),
+                          title: Text(
+                            "Review",
+                            style: GoogleFonts.roboto(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ModeratorScreen(),
+                              ),
+                            );
+                          },
+                        )
+                      : Container(),
                   ListTile(
                     leading: Icon(
                       Icons.phone,
@@ -112,6 +136,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           fontWeight: FontWeight.w600),
                     ),
                   ),
+                  Container(),
                   ListTile(
                     leading: Icon(
                       Icons.logout,

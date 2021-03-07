@@ -111,6 +111,7 @@ class FirebaseRepository {
           email: snapshot.data()['email'],
           imageUrl: snapshot.data()['image_url'],
           phone: snapshot.data()['phone'],
+          isModerator: snapshot.data()['isModerator'],
         );
 
         String user1 = jsonEncode(user);
@@ -154,6 +155,7 @@ class FirebaseRepository {
           'email': email,
           'image_url': "",
           'phone': "",
+          'isModerator': false,
         });
         _scaffoldKey.currentState.showSnackBar(
           SnackBar(
@@ -606,6 +608,7 @@ class FirebaseRepository {
         'email': userCredential.user.email,
         'image_url': userCredential.user.photoURL,
         'phone': userCredential.user.phoneNumber ?? "",
+        'isModerator': false,
       });
     }
     try {
@@ -621,6 +624,7 @@ class FirebaseRepository {
         email: snapshot.data()['email'],
         imageUrl: snapshot.data()['image_url'],
         phone: snapshot.data()['phone'],
+        isModerator: snapshot.data()['isModerator'],
       );
 
       String user1 = jsonEncode(user);

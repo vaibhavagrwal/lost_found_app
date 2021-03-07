@@ -13,28 +13,9 @@ class MyAdScreen extends StatefulWidget {
 }
 
 class _MyAdScreenState extends State<MyAdScreen> {
-  StreamController streamController;
-  Stream<List<QuerySnapshot>> getData() {
-    Stream stream1 = FirebaseFirestore.instance
-        .collection('lostItems')
-        .doc(user.userId)
-        .collection("myLostItems")
-        .orderBy('timeStamp')
-        .snapshots();
-    Stream stream2 = FirebaseFirestore.instance
-        .collection('FoundItems')
-        .doc(user.userId)
-        .collection("myFoundItems")
-        .orderBy('timeStamp')
-        .snapshots();
-    return StreamZip(([stream1, stream2]));
-  }
-
   @override
   void dispose() {
     super.dispose();
-    streamController?.close();
-    streamController = null;
   }
 
   @override
