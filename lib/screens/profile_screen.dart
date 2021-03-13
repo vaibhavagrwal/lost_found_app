@@ -95,12 +95,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 20.0 * ScreenSize.heightMultiplyingFactor,
             ),
-            smallBox(
-              Icons.phone,
-              user.phone == ""
-                  ? "Update Your Phone No."
-                  : ("+91 - " + user.phone),
-            ),
+            // smallBox(
+            //   Icons.phone,
+            //   user.phone == ""
+            //       ? "Update Your Phone No."
+            //       : ("+91 - " + user.phone),
+            // ),
             SizedBox(
               height: 30.0 * ScreenSize.heightMultiplyingFactor,
             ),

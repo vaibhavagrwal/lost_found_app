@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flushbar/flushbar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lost_found_app/models/user_model.dart';
 import 'package:path_provider/path_provider.dart';
@@ -61,19 +62,43 @@ class FirebaseRepository {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String user1 = jsonEncode(user);
       pref.setString('userData', user1);
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text("Profile Updated")),
-      );
+      showSuccessFlushbar("Sucess", "Profile Updated", context);
+
       // Navigator.of(context, rootNavigator: true).pushReplacement(
       //   MaterialPageRoute(
       //     builder: (context) => ProfileScreen(),
       //   ),
       // );
       // Navigator.of(context).pop();
-    } catch (e) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+    } catch (error) {
+      String errorMessage;
+      switch (error.message) {
+        case "ERROR_INVALID_EMAIL":
+          errorMessage = "Your email address appears to be malformed.";
+          break;
+        case 'The password is invalid or the user does not have a password.':
+          errorMessage = "Your password is invalid.";
+          break;
+        case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+          errorMessage = "User with this email doesn't exist.";
+          break;
+        case "ERROR_USER_DISABLED":
+          errorMessage = "User with this email has been disabled.";
+          break;
+        case "ERROR_TOO_MANY_REQUESTS":
+          errorMessage = "Too many requests. Try again later.";
+          break;
+        case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
+          errorMessage = "Network error..!!.";
+          break;
+        default:
+          errorMessage = error.toString();
+      }
+      print(error);
+      // _scaffoldKey.currentState.showSnackBar(
+      //   SnackBar(content: Text(errorMessage)),
+      // );
+      showErrorFlushbar("Error", errorMessage, context);
     }
   }
 
@@ -124,22 +149,160 @@ class FirebaseRepository {
           ),
         );
       } else {
-        _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-              content:
-                  Text("Account is not verified! Please verify to login.")),
-        );
+        // _scaffoldKey.currentState.showSnackBar(
+        //   SnackBar(
+        //       content:
+        //           Text("Account is not verified! Please verify to login.")),
+        // );
+        showErrorFlushbar("Error",
+            "Account is not verified! Please verify to login.", context);
       }
-    } catch (e) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+    } catch (error) {
+      String errorMessage;
+      switch (error.message) {
+        case "ERROR_INVALID_EMAIL":
+          errorMessage = "Your email address appears to be malformed.";
+          break;
+        case 'The password is invalid or the user does not have a password.':
+          errorMessage = "Your password is invalid.";
+          break;
+        case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+          errorMessage = "User with this email doesn't exist.";
+          break;
+        case "ERROR_USER_DISABLED":
+          errorMessage = "User with this email has been disabled.";
+          break;
+        case "ERROR_TOO_MANY_REQUESTS":
+          errorMessage = "Too many requests. Try again later.";
+          break;
+        case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
+          errorMessage = "Network error..!!.";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      }
+      print(error);
+      // _scaffoldKey.currentState.showSnackBar(
+      //   SnackBar(content: Text(errorMessage)),
+      // );
+      showErrorFlushbar("Error", errorMessage, context);
     }
   }
 
-  Future<void> signUp(
-      String name, String email, String password, _scaffoldKey) async {
+  Future<void> resetPassword(
+      String email, _scaffoldKey, BuildContext context) async {
     try {
+      await _auth.sendPasswordResetEmail(email: email);
+      // _scaffoldKey.currentState.showSnackBar(
+      //   SnackBar(
+      //       content: Text(
+      //           "Password reset link sent on your email-id. Please check it.")),
+      // );
+      showSuccessFlushbar(
+          "Success",
+          "Password reset link sent on your email-id. Please check it.",
+          context);
+    } catch (error) {
+      String errorMessage;
+      switch (error.code) {
+        case "ERROR_EMAIL_ALREADY_IN_USE":
+        case "account-exists-with-different-credential":
+        case "email-already-in-use":
+          errorMessage = "Email already used. Go to login page.";
+          break;
+        case "ERROR_WRONG_PASSWORD":
+        case "wrong-password":
+          errorMessage = "Wrong email/password combination.";
+          break;
+        case "ERROR_USER_NOT_FOUND":
+        case "user-not-found":
+          errorMessage = "No user found with this email.";
+          break;
+        case "ERROR_USER_DISABLED":
+        case "user-disabled":
+          errorMessage = "User disabled.";
+          break;
+        case "ERROR_TOO_MANY_REQUESTS":
+        case "operation-not-allowed":
+          errorMessage = "Too many requests to log into this account.";
+          break;
+        case "ERROR_OPERATION_NOT_ALLOWED":
+        case "operation-not-allowed":
+          errorMessage = "Server error, please try again later.";
+          break;
+        case "ERROR_INVALID_EMAIL":
+        case "invalid-email":
+          errorMessage = "Email address is invalid.";
+          break;
+        default:
+          errorMessage = "Login failed. Please try again.";
+          break;
+      }
+      print(error);
+      showErrorFlushbar("Error", errorMessage, context);
+      // _scaffoldKey.currentState.showSnackBar(
+      //   SnackBar(content: Text(errorMessage)),
+      // );
+    }
+  }
+
+  showErrorFlushbar(String heading, String des, BuildContext context) {
+    Flushbar(
+      title: heading,
+      message: des,
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+      icon: Icon(
+        Icons.error,
+        color: Colors.redAccent,
+      ),
+      backgroundColor: Colors.red,
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
+
+  showSuccessFlushbar(String heading, String des, BuildContext context) {
+    Flushbar(
+      title: heading,
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+      message: des,
+      backgroundColor: Colors.green,
+      icon: Icon(
+        Icons.check,
+        color: Colors.greenAccent,
+      ),
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
+
+  Future<void> signUp(String name, String email, String password, _scaffoldKey,
+      BuildContext context) async {
+    String uid, oldEmail, oldPass;
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .where('email', isEqualTo: email)
+          .get()
+          .then((querySnapshot) => {
+                querySnapshot.docs.forEach((docu) {
+                  uid = docu.get('id');
+                  oldEmail = docu.get('email');
+                  oldPass = docu.get('password');
+                })
+              });
+      if (uid != null) {
+        UserCredential userCredential1 = await _auth.signInWithEmailAndPassword(
+            email: email, password: oldPass);
+        if (userCredential1.user.emailVerified == false) {
+          await userCredential1.user.delete();
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(uid)
+              .delete();
+        }
+      }
+
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -153,27 +316,64 @@ class FirebaseRepository {
           'id': userCredential.user.uid,
           'name': name,
           'email': email,
+          'password': password,
           'image_url': "",
           'phone': "",
           'isModerator': false,
         });
-        _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text("Please verify your email and login!"),
-          ),
-        );
+        showSuccessFlushbar(
+            "Success", "Please Verify your Email and Login..!.", context);
+        // _scaffoldKey.currentState.showSnackBar(
+        //   SnackBar(
+        //     content: Text("Please verify your email and login!"),
+        //   ),
+        // );
       } else {
-        _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text("Some error occurred, please try again!"),
-          ),
-        );
+        showErrorFlushbar("Error", "Please Try Again...", context);
+        // _scaffoldKey.currentState.showSnackBar(
+        //   SnackBar(
+        //     content: Text("Some error occurred, please try again!"),
+        //   ),
+        // );
       }
-    } catch (e) {
-      print(e);
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+    } catch (error) {
+      String errorMessage;
+      switch (error.code) {
+        case "ERROR_EMAIL_ALREADY_IN_USE":
+        case "account-exists-with-different-credential":
+        case "email-already-in-use":
+          errorMessage = "Email already used. Go to login page.";
+          break;
+        case "ERROR_WRONG_PASSWORD":
+        case "wrong-password":
+          errorMessage = "Wrong email/password combination.";
+          break;
+        case "ERROR_USER_NOT_FOUND":
+        case "user-not-found":
+          errorMessage = "No user found with this email.";
+          break;
+        case "ERROR_USER_DISABLED":
+        case "user-disabled":
+          errorMessage = "User disabled.";
+          break;
+        case "ERROR_TOO_MANY_REQUESTS":
+        case "operation-not-allowed":
+          errorMessage = "Too many requests to log into this account.";
+          break;
+        case "ERROR_OPERATION_NOT_ALLOWED":
+        case "operation-not-allowed":
+          errorMessage = "Server error, please try again later.";
+          break;
+        case "ERROR_INVALID_EMAIL":
+        case "invalid-email":
+          errorMessage = "Email address is invalid.";
+          break;
+        default:
+          errorMessage = "Login failed. Please try again.";
+          break;
+      }
+
+      showErrorFlushbar("Error", errorMessage, context);
     }
   }
 
@@ -636,10 +836,35 @@ class FirebaseRepository {
           builder: (context) => RootScreen(),
         ),
       );
-    } catch (e) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+    } catch (error) {
+      String errorMessage;
+      switch (error.message) {
+        case "ERROR_INVALID_EMAIL":
+          errorMessage = "Your email address appears to be malformed.";
+          break;
+        case 'The password is invalid or the user does not have a password.':
+          errorMessage = "Your password is invalid.";
+          break;
+        case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+          errorMessage = "User with this email doesn't exist.";
+          break;
+        case "ERROR_USER_DISABLED":
+          errorMessage = "User with this email has been disabled.";
+          break;
+        case "ERROR_TOO_MANY_REQUESTS":
+          errorMessage = "Too many requests. Try again later.";
+          break;
+        case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
+          errorMessage = "Network error..!!.";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      }
+      print(error);
+      // _scaffoldKey.currentState.showSnackBar(
+      //   SnackBar(content: Text(errorMessage)),
+      // );
+      showErrorFlushbar("Error", errorMessage, context);
     }
   }
 }

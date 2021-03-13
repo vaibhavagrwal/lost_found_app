@@ -9,6 +9,7 @@ import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/main.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -91,10 +92,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             key: _formKey,
             child: Column(
               children: [
-                InkWell(
-                  onTap: () {
-                    _pickImage();
-                  },
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Color.fromRGBO(26, 80, 152, 0.1),
+                        offset: Offset(8.0, 8.0),
+                        blurRadius: 25.0,
+                      ),
+                    ],
+                  ),
                   child: Padding(
                     padding: EdgeInsets.only(top: 20.0),
                     child: new Stack(
@@ -105,9 +112,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             new Container(
-                                width: 140.0,
-                                height: 140.0,
+                                width: 180.0,
+                                height: 180.0,
                                 decoration: new BoxDecoration(
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                      color: Color.fromRGBO(26, 80, 152, 0.1),
+                                      offset: Offset(8.0, 8.0),
+                                      blurRadius: 6.0,
+                                    ),
+                                  ],
+                                  color: Color.fromRGBO(252, 255, 300, 1),
                                   shape: BoxShape.circle,
                                   image: new DecorationImage(
                                     image: _image == null
@@ -122,48 +137,48 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 )),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              new CircleAvatar(
-                                backgroundColor: primaryColour,
-                                radius: 25.0,
-                                child: new Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(top: 90.0, right: 100.0),
+                        //   child: new Row(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: <Widget>[
+                        //       new CircleAvatar(
+                        //         backgroundColor: primaryColour,
+                        //         radius: 25.0,
+                        //         child: new Icon(
+                        //           Icons.camera_alt,
+                        //           color: Colors.white,
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 30.0 * ScreenSize.heightMultiplyingFactor,
+                  height: 80.0 * ScreenSize.heightMultiplyingFactor,
                 ),
-                Padding(
-                    padding:
-                        EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                    child: new Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        new Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            new Text(
-                              'Name',
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
+                // Padding(
+                //   padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+                //   child: new Row(
+                //     mainAxisSize: MainAxisSize.max,
+                //     children: <Widget>[
+                //       new Column(
+                //         mainAxisAlignment: MainAxisAlignment.start,
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: <Widget>[
+                //           new Text(
+                //             'Name',
+                //             style: TextStyle(
+                //                 fontSize: 16.0, fontWeight: FontWeight.bold),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 0.0),
                   child: new Row(
@@ -172,9 +187,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       new Flexible(
                         child: new TextFormField(
                           controller: _nameController,
-                          decoration: const InputDecoration(
-                            hintText: "Enter Your Name",
+
+                          decoration: InputDecoration(
+                            fillColor: Color.fromRGBO(242, 245, 250, 1),
+                            filled: true,
+                            labelText: "Name",
+                            enabled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: primaryColour,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: primaryColour,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            hintText: "Enter your name..",
                           ),
+
                           onSaved: (val) {
                             name = val.trim();
                           },
@@ -186,133 +219,171 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 10.0 * ScreenSize.heightMultiplyingFactor,
+                  height: 20.0 * ScreenSize.heightMultiplyingFactor,
                 ),
-                Padding(
-                    padding:
-                        EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                    child: new Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        new Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            new Text(
-                              'Email ID',
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
                 Padding(
                   padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 0.0),
                   child: new Row(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       new Flexible(
-                        child: new Text(
-                          user.email,
-                          style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                    padding:
-                        EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-                    child: new Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        new Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            new Text(
-                              'Mobile',
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
-                Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
-                  child: new Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Flexible(
-                        child: Container(
-                          color: Colors.white,
-                          child: new Text(
-                            "+91",
-                            style: GoogleFonts.poppins(
-                              fontSize: 20,
-                            ),
-                            // enabled: !_status,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Flexible(
-                        child: _phoneController.text == ""
-                            ? TextFormField(
-                                validator: (val) {
-                                  if (val.trim().length != 10) {
-                                    return "Invalid!";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (val) {
-                                  phone = val.trim();
-                                },
-                                onSaved: (val) {
-                                  phone = val.trim();
-                                },
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                    hintText: "Enter Mobile Number"),
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(10),
-                                ],
-                              )
-                            : TextFormField(
-                                controller: _phoneController,
-                                validator: (val) {
-                                  if (val.trim().length != 10) {
-                                    return "Invalid!";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (val) {
-                                  phone = val.trim();
-                                },
-                                onSaved: (val) {
-                                  phone = val.trim();
-                                },
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                    hintText: "Enter Mobile Number"),
-
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(10),
-                                ],
-
-                                // enabled: !_status,
+                        child: new TextFormField(
+                          controller: _emailController,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            fillColor: Color.fromRGBO(242, 245, 250, 1),
+                            filled: true,
+                            labelText: "Email ID",
+                            enabled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: primaryColour,
                               ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: primaryColour,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+
+                          // enabled: !_status,
+                          // autofocus: !_status,
+                        ),
                       ),
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 20.0 * ScreenSize.heightMultiplyingFactor,
+                ),
+                // Padding(
+                //   padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+                //   child: new Row(
+                //     mainAxisSize: MainAxisSize.max,
+                //     children: <Widget>[
+                //       new Column(
+                //         mainAxisAlignment: MainAxisAlignment.start,
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: <Widget>[
+                //           new Text(
+                //             'Email ID',
+                //             style: TextStyle(
+                //                 fontSize: 16.0, fontWeight: FontWeight.bold),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Padding(
+                //   padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 0.0),
+                //   child: new Row(
+                //     mainAxisSize: MainAxisSize.max,
+                //     children: <Widget>[
+                //       new Flexible(
+                //         child: new Text(
+                //           user.email,
+                //           style: GoogleFonts.poppins(
+                //             fontSize: 18,
+                //             color: Colors.black54,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Padding(
+                //     padding:
+                //         EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+                //     child: new Row(
+                //       mainAxisSize: MainAxisSize.max,
+                //       children: <Widget>[
+                //         new Column(
+                //           mainAxisAlignment: MainAxisAlignment.start,
+                //           mainAxisSize: MainAxisSize.min,
+                //           children: <Widget>[
+                //             new Text(
+                //               'Mobile',
+                //               style: TextStyle(
+                //                   fontSize: 16.0, fontWeight: FontWeight.bold),
+                //             ),
+                //           ],
+                //         ),
+                //       ],
+                //     )),
+                // Padding(
+                //   padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
+                //   child: new Row(
+                //     mainAxisSize: MainAxisSize.max,
+                //     children: <Widget>[
+                //       Flexible(
+                //         child: Container(
+                //           color: Colors.white,
+                //           child: new Text(
+                //             "+91",
+                //             style: GoogleFonts.poppins(
+                //               fontSize: 20,
+                //             ),
+                //             // enabled: !_status,
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 20,
+                //       ),
+                //       Flexible(
+                //         child: _phoneController.text == ""
+                //             ? TextFormField(
+                //                 validator: (val) {
+                //                   if (val.trim().length != 10) {
+                //                     return "Invalid!";
+                //                   }
+                //                   return null;
+                //                 },
+                //                 onChanged: (val) {
+                //                   phone = val.trim();
+                //                 },
+                //                 onSaved: (val) {
+                //                   phone = val.trim();
+                //                 },
+                //                 keyboardType: TextInputType.phone,
+                //                 decoration: InputDecoration(
+                //                     hintText: "Enter Mobile Number"),
+                //                 inputFormatters: [
+                //                   LengthLimitingTextInputFormatter(10),
+                //                 ],
+                //               )
+                //             : TextFormField(
+                //                 controller: _phoneController,
+                //                 validator: (val) {
+                //                   if (val.trim().length != 10) {
+                //                     return "Invalid!";
+                //                   }
+                //                   return null;
+                //                 },
+                //                 onChanged: (val) {
+                //                   phone = val.trim();
+                //                 },
+                //                 onSaved: (val) {
+                //                   phone = val.trim();
+                //                 },
+                //                 keyboardType: TextInputType.phone,
+                //                 decoration: InputDecoration(
+                //                     hintText: "Enter Mobile Number"),
+
+                //                 inputFormatters: [
+                //                   LengthLimitingTextInputFormatter(10),
+                //                 ],
+
+                //                 // enabled: !_status,
+                //               ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 _getActionButtons(_scaffoldKey),
               ],
             ),

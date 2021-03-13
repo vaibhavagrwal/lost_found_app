@@ -24,7 +24,6 @@ import 'package:flutter/rendering.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-
 import '../main.dart';
 
 class LostItemDetailScreen extends StatefulWidget {

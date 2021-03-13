@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/widgets/item_tile.dart';
@@ -87,8 +88,18 @@ class _MyListState extends State<MyList> {
                         setState(() {
                           snapshot.data.docs.removeAt(index);
                         });
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Item deleted successfully..!!")));
+                        Flushbar(
+                          title: "Success",
+                          margin: EdgeInsets.all(8),
+                          borderRadius: 8,
+                          message: "Item Deleted Successfully!!",
+                          backgroundColor: Colors.green,
+                          icon: Icon(
+                            Icons.check,
+                            color: Colors.greenAccent,
+                          ),
+                          duration: Duration(seconds: 3),
+                        )..show(context);
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(e.toString())));
@@ -137,11 +148,31 @@ class _MyListState extends State<MyList> {
                         setState(() {
                           snapshot.data.docs.removeAt(index);
                         });
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Item deleted successfully..!!")));
+                        Flushbar(
+                          title: "Success",
+                          margin: EdgeInsets.all(8),
+                          borderRadius: 8,
+                          message: "Item Deleted Successfully!!",
+                          backgroundColor: Colors.green,
+                          icon: Icon(
+                            Icons.check,
+                            color: Colors.greenAccent,
+                          ),
+                          duration: Duration(seconds: 3),
+                        )..show(context);
                       } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(e.toString())));
+                        Flushbar(
+                          title: "Error",
+                          message: e.toString(),
+                          margin: EdgeInsets.all(8),
+                          borderRadius: 8,
+                          icon: Icon(
+                            Icons.error,
+                            color: Colors.redAccent,
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 3),
+                        )..show(context);
                       }
                     },
                     background: Container(

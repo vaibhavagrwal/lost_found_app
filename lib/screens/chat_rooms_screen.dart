@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
-import 'package:lost_found_app/util/screen_size.dart';
+
 import 'chat_screen.dart';
 import 'package:lost_found_app/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 
 class ChatRoom extends StatefulWidget {
