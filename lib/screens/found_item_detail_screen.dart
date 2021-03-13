@@ -8,7 +8,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lost_found_app/models/post_model.dart';
-import 'package:lost_found_app/widgets/claim_button.dart';
+
 import 'package:shimmer/shimmer.dart';
 
 class FoundItemDetailScreen extends StatefulWidget {
@@ -38,9 +38,9 @@ class _FoundItemDetailScreenState extends State<FoundItemDetailScreen> {
   _asyncMethod() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     currentPost = PostModel.fromSnapshot(await firebaseFirestore
-        .collection("FoundItems")
+        .collection("AllItems")
         .doc(widget.ownerId)
-        .collection("myFoundItems")
+        .collection("myItems")
         .doc(widget.postId)
         .get());
     setState(() {
@@ -232,7 +232,7 @@ class _FoundItemDetailScreenState extends State<FoundItemDetailScreen> {
             Padding(
               padding: EdgeInsetsDirectional.only(
                   start: width * 0.18, top: height * 0.05),
-              child: ClaimButton(),
+              //child: ClaimButton(),
             )
           ],
         ),

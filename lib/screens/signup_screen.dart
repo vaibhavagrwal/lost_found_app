@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/login_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
+import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
 
@@ -17,6 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   FocusNode _passwordFocusNode;
   FocusNode _emailFocusNode;
   FocusNode _confirmFocusNode;
+  bool _googleLoading = false;
 
   bool _obscureText1 = true;
   bool _obscureText2 = true;
@@ -78,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     FirebaseRepository _repository = FirebaseRepository();
     await _repository.signUp(_authDataMap['name'], _authDataMap['email'],
-        _authDataMap['password'], _scaffoldKey);
+        _authDataMap['password'], _scaffoldKey, context);
     setState(() {
       isLoading = false;
     });
@@ -321,7 +324,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 15,
                     ),
                     isLoading
-                        ? CircularProgressIndicator()
+                        ? SpinKitWanderingCubes(
+                            color: primaryColour,
+                          )
                         : CustomFlatButton(
                             title: "SIGN UP",
                             onPressed: () {
@@ -388,18 +393,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Container(
                       margin: EdgeInsets.all(13),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          RoundButton(
-                            onPressed: () {},
-                            image: Image.asset(
-                              'lib/assets/google.png',
-                              width: 50,
+                      child: _googleLoading
+                          ? SpinKitWanderingCubes(
+                              color: primaryColour,
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                RoundButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      _googleLoading = true;
+                                    });
+                                    await FirebaseRepository()
+                                        .signInGoogle(context, _scaffoldKey);
+                                    setState(() {
+                                      _googleLoading = false;
+                                    });
+                                  },
+                                  image: Image.asset(
+                                    'lib/assets/google.png',
+                                    width: 50,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                     Container(
                       padding: EdgeInsets.only(

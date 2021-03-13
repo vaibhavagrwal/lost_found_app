@@ -15,6 +15,7 @@ class _FoundItemsScreenState extends State<FoundItemsScreen> {
     return StreamBuilder<QuerySnapshot>(
       stream: firebaseFirestore
           .collection("FoundItemsList")
+          .where("isVerified", isEqualTo: true)
           .orderBy('date', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -32,6 +33,7 @@ class _FoundItemsScreenState extends State<FoundItemsScreen> {
                 itemName: snapshot.data.docs[index].get('heading'),
                 location: snapshot.data.docs[index].get('location'),
                 imageUrl: snapshot.data.docs[index].get('image_url'),
+                by: snapshot.data.docs[index].get('by'),
                 onPressed: () {
                   String ownerId = snapshot.data.docs[index].get('ownerId');
                   String postId = snapshot.data.docs[index].get('postId');
