@@ -50,12 +50,15 @@ class _ReviewTileState extends State<ReviewTile> {
                 child: Container(
                   width: 70,
                   height: 80,
-                  child: CachedNetworkImage(
-                    imageUrl: widget.imageUrl == ""
-                        ? "https://axiomoptics.com/wp-content/uploads/2019/08/placeholder-images-image_large.png"
-                        : widget.imageUrl,
-                    fit: BoxFit.fill,
-                  ),
+                  child: widget.imageUrl != ""
+                      ? CachedNetworkImage(
+                          imageUrl: widget.imageUrl,
+                          fit: BoxFit.fill,
+                        )
+                      : Image.asset(
+                          "lib/assets/noimage.gif",
+                          fit: BoxFit.fill,
+                        ),
                 ),
               ),
               title: Text(

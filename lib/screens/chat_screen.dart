@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:emoji_picker/emoji_picker.dart';
+import 'chat_rooms_screen.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
@@ -37,7 +38,8 @@ class _ChatState extends State<Chat> {
         //messageEditingController.selection = TextSelection.collapsed(offset: messageEditingController.text.length); //for pointer
       });
     } else {
-      Navigator.pop(context);
+      navigatorKey.currentState
+          .pushReplacement(MaterialPageRoute(builder: (context) => ChatRoom()));
     }
 
     return Future.value(false);
@@ -131,7 +133,8 @@ class _ChatState extends State<Chat> {
           leading: IconButton(
             icon: Icon(Icons.keyboard_backspace),
             onPressed: () {
-              Navigator.pop(context);
+              navigatorKey.currentState.pushReplacement(
+                  MaterialPageRoute(builder: (context) => ChatRoom()));
             },
           ),
           elevation: 0,
@@ -168,7 +171,6 @@ class _ChatState extends State<Chat> {
                   bottom: MediaQuery.of(context).size.height / 12),
           child: chatMessages(),
         ),
-
         WillPopScope(
           child: Container(
             //padding: EdgeInsetsDirectional.only(bottom: 200),
@@ -269,7 +271,7 @@ class _ChatState extends State<Chat> {
           ),
           onWillPop: onBackPress,
         ),
-            Positioned(
+        Positioned(
           bottom: 0,
           child: isShowSticker
               ? Container(

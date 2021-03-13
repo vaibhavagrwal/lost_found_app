@@ -420,6 +420,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         child: TextFormField(
                           controller: headingController,
                           decoration: InputDecoration(
+                            hintStyle: GoogleFonts.poppins(),
                             hintText: "Write a heading...",
                             border: InputBorder.none,
                           ),
@@ -447,6 +448,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                           controller: categoryController,
                           decoration: InputDecoration(
                             hintText: "Write a category...",
+                            hintStyle: GoogleFonts.poppins(),
                             border: InputBorder.none,
                           ),
                           validator: (val) {
@@ -476,6 +478,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                           maxLines: 30,
                           decoration: InputDecoration(
                             hintText: "Description",
+                            hintStyle: GoogleFonts.poppins(),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
                                 16,
@@ -526,6 +529,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                           },
                           decoration: InputDecoration(
                             hintText: "Where...",
+                            hintStyle: GoogleFonts.poppins(),
                             border: InputBorder.none,
                           ),
                         ),
@@ -563,7 +567,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                                   border: InputBorder.none,
                                   hintText:
                                       ('${myFormat.format(selectedDate)}'),
-                                  hintStyle: GoogleFonts.roboto(
+                                  hintStyle: GoogleFonts.poppins(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,

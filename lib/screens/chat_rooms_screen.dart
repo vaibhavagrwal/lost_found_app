@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -18,24 +19,10 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   Stream ListofPeople;
-  int num = 0;
-  notify(String PersonId) async {
-    DocumentSnapshot document = await FirebaseFirestore.instance
-        .collection("UserChatPeople")
-        .doc(PersonId)
-        .collection(PersonId)
-        .doc(user.userId)
-        .get();
-
-    print(document["read"].toString() + "real");
-
-        num = document["read"];
-
-    //num = document["read"];
-  }
+  var num = [];
 
   Widget chatRoomsList() {
-    return StreamBuilder (
+    return StreamBuilder(
       stream: ListofPeople,
       builder: (context, snapshot) {
         return snapshot.hasData
@@ -43,14 +30,11 @@ class _ChatRoomState extends State<ChatRoom> {
                 itemCount: snapshot.data.docs.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  notify(snapshot
-                      .data.docs[snapshot.data.docs.length - index - 1]
-                      .data()["user_ID"]);
                   //sleep(const Duration(seconds: 5));
 
-                  print(num.toString() +
+                  /* print(num[snapshot.data.docs.length - index - 1].toString() +
                       snapshot.data.docs[snapshot.data.docs.length - index - 1]
-                          .data()["sender_name"]);
+                          .data()["sender_name"]);*/
 
                   return ChatRoomsTile(
                     userName: snapshot
@@ -79,14 +63,23 @@ class _ChatRoomState extends State<ChatRoom> {
                     Unread: snapshot
                         .data.docs[snapshot.data.docs.length - index - 1]
                         .data()["read"],
-                    notification: num,
+                    notification: num[snapshot.data.docs.length - index - 1],
                     lastMessageId: snapshot
                         .data.docs[snapshot.data.docs.length - index - 1]
                         .data()["lastMessage_sendBy"],
-                    index : index,
+                    index: index,
                   );
                 })
-            : Container();
+            : SizedBox(
+                height: MediaQuery.of(context).size.height / 1.3,
+                child: Center(
+                  child: Image(
+                    image: CachedNetworkImageProvider(
+                        'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2Fanimation_640_km7rzhxu.gif?alt=media&token=2364d71b-834c-426c-845d-495276705a32'),
+                    width: 120,
+                    height: 120,
+                  ),
+                ));
       },
     );
   }
@@ -98,6 +91,27 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   getUserInfogetChats() async {
+    QuerySnapshot list = await FirebaseFirestore.instance
+        .collection("UserChatPeople")
+        .doc(user.userId)
+        .collection(user.userId)
+        .orderBy('lastMessageTime')
+        .get();
+    List lit = list.docs;
+    for (DocumentSnapshot i in lit) {
+      DocumentSnapshot document = await FirebaseFirestore.instance
+          .collection("UserChatPeople")
+          .doc(i['user_ID'])
+          .collection(i['user_ID'])
+          .doc(user.userId)
+          .get();
+
+      print(document["read"].toString() + "realbefore");
+      setState(() {
+        num.add(document["read"]);
+      });
+    }
+
     FirebaseRepository().getUserPeople().then((snapshots) {
       setState(() {
         ListofPeople = snapshots;
@@ -129,12 +143,12 @@ class _ChatRoomState extends State<ChatRoom> {
               fontSize: 20,
               fontWeight: FontWeight.w600),
         ),
-
-
       ),
-      body: Column(children: [
-        chatRoomsList(),
-      ]),
+      body: ColoredBox(
+          color: Colors.white,
+          child: Column(children: [
+            chatRoomsList(),
+          ])),
     );
   }
 }
@@ -165,102 +179,116 @@ class ChatRoomsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: EdgeInsetsDirectional.only(bottom: 8,start:10,end: 10,top: index==0?8:0,),
-        child : GestureDetector(
-        onTap: () {
-          navigatorKey.currentState.push(MaterialPageRoute(
-              builder: (context) => Chat(
-                    chatRoomId: chatRoomId,
-                    username: userName,
-                    personID: personID,
-                    personName: userName,
-                  )));
-        },
-        child: Neumorphic(
-          style: NeumorphicStyle(
-            shape: NeumorphicShape.convex,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20)),
-            lightSource: LightSource.topRight,
-          ),
-          child: Container(
-            color: Colors.white60,
-            height: MediaQuery.of(context).size.height/10,
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-            child: Stack(
-              children: [
-
-                Stack(children: [
-                  Positioned(
-                    left: 0,
-                    child: ClipOval(
-                    child: Image.asset(
-                      "lib/assets/face3.gif",
-                      width: 55,
-                      height: 55,
-                    ),
-                  ),),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: Text("  " +
-                      DateFormat('hh:mm a')
-                          .format(lastMessageTime.toDate())
-                          .toString(),
-                          style: GoogleFonts.poppins(
-                          color: Color(0xff505C6B),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal))
-                  ),
-                  Positioned(
-                      left : MediaQuery.of(context).size.width/6,
-                      top: 0,
-                      child: Text(userName,
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.poppins(
-                              color: Color(0xff505C6B),
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold))),
-                  Positioned(
-                      left : lastMessageId == user.userId
-                          ? MediaQuery.of(context).size.width/8:MediaQuery.of(context).size.width/6,
-                      top: lastMessageId == user.userId
-                          ? MediaQuery.of(context).size.height/40:MediaQuery.of(context).size.height/23,
-                      child: Row(
-                    children: [
-                      lastMessageId == user.userId
-                          ? Unread == 0
-                              ? IconButton(
-                                  icon: Icon(Icons.check),
-                                  iconSize: 15.0,
-                                  color: Colors.black,
-                                  onPressed: () {},
-                                )
-                              : IconButton(
-                                  icon: Icon(Icons.done_all),
-                                  iconSize: 15.0,
-                                  color: Colors.green,
-                                  onPressed: () {},
-                                )
-                          : Text(senderName + "  :  ",style: GoogleFonts.poppins(
-                          fontWeight: lastMessageId == user.userId
-                              ? FontWeight.normal
-                              : notification != 0
-                              ? FontWeight.normal
-                              : FontWeight.bold)),
-                      Text(lastMessage,
-                          style: GoogleFonts.poppins(
-                              fontWeight: lastMessageId == user.userId
-                                  ? FontWeight.normal
-                                  : notification != 0
-                                      ? FontWeight.normal
-                                      : FontWeight.bold)),
-
-                    ],
-                  ))
-                ]),
-              ],
-            ),
-          ),
-        ))) ;
+    return Padding(
+        padding: EdgeInsetsDirectional.only(
+          bottom: 8,
+          start: 10,
+          end: 10,
+          top: index == 0 ? 8 : 0,
+        ),
+        child: GestureDetector(
+            onTap: () {
+              navigatorKey.currentState.pushReplacement(MaterialPageRoute(
+                  builder: (context) => Chat(
+                        chatRoomId: chatRoomId,
+                        username: userName,
+                        personID: personID,
+                        personName: userName,
+                      )));
+            },
+            child: Neumorphic(
+              style: NeumorphicStyle(
+                shape: NeumorphicShape.convex,
+                boxShape:
+                    NeumorphicBoxShape.roundRect(BorderRadius.circular(20)),
+                lightSource: LightSource.topRight,
+              ),
+              child: Container(
+                color: Colors.white60,
+                height: MediaQuery.of(context).size.height / 10,
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                child: Stack(
+                  children: [
+                    Stack(children: [
+                      Positioned(
+                        left: 0,
+                        child: ClipOval(
+                          child: Image.asset(
+                            "lib/assets/face3.gif",
+                            width: 55,
+                            height: 55,
+                          ),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                              "  " +
+                                  DateFormat('hh:mm a')
+                                      .format(lastMessageTime.toDate())
+                                      .toString(),
+                              style: GoogleFonts.poppins(
+                                  color: Color(0xff505C6B),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal))),
+                      Positioned(
+                          left: MediaQuery.of(context).size.width / 6,
+                          top: 0,
+                          child: Text(
+                              userName[0].toUpperCase() + userName.substring(1),
+                              textAlign: TextAlign.start,
+                              style: GoogleFonts.poppins(
+                                  color: Color(0xff505C6B),
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold))),
+                      Positioned(
+                          left: lastMessageId == user.userId
+                              ? MediaQuery.of(context).size.width / 8
+                              : MediaQuery.of(context).size.width / 6,
+                          top: lastMessageId == user.userId
+                              ? MediaQuery.of(context).size.height / 40
+                              : MediaQuery.of(context).size.height / 23,
+                          child: Row(
+                            children: [
+                              lastMessageId == user.userId
+                                  ? Unread == 0
+                                      ? IconButton(
+                                          icon: Icon(Icons.check),
+                                          iconSize: 15.0,
+                                          color: Colors.black,
+                                          onPressed: () {},
+                                        )
+                                      : IconButton(
+                                          icon: Icon(Icons.done_all),
+                                          iconSize: 15.0,
+                                          color: Colors.green,
+                                          onPressed: () {},
+                                        )
+                                  : Text(
+                                      senderName[0].toUpperCase() +
+                                          senderName.substring(1) +
+                                          "  :  ",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight:
+                                              lastMessageId == user.userId
+                                                  ? FontWeight.normal
+                                                  : notification != 0
+                                                      ? FontWeight.normal
+                                                      : FontWeight.bold)),
+                              Text(lastMessage,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: lastMessageId == user.userId
+                                          ? FontWeight.normal
+                                          : notification != 0
+                                              ? FontWeight.normal
+                                              : FontWeight.bold)),
+                            ],
+                          ))
+                    ]),
+                  ],
+                ),
+              ),
+            )));
   }
 }
 
