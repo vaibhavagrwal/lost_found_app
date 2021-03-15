@@ -338,7 +338,7 @@ class FirebaseRepository {
       }
     } catch (error) {
       String errorMessage;
-      switch (error.code) {
+      switch (error.message) {
         case "ERROR_EMAIL_ALREADY_IN_USE":
         case "account-exists-with-different-credential":
         case "email-already-in-use":
@@ -369,7 +369,7 @@ class FirebaseRepository {
           errorMessage = "Email address is invalid.";
           break;
         default:
-          errorMessage = "Login failed. Please try again.";
+          errorMessage = error.message;
           break;
       }
 

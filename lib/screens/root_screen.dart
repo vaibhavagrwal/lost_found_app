@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:lost_found_app/screens/tab_navigator.dart';
+import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
   @override

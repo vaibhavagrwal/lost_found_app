@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lost_found_app/screens/create_ad_screen.dart';
 import 'package:lost_found_app/screens/home_screen.dart';
+import 'package:lost_found_app/screens/home_screen1.dart';
 import 'package:lost_found_app/screens/my_ad_screen.dart';
 import 'package:lost_found_app/screens/profile_screen.dart';
 
@@ -19,7 +20,7 @@ class _TabNavigatorState extends State<TabNavigator> {
     Widget child;
 
     if (widget.tabItem == "Home")
-      child = HomeScreen();
+      child = HomeScreen1();
     else if (widget.tabItem == "CreateAd")
       child = CreateAdScreen();
     else if (widget.tabItem == "MyAd")
