@@ -8,19 +8,17 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lost_found_app/models/post_model.dart';
+import 'package:lost_found_app/util/constants.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
-import 'package:lost_found_app/models/user_model.dart';
 import 'chat_screen.dart';
 import 'package:lost_found_app/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'home_screen.dart';
 import 'dart:typed_data';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -29,9 +27,13 @@ import '../main.dart';
 class LostItemDetailScreen extends StatefulWidget {
   final String ownerId;
   final String postId;
-
-  const LostItemDetailScreen({Key key, this.ownerId, this.postId})
-      : super(key: key);
+  final String type;
+  const LostItemDetailScreen({
+    Key key,
+    this.ownerId,
+    this.postId,
+    this.type,
+  }) : super(key: key);
   @override
   _LostItemDetailScreenState createState() => _LostItemDetailScreenState();
 }
@@ -89,13 +91,13 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
         .doc(widget.postId)
         .get());
     setState(() {
-      print(currentPost.postId);
-      print(currentPost.postLocation);
-      print(currentPost.postDescription);
-      print(currentPost.postName);
-      print(currentPost.imageUrl);
-      print(currentPost.ownerName);
-      print(currentPost.postDate);
+      // print(currentPost.postId);
+      // print(currentPost.postLocation);
+      // print(currentPost.postDescription);
+      // print(currentPost.postName);
+      // print(currentPost.imageUrl);
+      // print(currentPost.ownerName);
+      // print(currentPost.postDate);
       isLoading = false;
     });
     print(isLoading);
@@ -113,7 +115,7 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
         tag: 'post-image-}',
         child: Container(
           margin: EdgeInsets.all(16.0 * height * 0.002),
-          height: 300,
+          height: 300 * ScreenSize.heightMultiplyingFactor,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12.0 * height * 0.002),
@@ -132,10 +134,10 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
               itemBuilder: (_, index) {
                 return InkWell(
                   onTap: () {
-                    if (currentPost.imageUrl != "" &&
-                        currentPost.imageUrl != null)
-                      showDialogFunc(context, currentPost.imageUrl,
-                          currentPost.postName, "LOST");
+                    // if (currentPost.imageUrl != "" &&
+                    //     currentPost.imageUrl != null)
+                    //   showDialogFunc(context, currentPost.imageUrl,
+                    //       currentPost.postName, "LOST");
                   },
                   child: currentPost == null
                       ? Container()
@@ -196,7 +198,7 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                   border: Border(
                     left: BorderSide(
                       color: Color.fromRGBO(19, 60, 130, 1),
-                      width: 3,
+                      width: 3 * ScreenSize.widthMultiplyingFactor,
                     ),
                   ),
                 ),
@@ -222,23 +224,30 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                           lightSource: LightSource.topRight,
                         ),
                         child: Container(
-                            height: 30,
+                            height: 30 * ScreenSize.heightMultiplyingFactor,
                             width: width / 2,
                             child: Center(
                                 child: Text(
-                              'Lost By : ' +
-                                  (currentPost == null
-                                      ? ""
-                                      : currentPost.ownerName),
+                              widget.type == 'Lost'
+                                  ? 'Lost By : ' +
+                                      (currentPost == null
+                                          ? ""
+                                          : currentPost.ownerName)
+                                  : 'Found By : ' +
+                                      (currentPost == null
+                                          ? ""
+                                          : currentPost.ownerName),
                               textAlign: TextAlign.left,
                               style: GoogleFonts.poppins(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                                  fontSize:
+                                      15 * ScreenSize.heightMultiplyingFactor,
+                                  fontWeight: FontWeight.bold),
                             )))),
                     Container(
                       margin:
                           EdgeInsets.symmetric(vertical: 12.0 * height * 0.002),
-                      width: 50,
-                      height: 2,
+                      width: 50 * ScreenSize.widthMultiplyingFactor,
+                      height: 2 * ScreenSize.heightMultiplyingFactor,
                       color: Color.fromRGBO(19, 60, 130, 1),
                     ),
                     SizedBox(height: 8.0 * height * 0.002),
@@ -246,7 +255,7 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                       children: <Widget>[
                         Icon(
                           Icons.location_on_outlined,
-                          size: 18,
+                          size: 18 * ScreenSize.heightMultiplyingFactor,
                         ),
                         SizedBox(width: 8.0 * height * 0.002),
                         Text(
@@ -261,7 +270,9 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                       children: <Widget>[
                         Text(
                           currentPost == null ? "" : currentPost.postLocation,
-                          style: GoogleFonts.poppins(fontSize: 20),
+                          style: GoogleFonts.poppins(
+                              fontSize:
+                                  20 * ScreenSize.heightMultiplyingFactor),
                         ),
                       ],
                     ),
@@ -270,7 +281,7 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                       children: <Widget>[
                         Icon(
                           FontAwesomeIcons.mapPin,
-                          size: 18,
+                          size: 18 * ScreenSize.heightMultiplyingFactor,
                         ),
                         SizedBox(width: 8.0 * height * 0.002),
                         Text(
@@ -289,7 +300,9 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                           currentPost == null
                               ? ""
                               : '${myFormat.format(currentPost.postDate)}',
-                          style: GoogleFonts.poppins(fontSize: 20),
+                          style: GoogleFonts.poppins(
+                              fontSize:
+                                  20 * ScreenSize.heightMultiplyingFactor),
                         ),
                       ],
                     ),
@@ -304,8 +317,10 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                         Text(
                           currentPost == null
                               ? ""
-                              : currentPost.postDescription + "\n\n\n",
-                          style: GoogleFonts.poppins(fontSize: 20),
+                              : currentPost.postDescription + "\n\n",
+                          style: GoogleFonts.poppins(
+                              fontSize:
+                                  20 * ScreenSize.heightMultiplyingFactor),
                         ),
                       ],
                     ),
@@ -320,16 +335,25 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(30.0),
+            bottomLeft: Radius.circular(30.0),
+          ),
         ),
-        title: Text("Item Details"),
-        automaticallyImplyLeading: true,
-        backgroundColor: Color.fromRGBO(19, 60, 130, 1),
-        iconTheme: IconThemeData.fallback(),
+        backgroundColor: primaryColour,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        title: Text(
+          " Item Details ",
+          style: GoogleFonts.roboto(
+              color: Colors.white,
+              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
+              fontWeight: FontWeight.w600),
+        ),
       ),
       body: isLoading
           ? Shimmer.fromColors(
@@ -353,28 +377,32 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                           _buildSwiper(),
                           _buildContentContainer(),
                         ]))),
-                Padding(
-                    padding: EdgeInsetsDirectional.only(
-                        start: width * 0.25,
-                        top: height * 0.02,
-                        bottom: height * 0.02),
-                    child: AnimatedButton(
-                      child: Text(
-                        'CLAIM',
-                        style: GoogleFonts.poppins(
-                          fontSize: 22,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      color: Color.fromRGBO(242, 245, 250, 1),
-                      onPressed: () {
-                        sendMessage(user.name);
-                      },
-                    )),
+                widget.ownerId == user.userId
+                    ? Container()
+                    : Padding(
+                        padding: EdgeInsetsDirectional.only(
+                            start: width * 0.25,
+                            top: height * 0.02,
+                            bottom: height * 0.02),
+                        child: AnimatedButton(
+                          child: Text(
+                            'CLAIM',
+                            style: GoogleFonts.poppins(
+                              fontSize: 22,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          color: Color.fromRGBO(242, 245, 250, 1),
+                          onPressed: () {
+                            sendMessage(user.name);
+                          },
+                        )),
               ],
             ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: primaryColour,
+        splashColor: Colors.lightBlueAccent,
         onPressed: () async {
           _takeScreenshotandShare();
         },

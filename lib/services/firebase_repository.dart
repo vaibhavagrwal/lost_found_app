@@ -62,7 +62,7 @@ class FirebaseRepository {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String user1 = jsonEncode(user);
       pref.setString('userData', user1);
-      showSuccessFlushbar("Sucess", "Profile Updated", context);
+      showSuccessFlushbar("Success", "Profile Updated", context);
 
       // Navigator.of(context, rootNavigator: true).pushReplacement(
       //   MaterialPageRoute(
@@ -338,16 +338,7 @@ class FirebaseRepository {
       }
     } catch (error) {
       String errorMessage;
-      switch (error.code) {
-        case "ERROR_EMAIL_ALREADY_IN_USE":
-        case "account-exists-with-different-credential":
-        case "email-already-in-use":
-          errorMessage = "Email already used. Go to login page.";
-          break;
-        case "ERROR_WRONG_PASSWORD":
-        case "wrong-password":
-          errorMessage = "Wrong email/password combination.";
-          break;
+      switch (error.message) {
         case "ERROR_USER_NOT_FOUND":
         case "user-not-found":
           errorMessage = "No user found with this email.";
@@ -369,7 +360,7 @@ class FirebaseRepository {
           errorMessage = "Email address is invalid.";
           break;
         default:
-          errorMessage = "Login failed. Please try again.";
+          errorMessage = error.toString();
           break;
       }
 

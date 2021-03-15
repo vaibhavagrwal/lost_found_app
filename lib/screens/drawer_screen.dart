@@ -5,7 +5,7 @@ import 'package:lost_found_app/models/user_model.dart';
 import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/screens/moderator_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
-
+import 'package:lost_found_app/util/screen_size.dart';
 import '../main.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -17,12 +17,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250,
+      width: 250 * ScreenSize.widthMultiplyingFactor,
       child: Drawer(
         child: ListView(
           children: [
             Container(
-              height: 200,
+              height: 200 * ScreenSize.heightMultiplyingFactor,
               child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(
                   boxShadow: <BoxShadow>[
@@ -39,14 +39,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   user.name != null ? user.name : "",
                   style: GoogleFonts.roboto(
                       color: Color.fromRGBO(44, 62, 80, 1),
-                      fontSize: 18,
+                      fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                       fontWeight: FontWeight.w600),
                 ),
                 accountEmail: Text(
                   user.email != null ? user.email : "",
                   style: GoogleFonts.roboto(
                       color: Color.fromRGBO(44, 62, 80, 1),
-                      fontSize: 14,
+                      fontSize: 14 * ScreenSize.heightMultiplyingFactor,
                       fontWeight: FontWeight.w600),
                 ),
                 currentAccountPicture: Container(
@@ -69,7 +69,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
             ),
             Container(
-              height: 320,
+              height: 320 * ScreenSize.heightMultiplyingFactor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -82,7 +82,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       "Edit Profile",
                       style: GoogleFonts.roboto(
                           color: Colors.black,
-                          fontSize: 17,
+                          fontSize: 17 * ScreenSize.heightMultiplyingFactor,
                           fontWeight: FontWeight.w600),
                     ),
                     onTap: () async {
@@ -110,7 +110,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             "Review",
                             style: GoogleFonts.roboto(
                                 color: Colors.black,
-                                fontSize: 17,
+                                fontSize:
+                                    17 * ScreenSize.heightMultiplyingFactor,
                                 fontWeight: FontWeight.w600),
                           ),
                           onTap: () async {
@@ -132,7 +133,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       "Contact Us",
                       style: GoogleFonts.roboto(
                           color: Colors.black,
-                          fontSize: 17,
+                          fontSize: 17 * ScreenSize.heightMultiplyingFactor,
                           fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -146,7 +147,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       "Log Out",
                       style: GoogleFonts.roboto(
                         color: Colors.black,
-                        fontSize: 17,
+                        fontSize: 17 * ScreenSize.heightMultiplyingFactor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

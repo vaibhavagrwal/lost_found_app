@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const defaultWidth = 375.0;
-const defaultHeight = 812.0;
-const defaultSize = Size(375.0, 812.0);
+const defaultWidth = 392.72;
+const defaultHeight = 759.27;
+const defaultSize = Size(392.72, 759.27);
 
 class ScreenSize {
   final double _width;

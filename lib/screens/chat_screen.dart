@@ -1,16 +1,14 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lost_found_app/models/user_model.dart';
 import 'package:lost_found_app/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:emoji_picker/emoji_picker.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'chat_rooms_screen.dart';
 
 class Chat extends StatefulWidget {
@@ -146,8 +144,8 @@ class _ChatState extends State<Chat> {
             ClipOval(
               child: Image.asset(
                 "lib/assets/face2.jpg",
-                width: 50,
-                height: 50,
+                width: 50 * ScreenSize.widthMultiplyingFactor,
+                height: 50 * ScreenSize.heightMultiplyingFactor,
                 fit: BoxFit.fill,
               ),
             ),
@@ -156,7 +154,7 @@ class _ChatState extends State<Chat> {
               widget.personName.toUpperCase(),
               style: GoogleFonts.roboto(
                   color: Color.fromRGBO(44, 62, 80, 1),
-                  fontSize: 18,
+                  fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                   fontWeight: FontWeight.bold),
             ),
           ])),
@@ -194,8 +192,8 @@ class _ChatState extends State<Chat> {
                   ),
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 15,
+                      vertical: 10 * ScreenSize.heightMultiplyingFactor,
+                      horizontal: 15 * ScreenSize.widthMultiplyingFactor,
                     ),
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -218,7 +216,7 @@ class _ChatState extends State<Chat> {
                           ),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 10 * ScreenSize.widthMultiplyingFactor,
                         ),
                         Expanded(
                           child: TextField(
@@ -231,13 +229,14 @@ class _ChatState extends State<Chat> {
                             autofocus: true,
                             controller: messageEditingController,
                             style: GoogleFonts.poppins(
-                              fontSize: 18,
+                              fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                               color: Colors.white,
                             ),
                             decoration: InputDecoration.collapsed(
                               hintText: 'Type message..',
                               hintStyle: GoogleFonts.poppins(
-                                fontSize: 18,
+                                fontSize:
+                                    18 * ScreenSize.heightMultiplyingFactor,
                                 color: Colors.white,
                               ),
                             ),
@@ -258,7 +257,7 @@ class _ChatState extends State<Chat> {
                             },
                             child: Image.asset(
                               'lib/assets/sendbtn.png',
-                              width: 50,
+                              width: 50 * ScreenSize.widthMultiplyingFactor,
                             ),
                           ),
                         ),
@@ -276,7 +275,8 @@ class _ChatState extends State<Chat> {
           child: isShowSticker
               ? Container(
                   width: MediaQuery.of(context).size.height / 2,
-                  padding: EdgeInsetsDirectional.only(bottom: 10),
+                  padding: EdgeInsetsDirectional.only(
+                      bottom: 10 * ScreenSize.heightMultiplyingFactor),
                   color: Colors.transparent,
                   child: Neumorphic(
                       style: NeumorphicStyle(
@@ -343,8 +343,8 @@ class MessageTile extends StatelessWidget {
               child: ClipOval(
               child: Image.asset(
                 "lib/assets/face2.jpg",
-                width: 100,
-                height: 100,
+                width: 100 * ScreenSize.widthMultiplyingFactor,
+                height: 100 * ScreenSize.heightMultiplyingFactor,
                 fit: BoxFit.fill,
               ),
             ))
@@ -356,13 +356,14 @@ class MessageTile extends StatelessWidget {
                 personName.toUpperCase(),
                 style: GoogleFonts.poppins(
                     color: Color(0xff505C6B),
-                    fontSize: 25,
+                    fontSize: 25 * ScreenSize.heightMultiplyingFactor,
                     fontWeight: FontWeight.bold),
                 //textAlign: !sendByMe ? TextAlign.end : TextAlign.start,
               ))
           : Container(),
       Padding(
-        padding: EdgeInsets.only(bottom: 30),
+        padding:
+            EdgeInsets.only(bottom: 30 * ScreenSize.heightMultiplyingFactor),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment:
@@ -370,22 +371,22 @@ class MessageTile extends StatelessWidget {
           children: <Widget>[
             !sendByMe
                 ? SizedBox(
-                    width: 6,
+                    width: 6 * ScreenSize.widthMultiplyingFactor,
                   )
                 : Container(),
             !sendByMe
                 ? ClipOval(
                     child: Image.asset(
                       "lib/assets/face2.jpg",
-                      width: 60,
-                      height: 60,
+                      width: 60 * ScreenSize.widthMultiplyingFactor,
+                      height: 60 * ScreenSize.heightMultiplyingFactor,
                       fit: BoxFit.fill,
                     ),
                   )
                 : Container(),
             !sendByMe
                 ? SizedBox(
-                    width: 12,
+                    width: 12 * ScreenSize.widthMultiplyingFactor,
                   )
                 : Container(),
             Flexible(
@@ -434,19 +435,23 @@ class MessageTile extends StatelessWidget {
                                 ? read != 1
                                     ? Icon(
                                         Icons.check,
-                                        size: 17.0,
+                                        size: 17.0 *
+                                            ScreenSize.heightMultiplyingFactor,
                                         color: Colors.black,
                                       )
                                     : Icon(
                                         Icons.done_all,
-                                        size: 17.0,
+                                        size: 17.0 *
+                                            ScreenSize.heightMultiplyingFactor,
                                         color: Colors.green,
                                       )
                                 : Container(
                                     width: 0,
                                   ),
                             sendByMe
-                                ? SizedBox(width: 8)
+                                ? SizedBox(
+                                    width:
+                                        8 * ScreenSize.widthMultiplyingFactor)
                                 : Container(
                                     width: 0,
                                   ),
@@ -455,9 +460,11 @@ class MessageTile extends StatelessWidget {
                                   .format(time.toDate())
                                   .toString(),
                               style: GoogleFonts.poppins(
-                                  color: Color(0xff808BA2),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14),
+                                color: Color(0xff808BA2),
+                                fontWeight: FontWeight.w400,
+                                fontSize:
+                                    14 * ScreenSize.heightMultiplyingFactor,
+                              ),
                             ),
                           ])
                     ],
@@ -468,22 +475,22 @@ class MessageTile extends StatelessWidget {
             !sendByMe
                 ? Container()
                 : SizedBox(
-                    width: 12,
+                    width: 12 * ScreenSize.widthMultiplyingFactor,
                   ),
             !sendByMe
                 ? Container()
                 : ClipOval(
                     child: Image.asset(
                       "lib/assets/face1.gif",
-                      width: 60,
-                      height: 60,
+                      width: 60 * ScreenSize.widthMultiplyingFactor,
+                      height: 60 * ScreenSize.heightMultiplyingFactor,
                       fit: BoxFit.fill,
                     ),
                   ),
             !sendByMe
                 ? Container()
                 : SizedBox(
-                    width: 6,
+                    width: 6 * ScreenSize.widthMultiplyingFactor,
                   ),
           ],
         ),

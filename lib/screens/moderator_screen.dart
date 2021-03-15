@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/screens/item_detail_screen.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/item_tile.dart';
 import 'package:lost_found_app/widgets/review_tile.dart';
 
@@ -25,7 +27,7 @@ class _ModeratorScreenState extends State<ModeratorScreen> {
           " Review Ads ",
           style: GoogleFonts.roboto(
               color: Color.fromRGBO(44, 62, 80, 1),
-              fontSize: 20,
+              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
               fontWeight: FontWeight.w600),
         ),
       ),
@@ -104,6 +106,20 @@ class _FoundReviewListState extends State<FoundReviewList> {
                     imageUrl: snapshot.data.docs[index].get('image_url'),
                     title: snapshot.data.docs[index].get('heading'),
                     status: "Found",
+                    onPressed2: () {
+                      String ownerId = snapshot.data.docs[index].get('ownerId');
+                      String postId = snapshot.data.docs[index].get('postId');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LostItemDetailScreen(
+                            ownerId: ownerId,
+                            postId: postId,
+                            type: "Found",
+                          ),
+                        ),
+                      );
+                    },
                     onPressed: () async {
                       try {
                         await FirebaseFirestore.instance
@@ -201,6 +217,20 @@ class _LostReviewListState extends State<LostReviewList> {
                     imageUrl: snapshot.data.docs[index].get('image_url'),
                     title: snapshot.data.docs[index].get('heading'),
                     status: "Lost",
+                    onPressed2: () {
+                      String ownerId = snapshot.data.docs[index].get('ownerId');
+                      String postId = snapshot.data.docs[index].get('postId');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LostItemDetailScreen(
+                            ownerId: ownerId,
+                            postId: postId,
+                            type: "Lost",
+                          ),
+                        ),
+                      );
+                    },
                     onPressed: () async {
                       try {
                         await FirebaseFirestore.instance

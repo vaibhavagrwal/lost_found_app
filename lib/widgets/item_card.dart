@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'package:slimy_card/slimy_card.dart';
 
 class ItemCard extends StatelessWidget {
@@ -23,12 +24,12 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SlimyCard(
       //Curve: Curves.bounceOut,
-      width: 190,
+      width: 190 * ScreenSize.widthMultiplyingFactor,
       color: Color.fromRGBO(19, 60, 130, 1),
       // elevation: 0,
       slimeEnabled: true,
-      topCardHeight: 180,
-      bottomCardHeight: 68,
+      topCardHeight: 180 * ScreenSize.heightMultiplyingFactor,
+      bottomCardHeight: 68 * ScreenSize.heightMultiplyingFactor,
 
       bottomCardWidget:
           Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -36,19 +37,19 @@ class ItemCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              width: 15,
+              width: 15 * ScreenSize.widthMultiplyingFactor,
             ),
             Icon(
               Icons.location_on_outlined,
               color: Colors.white,
-              size: 22,
+              size: 22 * ScreenSize.heightMultiplyingFactor,
             ),
             Text(
               location,
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 15 * ScreenSize.heightMultiplyingFactor,
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -58,19 +59,19 @@ class ItemCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              width: 15,
+              width: 15 * ScreenSize.heightMultiplyingFactor,
             ),
             Icon(
               Icons.person,
               color: Colors.white,
-              size: 22,
+              size: 22 * ScreenSize.heightMultiplyingFactor,
             ),
             Text(
               by,
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 15 * ScreenSize.heightMultiplyingFactor,
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -82,7 +83,7 @@ class ItemCard extends StatelessWidget {
           GestureDetector(
               onTap: onPressed,
               child: Container(
-                height: 100,
+                height: 100 * ScreenSize.heightMultiplyingFactor,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
@@ -108,7 +109,7 @@ class ItemCard extends StatelessWidget {
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
             ),
           ),
         ],

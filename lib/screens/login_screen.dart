@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/signup_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/constants.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
 
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.72,
+                height: 546.5 * ScreenSize.heightMultiplyingFactor,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -112,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Center(
                             child: Container(
-                              height: 130,
+                              height: 130 * ScreenSize.heightMultiplyingFactor,
                               // child: Image(
                               //   width: double.infinity,
                               //   height: 130,
@@ -123,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 10 * ScreenSize.heightMultiplyingFactor,
                           ),
                           Form(
                             key: _formKey1,
@@ -131,7 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(24, 8, 24, 14),
-                                  width: 328,
+                                  width:
+                                      328 * ScreenSize.widthMultiplyingFactor,
                                   child: TextFormField(
                                     controller: _resetEmailController,
                                     keyboardType: TextInputType.emailAddress,
@@ -157,7 +159,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: Color.fromRGBO(44, 62, 80, 1),
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
-                                          vertical: 6.0, horizontal: 10.0),
+                                          vertical: 6.0 *
+                                              ScreenSize
+                                                  .heightMultiplyingFactor,
+                                          horizontal: 10.0 *
+                                              ScreenSize
+                                                  .heightMultiplyingFactor),
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(12.0),
@@ -199,7 +206,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 //   ),
                                 // ),
                                 SizedBox(
-                                  height: 15,
+                                  height:
+                                      15 * ScreenSize.heightMultiplyingFactor,
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -210,7 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Text(
                                     'CANCEL AND GO BACK',
                                     style: GoogleFonts.roboto(
-                                      fontSize: 14,
+                                      fontSize: 14 *
+                                          ScreenSize.heightMultiplyingFactor,
                                       color: Color.fromRGBO(19, 60, 109, 1),
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -226,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Center(
                             child: Container(
-                              height: 130,
+                              height: 130 * ScreenSize.heightMultiplyingFactor,
                               // child: Image(
                               //   width: double.infinity,
                               //   height: 130,
@@ -237,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 10 * ScreenSize.heightMultiplyingFactor,
                           ),
                           Form(
                             key: _formKey,
@@ -245,7 +254,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(24, 8, 24, 14),
-                                  width: 328,
+                                  width:
+                                      328 * ScreenSize.widthMultiplyingFactor,
                                   child: TextFormField(
                                     focusNode: _emailFocusNode,
                                     keyboardType: TextInputType.emailAddress,
@@ -274,7 +284,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: Color.fromRGBO(44, 62, 80, 1),
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
-                                          vertical: 6.0, horizontal: 10.0),
+                                          vertical: 6.0 *
+                                              ScreenSize
+                                                  .heightMultiplyingFactor,
+                                          horizontal: 10.0 *
+                                              ScreenSize
+                                                  .widthMultiplyingFactor),
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(12.0),
@@ -288,7 +303,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(24, 4, 24, 10),
-                                  width: 328,
+                                  width:
+                                      328 * ScreenSize.widthMultiplyingFactor,
                                   child: Column(
                                     children: [
                                       TextFormField(
@@ -326,7 +342,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 Color.fromRGBO(44, 62, 80, 1),
                                           ),
                                           contentPadding: EdgeInsets.symmetric(
-                                              vertical: 6.0, horizontal: 10.0),
+                                              vertical: 6.0 *
+                                                  ScreenSize
+                                                      .heightMultiplyingFactor,
+                                              horizontal: 10.0 *
+                                                  ScreenSize
+                                                      .widthMultiplyingFactor),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(12.0),
@@ -338,7 +359,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 15,
+                                        height: 15 *
+                                            ScreenSize.heightMultiplyingFactor,
                                       ),
                                       GestureDetector(
                                         onTap: () {
@@ -350,7 +372,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           alignment: Alignment.bottomRight,
                                           child: Text('Forgot Password?',
                                               style: GoogleFonts.roboto(
-                                                fontSize: 13,
+                                                fontSize: 13 *
+                                                    ScreenSize
+                                                        .heightMultiplyingFactor,
                                                 color: Color.fromRGBO(
                                                     44, 62, 80, 1),
                                               )),
@@ -382,13 +406,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Text(
                                   'DON\'T HAVE AN ACCOUNT?',
                                   style: GoogleFonts.roboto(
-                                    fontSize: 14,
+                                    fontSize:
+                                        14 * ScreenSize.heightMultiplyingFactor,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 15,
+                                  height:
+                                      15 * ScreenSize.heightMultiplyingFactor,
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -401,7 +427,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Text(
                                     'REGISTER HERE',
                                     style: GoogleFonts.roboto(
-                                      fontSize: 14,
+                                      fontSize: 14 *
+                                          ScreenSize.heightMultiplyingFactor,
                                       color: Color.fromRGBO(19, 60, 109, 1),
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -414,7 +441,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.20,
+                height: 152 * ScreenSize.heightMultiplyingFactor,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -423,7 +450,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         'LOGIN USING',
                         style: GoogleFonts.roboto(
-                          fontSize: 14,
+                          fontSize: 14 * ScreenSize.heightMultiplyingFactor,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
@@ -455,7 +482,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                   image: Image.asset(
                                     'lib/assets/google.png',
-                                    width: 50,
+                                    width:
+                                        50 * ScreenSize.widthMultiplyingFactor,
                                   ),
                                 ),
                                 // RoundButton(

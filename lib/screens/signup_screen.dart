@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/login_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/constants.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
 
@@ -102,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.76,
+                height: 576 * ScreenSize.heightMultiplyingFactor,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -124,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     Center(
                       child: Container(
-                        height: 120,
+                        height: 120 * ScreenSize.heightMultiplyingFactor,
                         // child: Image(
                         //   width: double.infinity,
                         //   height: 120,
@@ -140,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           Container(
                             padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                            width: 328,
+                            width: 328 * ScreenSize.widthMultiplyingFactor,
                             child: TextFormField(
                               controller: _nameController,
                               focusNode: _nameFocusNode,
@@ -162,7 +163,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Color.fromRGBO(44, 62, 80, 1),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical: 6.0, horizontal: 10.0),
+                                  vertical:
+                                      6.0 * ScreenSize.heightMultiplyingFactor,
+                                  horizontal:
+                                      10.0 * ScreenSize.widthMultiplyingFactor,
+                                ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
                                   borderSide: BorderSide(
@@ -175,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Container(
                             padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                            width: 328,
+                            width: 328 * ScreenSize.widthMultiplyingFactor,
                             child: TextFormField(
                               controller: _emailController,
                               focusNode: _emailFocusNode,
@@ -209,8 +214,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(24, 4, 24, 4),
-                            width: 328,
+                            padding: EdgeInsets.fromLTRB(
+                                24 * ScreenSize.heightMultiplyingFactor,
+                                4 * ScreenSize.widthMultiplyingFactor,
+                                24 * ScreenSize.heightMultiplyingFactor,
+                                4 * ScreenSize.widthMultiplyingFactor),
+                            width: 328 * ScreenSize.widthMultiplyingFactor,
                             child: TextFormField(
                               controller: _passwordController,
 
@@ -255,7 +264,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Color.fromRGBO(44, 62, 80, 1),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical: 6.0, horizontal: 10.0),
+                                    vertical: 6.0 *
+                                        ScreenSize.heightMultiplyingFactor,
+                                    horizontal: 10.0 *
+                                        ScreenSize.widthMultiplyingFactor),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
                                   borderSide: BorderSide(
@@ -268,7 +280,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Container(
                             padding: EdgeInsets.fromLTRB(24, 4, 24, 4),
-                            width: 328,
+                            width: 328 * ScreenSize.widthMultiplyingFactor,
                             child: TextFormField(
                               focusNode: _confirmFocusNode,
                               controller: _confirmPasswordController,
@@ -306,7 +318,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Color.fromRGBO(44, 62, 80, 1),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical: 6.0, horizontal: 10.0),
+                                    vertical: 6.0 *
+                                        ScreenSize.heightMultiplyingFactor,
+                                    horizontal: 10.0 *
+                                        ScreenSize.widthMultiplyingFactor),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
                                   borderSide: BorderSide(
@@ -321,7 +336,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 15 * ScreenSize.heightMultiplyingFactor,
                     ),
                     isLoading
                         ? SpinKitWanderingCubes(
@@ -334,7 +349,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                     SizedBox(
-                      height: 5,
+                      height: 5 * ScreenSize.heightMultiplyingFactor,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -342,13 +357,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Text(
                           'ALREADY HAVE AN ACCOUNT?',
                           style: GoogleFonts.roboto(
-                            fontSize: 14,
+                            fontSize: 14 * ScreenSize.heightMultiplyingFactor,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 8 * ScreenSize.heightMultiplyingFactor,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -361,14 +376,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             'Log In Here',
                             style: GoogleFonts.roboto(
-                              fontSize: 14,
+                              fontSize: 14 * ScreenSize.heightMultiplyingFactor,
                               color: Color.fromRGBO(19, 60, 109, 1),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 10 * ScreenSize.heightMultiplyingFactor,
                         ),
                       ],
                     ),
@@ -376,23 +391,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.20,
+                height: 152 * ScreenSize.heightMultiplyingFactor,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 13),
+                      margin: EdgeInsets.only(
+                          top: 13 * ScreenSize.heightMultiplyingFactor),
                       child: Text(
                         'SIGN UP USING ',
                         style: GoogleFonts.roboto(
-                          fontSize: 14,
+                          fontSize: 14 * ScreenSize.heightMultiplyingFactor,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(13),
+                      margin: EdgeInsets.all(
+                          13 * ScreenSize.heightMultiplyingFactor),
                       child: _googleLoading
                           ? SpinKitWanderingCubes(
                               color: primaryColour,
@@ -413,7 +430,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   },
                                   image: Image.asset(
                                     'lib/assets/google.png',
-                                    width: 50,
+                                    width:
+                                        50 * ScreenSize.widthMultiplyingFactor,
                                   ),
                                 ),
                               ],
@@ -421,13 +439,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Container(
                       padding: EdgeInsets.only(
-                        bottom: 10,
+                        bottom: 10 * ScreenSize.heightMultiplyingFactor,
                       ),
                       child: RichText(
                         text: TextSpan(
                           text: 'By Clicking Sign Up, You Agree To Our ',
                           style: GoogleFonts.roboto(
-                            fontSize: 12,
+                            fontSize: 11 * ScreenSize.heightMultiplyingFactor,
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
                           ),
@@ -435,7 +453,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             TextSpan(
                               text: 'Term And Conditions',
                               style: GoogleFonts.roboto(
-                                fontSize: 12,
+                                fontSize:
+                                    11 * ScreenSize.heightMultiplyingFactor,
                                 fontWeight: FontWeight.w600,
                                 color: Color.fromRGBO(19, 60, 109, 1),
                               ),

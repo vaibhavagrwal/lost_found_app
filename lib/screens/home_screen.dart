@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             " Home ",
             style: GoogleFonts.roboto(
                 color: Color.fromRGBO(44, 62, 80, 1),
-                fontSize: 20,
+                fontSize: 20 * ScreenSize.heightMultiplyingFactor,
                 fontWeight: FontWeight.w600),
           ),
           bottom: TabBar(
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   'LOST',
                   style: GoogleFonts.roboto(
-                    fontSize: 18,
+                    fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                   'FOUND',
                   style: GoogleFonts.roboto(
-                    fontSize: 18,
+                    fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -81,12 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                navigatorKey.currentState.push(MaterialPageRoute(
-                    builder: (context) => ChatRoom()));
+                navigatorKey.currentState
+                    .push(MaterialPageRoute(builder: (context) => ChatRoom()));
               },
               icon: FaIcon(
                 FontAwesomeIcons.facebookMessenger,
-                size: 20,
+                size: 20 * ScreenSize.heightMultiplyingFactor,
                 color: Color.fromRGBO(44, 62, 80, 1),
               ),
             ),
