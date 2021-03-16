@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/models/user_model.dart';
+import 'package:lost_found_app/screens/about_us.dart';
 import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/screens/moderator_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
@@ -129,8 +130,16 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       Icons.phone,
                       color: Color.fromRGBO(19, 60, 109, 1),
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AboutUs(),
+                        ),
+                      );
+                    },
                     title: Text(
-                      "Contact Us",
+                      "About Us",
                       style: GoogleFonts.roboto(
                           color: Colors.black,
                           fontSize: 17 * ScreenSize.heightMultiplyingFactor,
