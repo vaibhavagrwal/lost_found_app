@@ -3,6 +3,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/item_detail_screen.dart';
+import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/item_tile.dart';
 
@@ -31,14 +32,14 @@ class _MyAdScreenState extends State<MyAdScreen> {
             bottomLeft: Radius.circular(30.0),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColour,
         iconTheme: IconThemeData(
           color: Color.fromRGBO(44, 62, 80, 1),
         ),
         title: Text(
           "My Ads ",
-          style: GoogleFonts.roboto(
-              color: Color.fromRGBO(44, 62, 80, 1),
+          style: GoogleFonts.poppins(
+              color: Colors.white,
               fontSize: 20 * ScreenSize.heightMultiplyingFactor,
               fontWeight: FontWeight.w600),
         ),

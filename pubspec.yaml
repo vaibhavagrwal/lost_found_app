@@ -51,6 +51,7 @@ dependencies:
   flushbar: ^1.10.4
   animated_button: ^0.1.3
   screenshot: ^0.2.0
+  animated_text_kit: ^4.0.0
   esys_flutter_share: ^1.0.2
   slimy_card:
     git:

@@ -36,7 +36,10 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
 
       int res = await _repository.createPost(_image, type, heading, category,
           description, where, selectedDate, context);
-
+      setState(() {
+        print("11111111");
+        isLoading = false;
+      });
       if (res == 0) {
         showDialog(
           context: context,
@@ -113,6 +116,9 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
           selectedDate = DateTime.now();
         });
       } else {
+        setState(() {
+          isLoading = false;
+        });
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -177,9 +183,6 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
             );
           },
         );
-        setState(() {
-          isLoading = false;
-        });
       }
     }
   }
@@ -241,14 +244,14 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
             bottomLeft: Radius.circular(30.0),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColour,
         iconTheme: IconThemeData(
           color: Color.fromRGBO(44, 62, 80, 1),
         ),
         title: Text(
           " Create Post ",
-          style: GoogleFonts.roboto(
-              color: Color.fromRGBO(44, 62, 80, 1),
+          style: GoogleFonts.poppins(
+              color: Colors.white,
               fontSize: 20 * ScreenSize.heightMultiplyingFactor,
               fontWeight: FontWeight.w600),
         ),
@@ -262,7 +265,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                 : Text(
                     "Post",
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.lightGreenAccent,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0 * ScreenSize.heightMultiplyingFactor,
                     ),

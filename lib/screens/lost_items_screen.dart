@@ -23,6 +23,13 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data.docs.length == 0) {
+            return Center(
+              child: Text(
+                "No Posts to Display",
+              ),
+            );
+          }
           // snapshot.data.docs.forEach((item) {});
           return StaggeredGridView.countBuilder(
             physics: BouncingScrollPhysics(),
