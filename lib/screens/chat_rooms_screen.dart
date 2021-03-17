@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 
 import 'chat_screen.dart';
 import 'package:lost_found_app/main.dart';
@@ -30,12 +31,6 @@ class _ChatRoomState extends State<ChatRoom> {
                 itemCount: snapshot.data.docs.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  //sleep(const Duration(seconds: 5));
-
-                  /* print(num[snapshot.data.docs.length - index - 1].toString() +
-                      snapshot.data.docs[snapshot.data.docs.length - index - 1]
-                          .data()["sender_name"]);*/
-
                   return ChatRoomsTile(
                     userName: snapshot
                         .data.docs[snapshot.data.docs.length - index - 1]
@@ -181,10 +176,10 @@ class ChatRoomsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsetsDirectional.only(
-          bottom: 8,
-          start: 10,
-          end: 10,
-          top: index == 0 ? 8 : 0,
+          bottom: 8 * MediaQuery.of(context).size.height / 550,
+          start: 10 * MediaQuery.of(context).size.width / 400,
+          end: 10 * MediaQuery.of(context).size.width / 400,
+          top: index == 0 ? 8 * MediaQuery.of(context).size.height / 550 : 0,
         ),
         child: GestureDetector(
             onTap: () {
@@ -206,7 +201,9 @@ class ChatRoomsTile extends StatelessWidget {
               child: Container(
                 color: Colors.white60,
                 height: MediaQuery.of(context).size.height / 10,
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                padding: EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 10 * MediaQuery.of(context).size.height / 800),
                 child: Stack(
                   children: [
                     Stack(children: [
@@ -215,8 +212,9 @@ class ChatRoomsTile extends StatelessWidget {
                         child: ClipOval(
                           child: Image.asset(
                             "lib/assets/face3.gif",
-                            width: 55,
-                            height: 55,
+                            width: 55 * MediaQuery.of(context).size.width / 400,
+                            height:
+                                55 * MediaQuery.of(context).size.height / 800,
                           ),
                         ),
                       ),

@@ -24,7 +24,7 @@ class ItemCard extends StatelessWidget {
     return SlimyCard(
       //Curve: Curves.bounceOut,
       width: 190,
-      color: Color.fromRGBO(19, 60, 130, 1),
+      color: Color(0xff295ba7), //Color.fromRGBO(19, 60, 130, 1),
       // elevation: 0,
       slimeEnabled: true,
       topCardHeight: 180,
