@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 3),
+      Duration(milliseconds: 7000),
       () async {
         ScreenSize(MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height);
@@ -28,27 +28,20 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  ImageProvider logo = AssetImage("lib/assets/google.png");
+  ImageProvider logo = AssetImage("lib/assets/splash1.gif");
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color.fromRGBO(224, 227, 237, 1),
       resizeToAvoidBottomInset: false,
       body: Container(
         height: size.height,
         width: size.width,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: size.width,
-              child: Image(
-                image: logo,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ],
+        child: Image(
+          image: logo,
+          fit: BoxFit.fitHeight,
         ),
       ),
     );

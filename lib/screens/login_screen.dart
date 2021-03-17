@@ -113,14 +113,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Center(
                             child: Container(
-                              height: 130 * ScreenSize.heightMultiplyingFactor,
-                              // child: Image(
-                              //   width: double.infinity,
-                              //   height: 130,
-                              //   image: AssetImage(
-                              //     "assets/logo.png",
-                              //   ),
-                              // ),
+                              child: Image(
+                                width: double.infinity,
+                                height:
+                                    130 * ScreenSize.heightMultiplyingFactor,
+                                image: AssetImage(
+                                  "lib/assets/logo.png",
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -234,15 +234,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Center(
-                            child: Container(
-                              height: 130 * ScreenSize.heightMultiplyingFactor,
-                              // child: Image(
-                              //   width: double.infinity,
-                              //   height: 130,
-                              //   image: AssetImage(
-                              //     "assets/logo.png",
-                              //   ),
-                              // ),
+                            child: Image(
+                              // width: double.infinity,
+                              height: 120 * ScreenSize.heightMultiplyingFactor,
+                              image: AssetImage(
+                                "lib/assets/logo.png",
+                              ),
+                              fit: BoxFit.fill,
                             ),
                           ),
                           SizedBox(

@@ -124,15 +124,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Center(
-                      child: Container(
+                      child: Image(
+                        width: double.infinity,
                         height: 120 * ScreenSize.heightMultiplyingFactor,
-                        // child: Image(
-                        //   width: double.infinity,
-                        //   height: 120,
-                        //   image: AssetImage(
-                        //     "assets/logo.png",
-                        //   ),
-                        // ),
+                        image: AssetImage(
+                          "lib/assets/logo.png",
+                        ),
                       ),
                     ),
                     Form(
@@ -140,7 +137,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                            padding: EdgeInsets.fromLTRB(
+                                24 * ScreenSize.heightMultiplyingFactor,
+                                8 * ScreenSize.widthMultiplyingFactor,
+                                24 * ScreenSize.heightMultiplyingFactor,
+                                8 * ScreenSize.widthMultiplyingFactor),
                             width: 328 * ScreenSize.widthMultiplyingFactor,
                             child: TextFormField(
                               controller: _nameController,
@@ -179,7 +180,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                            padding: EdgeInsets.fromLTRB(
+                                24 * ScreenSize.heightMultiplyingFactor,
+                                8 * ScreenSize.widthMultiplyingFactor,
+                                24 * ScreenSize.heightMultiplyingFactor,
+                                8 * ScreenSize.widthMultiplyingFactor),
                             width: 328 * ScreenSize.widthMultiplyingFactor,
                             child: TextFormField(
                               controller: _emailController,
@@ -202,7 +207,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Color.fromRGBO(44, 62, 80, 1),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical: 6.0, horizontal: 10.0),
+                                    vertical: 6.0 *
+                                        ScreenSize.heightMultiplyingFactor,
+                                    horizontal: 10.0 *
+                                        ScreenSize.widthMultiplyingFactor),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
                                   borderSide: BorderSide(
@@ -279,7 +287,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.fromLTRB(24, 4, 24, 4),
+                            padding: EdgeInsets.fromLTRB(
+                              24 * ScreenSize.heightMultiplyingFactor,
+                              4 * ScreenSize.widthMultiplyingFactor,
+                              24 * ScreenSize.heightMultiplyingFactor,
+                              4 * ScreenSize.widthMultiplyingFactor,
+                            ),
                             width: 328 * ScreenSize.widthMultiplyingFactor,
                             child: TextFormField(
                               focusNode: _confirmFocusNode,

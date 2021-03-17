@@ -21,14 +21,14 @@ class _AboutUsState extends State<AboutUs> {
           children: [
             aboutUsAppBar(),
             Positioned(
-              top: 100.0 * ScreenSize.heightMultiplyingFactor,
-              left: 1,
-              right: 1,
+              top: 90.0 * ScreenSize.heightMultiplyingFactor,
+              left: 1 * ScreenSize.widthMultiplyingFactor,
+              right: 1 * ScreenSize.widthMultiplyingFactor,
               child: Column(
                 children: [
                   Container(
                     width: 335.0 * ScreenSize.widthMultiplyingFactor,
-                    height: 262.0 * ScreenSize.heightMultiplyingFactor,
+                    height: 250.0 * ScreenSize.heightMultiplyingFactor,
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
@@ -37,7 +37,7 @@ class _AboutUsState extends State<AboutUs> {
                       ),
                       elevation: 3.0 * ScreenSize.heightMultiplyingFactor,
                       child: Image.asset(
-                        "lib/assets/google.png",
+                        "lib/assets/logo.png",
                         height: 248 * ScreenSize.heightMultiplyingFactor,
                         width: 206 * ScreenSize.widthMultiplyingFactor,
                       ),
@@ -47,9 +47,9 @@ class _AboutUsState extends State<AboutUs> {
               ),
             ),
             Positioned(
-              top: 370.0 * ScreenSize.heightMultiplyingFactor,
-              left: 1,
-              right: 1,
+              top: 350.0 * ScreenSize.heightMultiplyingFactor,
+              left: 1 * ScreenSize.widthMultiplyingFactor,
+              right: 1 * ScreenSize.widthMultiplyingFactor,
               child: AboutUsData(),
             ),
           ],
@@ -125,7 +125,7 @@ class AboutUsData extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: Container(
-                      width: 60,
+                      width: 60 * ScreenSize.widthMultiplyingFactor,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: CachedNetworkImage(
@@ -146,7 +146,7 @@ class AboutUsData extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'SE     | DTU\'23',
+                          'SE     | DTU \'23',
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
                             fontSize: 14 * ScreenSize.heightMultiplyingFactor,
@@ -162,9 +162,10 @@ class AboutUsData extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Divider(),
                   ListTile(
                     leading: Container(
-                      width: 60,
+                      width: 60 * ScreenSize.widthMultiplyingFactor,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: CachedNetworkImage(
@@ -186,7 +187,7 @@ class AboutUsData extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'COE | DTU\'23',
+                          'COE | DTU \'23',
                           style: GoogleFonts.montserrat(
                             color: Colors.black,
                             fontSize: 14 * ScreenSize.heightMultiplyingFactor,
