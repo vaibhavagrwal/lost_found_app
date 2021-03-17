@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
+import 'package:lost_found_app/util/constants.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 
 import 'chat_screen.dart';
 import 'package:lost_found_app/main.dart';
@@ -26,50 +28,56 @@ class _ChatRoomState extends State<ChatRoom> {
       stream: ListofPeople,
       builder: (context, snapshot) {
         return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  //sleep(const Duration(seconds: 5));
+            ? snapshot.data.docs.length == 0
+                ? Center(
+                    child: Text("No Chats Yet..!"),
+                  )
+                : ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: snapshot.data.docs.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      //sleep(const Duration(seconds: 5));
 
-                  /* print(num[snapshot.data.docs.length - index - 1].toString() +
+                      /* print(num[snapshot.data.docs.length - index - 1].toString() +
                       snapshot.data.docs[snapshot.data.docs.length - index - 1]
                           .data()["sender_name"]);*/
 
-                  return ChatRoomsTile(
-                    userName: snapshot
-                        .data.docs[snapshot.data.docs.length - index - 1]
-                        .data()['user_name']
-                        .toString(),
-                    chatRoomId: getChatRoomId(
-                        user.userId,
-                        snapshot
+                      return ChatRoomsTile(
+                        userName: snapshot
                             .data.docs[snapshot.data.docs.length - index - 1]
-                            .data()["user_ID"]),
-                    personID: snapshot
-                        .data.docs[snapshot.data.docs.length - index - 1]
-                        .data()["user_ID"],
-                    lastMessage: snapshot
-                        .data.docs[snapshot.data.docs.length - index - 1]
-                        .data()['lastMessage']
-                        .toString(),
-                    senderName: snapshot
-                        .data.docs[snapshot.data.docs.length - index - 1]
-                        .data()['sender_name']
-                        .toString(),
-                    lastMessageTime: snapshot
-                        .data.docs[snapshot.data.docs.length - index - 1]
-                        .data()["lastMessageTime"],
-                    Unread: snapshot
-                        .data.docs[snapshot.data.docs.length - index - 1]
-                        .data()["read"],
-                    notification: num[snapshot.data.docs.length - index - 1],
-                    lastMessageId: snapshot
-                        .data.docs[snapshot.data.docs.length - index - 1]
-                        .data()["lastMessage_sendBy"],
-                    index: index,
-                  );
-                })
+                            .data()['user_name']
+                            .toString(),
+                        chatRoomId: getChatRoomId(
+                            user.userId,
+                            snapshot.data
+                                .docs[snapshot.data.docs.length - index - 1]
+                                .data()["user_ID"]),
+                        personID: snapshot
+                            .data.docs[snapshot.data.docs.length - index - 1]
+                            .data()["user_ID"],
+                        lastMessage: snapshot
+                            .data.docs[snapshot.data.docs.length - index - 1]
+                            .data()['lastMessage']
+                            .toString(),
+                        senderName: snapshot
+                            .data.docs[snapshot.data.docs.length - index - 1]
+                            .data()['sender_name']
+                            .toString(),
+                        lastMessageTime: snapshot
+                            .data.docs[snapshot.data.docs.length - index - 1]
+                            .data()["lastMessageTime"],
+                        Unread: snapshot
+                            .data.docs[snapshot.data.docs.length - index - 1]
+                            .data()["read"],
+                        notification:
+                            num[snapshot.data.docs.length - index - 1],
+                        lastMessageId: snapshot
+                            .data.docs[snapshot.data.docs.length - index - 1]
+                            .data()["lastMessage_sendBy"],
+                        index: index,
+                      );
+                    })
             : SizedBox(
                 height: MediaQuery.of(context).size.height / 1.3,
                 child: Center(
@@ -132,15 +140,15 @@ class _ChatRoomState extends State<ChatRoom> {
             bottomLeft: Radius.circular(30.0),
           ),
         ),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: primaryColour,
         iconTheme: IconThemeData(
-          color: Color.fromRGBO(44, 62, 80, 1),
+          color: Colors.white,
         ),
         title: Text(
           " Messages ",
           style: GoogleFonts.poppins(
-              color: Color.fromRGBO(44, 62, 80, 1),
-              fontSize: 20,
+              color: Colors.white,
+              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
               fontWeight: FontWeight.w600),
         ),
       ),
@@ -181,10 +189,10 @@ class ChatRoomsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsetsDirectional.only(
-          bottom: 8,
-          start: 10,
-          end: 10,
-          top: index == 0 ? 8 : 0,
+          bottom: 8 * ScreenSize.heightMultiplyingFactor,
+          start: 10 * ScreenSize.widthMultiplyingFactor,
+          end: 10 * ScreenSize.widthMultiplyingFactor,
+          top: index == 0 ? 8 * ScreenSize.heightMultiplyingFactor : 0,
         ),
         child: GestureDetector(
             onTap: () {
@@ -215,8 +223,8 @@ class ChatRoomsTile extends StatelessWidget {
                         child: ClipOval(
                           child: Image.asset(
                             "lib/assets/face3.gif",
-                            width: 55,
-                            height: 55,
+                            width: 55 * ScreenSize.widthMultiplyingFactor,
+                            height: 55 * ScreenSize.heightMultiplyingFactor,
                           ),
                         ),
                       ),
@@ -229,7 +237,8 @@ class ChatRoomsTile extends StatelessWidget {
                                       .toString(),
                               style: GoogleFonts.poppins(
                                   color: Color(0xff505C6B),
-                                  fontSize: 14,
+                                  fontSize:
+                                      14 * ScreenSize.heightMultiplyingFactor,
                                   fontWeight: FontWeight.normal))),
                       Positioned(
                           left: MediaQuery.of(context).size.width / 6,
@@ -239,7 +248,8 @@ class ChatRoomsTile extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: GoogleFonts.poppins(
                                   color: Color(0xff505C6B),
-                                  fontSize: 22,
+                                  fontSize:
+                                      22 * ScreenSize.heightMultiplyingFactor,
                                   fontWeight: FontWeight.bold))),
                       Positioned(
                           left: lastMessageId == user.userId
@@ -254,13 +264,17 @@ class ChatRoomsTile extends StatelessWidget {
                                   ? Unread == 0
                                       ? IconButton(
                                           icon: Icon(Icons.check),
-                                          iconSize: 15.0,
+                                          iconSize: 15.0 *
+                                              ScreenSize
+                                                  .heightMultiplyingFactor,
                                           color: Colors.black,
                                           onPressed: () {},
                                         )
                                       : IconButton(
                                           icon: Icon(Icons.done_all),
-                                          iconSize: 15.0,
+                                          iconSize: 15.0 *
+                                              ScreenSize
+                                                  .heightMultiplyingFactor,
                                           color: Colors.green,
                                           onPressed: () {},
                                         )

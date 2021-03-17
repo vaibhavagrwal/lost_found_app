@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:lost_found_app/screens/tab_navigator.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 
 class RootScreen extends StatefulWidget {
   @override
@@ -94,8 +95,8 @@ class _RootScreenState extends State<RootScreen> {
                     ),
                     label: '',
                     activeIcon: Container(
-                      width: 85,
-                      height: 40,
+                      width: 85 * ScreenSize.widthMultiplyingFactor,
+                      height: 40 * ScreenSize.heightMultiplyingFactor,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(19, 60, 109, 1),
                         borderRadius: BorderRadius.circular(12),
@@ -115,8 +116,8 @@ class _RootScreenState extends State<RootScreen> {
                     ),
                     label: '',
                     activeIcon: Container(
-                      width: 85,
-                      height: 40,
+                      width: 85 * ScreenSize.widthMultiplyingFactor,
+                      height: 40 * ScreenSize.heightMultiplyingFactor,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(19, 60, 109, 1),
                         borderRadius: BorderRadius.circular(12),
@@ -134,8 +135,8 @@ class _RootScreenState extends State<RootScreen> {
                     ),
                     label: '',
                     activeIcon: Container(
-                      width: 85,
-                      height: 40,
+                      width: 85 * ScreenSize.widthMultiplyingFactor,
+                      height: 40 * ScreenSize.heightMultiplyingFactor,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(19, 60, 109, 1),
                         borderRadius: BorderRadius.circular(12),
@@ -151,8 +152,8 @@ class _RootScreenState extends State<RootScreen> {
                     ),
                     label: '',
                     activeIcon: Container(
-                      width: 85,
-                      height: 40,
+                      width: 85 * ScreenSize.widthMultiplyingFactor,
+                      height: 40 * ScreenSize.heightMultiplyingFactor,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(19, 60, 109, 1),
                         borderRadius: BorderRadius.circular(12),
@@ -165,9 +166,11 @@ class _RootScreenState extends State<RootScreen> {
                 ],
                 currentIndex: _selectedIndex,
                 selectedItemColor: Colors.white,
-                selectedLabelStyle: TextStyle(fontSize: 0.1),
-                unselectedLabelStyle: TextStyle(fontSize: 0.1),
-                iconSize: 24,
+                selectedLabelStyle: TextStyle(
+                    fontSize: 0.1 * ScreenSize.heightMultiplyingFactor),
+                unselectedLabelStyle: TextStyle(
+                    fontSize: 0.1 * ScreenSize.heightMultiplyingFactor),
+                iconSize: 24 * ScreenSize.heightMultiplyingFactor,
                 showSelectedLabels: true,
                 unselectedItemColor: Color.fromRGBO(44, 62, 80, 1),
                 onTap: (int index) {

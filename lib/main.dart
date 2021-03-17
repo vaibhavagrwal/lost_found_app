@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_found_app/models/user_model.dart';
+import 'package:lost_found_app/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'screens/login_screen.dart';
 import 'screens/root_screen.dart';
 
@@ -33,7 +33,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
-      home: screen,
+      builder: (BuildContext context, Widget child) {
+        return MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaleFactor: 1.0, alwaysUse24HourFormat: false),
+          child: child,
+        );
+      },
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(
+        screen: screen,
+      ),
     );
   }
 }

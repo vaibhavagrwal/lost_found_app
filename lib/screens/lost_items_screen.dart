@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lost_found_app/screens/lost_item_detail_screen.dart';
+import 'package:lost_found_app/screens/item_detail_screen.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/item_card.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -22,15 +23,24 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data.docs.length == 0) {
+            return Center(
+              child: Text(
+                "No Posts to Display",
+              ),
+            );
+          }
           // snapshot.data.docs.forEach((item) {});
           return StaggeredGridView.countBuilder(
+            physics: BouncingScrollPhysics(),
             //gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
 
             itemCount: snapshot.data.docs.length,
             itemBuilder: (context, index) {
               return Padding(
-                  padding: EdgeInsetsDirectional.only(top: 10),
+                  padding: EdgeInsetsDirectional.only(
+                      top: 10 * ScreenSize.heightMultiplyingFactor),
                   child: ItemCard(
                     itemName: snapshot.data.docs[index].get('heading'),
                     location: snapshot.data.docs[index].get('location'),
@@ -45,6 +55,7 @@ class _LostItemsScreenState extends State<LostItemsScreen> {
                           builder: (context) => LostItemDetailScreen(
                             ownerId: ownerId,
                             postId: postId,
+                            type: "Lost",
                           ),
                         ),
                       );

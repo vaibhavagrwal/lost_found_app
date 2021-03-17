@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 
 class CreateAdScreen extends StatefulWidget {
   @override
@@ -35,7 +36,10 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
 
       int res = await _repository.createPost(_image, type, heading, category,
           description, where, selectedDate, context);
-
+      setState(() {
+        print("11111111");
+        isLoading = false;
+      });
       if (res == 0) {
         showDialog(
           context: context,
@@ -48,12 +52,12 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                   title: Center(
                     child: FaIcon(
                       FontAwesomeIcons.checkCircle,
-                      size: 80,
+                      size: 80 * ScreenSize.heightMultiplyingFactor,
                       color: Colors.green,
                     ),
                   ),
                   content: Container(
-                    height: 110,
+                    height: 110 * ScreenSize.heightMultiplyingFactor,
                     width: MediaQuery.of(context).size.width * 0.3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -70,21 +74,21 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                             'Your Post has been created!',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
-                              fontSize: 15,
+                              fontSize: 15 * ScreenSize.heightMultiplyingFactor,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 10 * ScreenSize.heightMultiplyingFactor,
                         ),
                         RaisedButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                           child: Text(
-                            'Cancel',
+                            'OK',
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 15 * ScreenSize.heightMultiplyingFactor,
                             ),
                           ),
                           color: primaryColour,
@@ -112,6 +116,9 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
           selectedDate = DateTime.now();
         });
       } else {
+        setState(() {
+          isLoading = false;
+        });
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -123,12 +130,12 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                   title: Center(
                     child: FaIcon(
                       FontAwesomeIcons.exclamationCircle,
-                      size: 80,
+                      size: 80 * ScreenSize.heightMultiplyingFactor,
                       color: Colors.red,
                     ),
                   ),
                   content: Container(
-                    height: 110,
+                    height: 110 * ScreenSize.heightMultiplyingFactor,
                     width: MediaQuery.of(context).size.width * 0.3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -136,7 +143,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         Text(
                           'ERROR',
                           style: GoogleFonts.montserrat(
-                            fontSize: 25,
+                            fontSize: 25 * ScreenSize.heightMultiplyingFactor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -145,12 +152,12 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                             'Please try again!',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
-                              fontSize: 15,
+                              fontSize: 15 * ScreenSize.heightMultiplyingFactor,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 10 * ScreenSize.heightMultiplyingFactor,
                         ),
                         RaisedButton(
                           onPressed: () {
@@ -159,7 +166,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                           child: Text(
                             'Cancel',
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 15 * ScreenSize.heightMultiplyingFactor,
                             ),
                           ),
                           color: primaryColour,
@@ -176,9 +183,6 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
             );
           },
         );
-        setState(() {
-          isLoading = false;
-        });
       }
     }
   }
@@ -232,7 +236,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
         elevation: 1,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -240,15 +244,15 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
             bottomLeft: Radius.circular(30.0),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColour,
         iconTheme: IconThemeData(
           color: Color.fromRGBO(44, 62, 80, 1),
         ),
         title: Text(
           " Create Post ",
-          style: GoogleFonts.roboto(
-              color: Color.fromRGBO(44, 62, 80, 1),
-              fontSize: 20,
+          style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
               fontWeight: FontWeight.w600),
         ),
         actions: [
@@ -261,9 +265,9 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                 : Text(
                     "Post",
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.lightGreenAccent,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
+                      fontSize: 20.0 * ScreenSize.heightMultiplyingFactor,
                     ),
                   ),
           ),
@@ -281,9 +285,9 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(
-                        top: 20,
+                        top: 20 * ScreenSize.heightMultiplyingFactor,
                       ),
-                      height: 150.0,
+                      height: 150.0 * ScreenSize.heightMultiplyingFactor,
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: Center(
                         child: GestureDetector(
@@ -365,7 +369,8 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0),
+                      padding: EdgeInsets.only(
+                          top: 10.0 * ScreenSize.heightMultiplyingFactor),
                     ),
                     Row(
                       children: [
@@ -385,7 +390,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         Text(
                           'Lost',
                           style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 16 * ScreenSize.heightMultiplyingFactor,
                           ),
                         ),
                         SizedBox(
@@ -404,7 +409,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         Text(
                           'Found',
                           style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 16 * ScreenSize.heightMultiplyingFactor,
                           ),
                         ),
                       ],
@@ -416,7 +421,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         color: primaryColour,
                       ),
                       title: Container(
-                        width: 250.0,
+                        width: 250.0 * ScreenSize.widthMultiplyingFactor,
                         child: TextFormField(
                           controller: headingController,
                           decoration: InputDecoration(
@@ -443,7 +448,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         color: primaryColour,
                       ),
                       title: Container(
-                        width: 250.0,
+                        width: 250.0 * ScreenSize.widthMultiplyingFactor,
                         child: TextFormField(
                           controller: categoryController,
                           decoration: InputDecoration(
@@ -468,10 +473,10 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                       leading: FaIcon(
                         FontAwesomeIcons.fileAlt,
                         color: primaryColour,
-                        size: 35.0,
+                        size: 35.0 * ScreenSize.heightMultiplyingFactor,
                       ),
                       title: Container(
-                        width: 250.0,
+                        width: 250.0 * ScreenSize.widthMultiplyingFactor,
                         child: TextFormField(
                           controller: descriptionController,
                           minLines: 2,
@@ -515,7 +520,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         color: primaryColour,
                       ),
                       title: Container(
-                        width: 250.0,
+                        width: 250.0 * ScreenSize.widthMultiplyingFactor,
                         child: TextFormField(
                           controller: placeController,
                           validator: (val) {
@@ -543,10 +548,10 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                       ),
                       title: Container(
                         padding: EdgeInsets.only(
-                          left: 20,
+                          left: 20 * ScreenSize.widthMultiplyingFactor,
                         ),
-                        width: 150,
-                        height: 48,
+                        width: 150 * ScreenSize.widthMultiplyingFactor,
+                        height: 48 * ScreenSize.heightMultiplyingFactor,
                         decoration: BoxDecoration(
                           boxShadow: <BoxShadow>[
                             BoxShadow(
@@ -568,7 +573,8 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                                   hintText:
                                       ('${myFormat.format(selectedDate)}'),
                                   hintStyle: GoogleFonts.poppins(
-                                    fontSize: 16,
+                                    fontSize:
+                                        16 * ScreenSize.heightMultiplyingFactor,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
@@ -589,7 +595,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
             child: Center(
               child: SpinKitCircle(
                 color: primaryColour,
-                size: 80,
+                size: 80 * ScreenSize.widthMultiplyingFactor,
               ),
             ),
           ),

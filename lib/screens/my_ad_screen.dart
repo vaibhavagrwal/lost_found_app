@@ -1,12 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/screens/item_detail_screen.dart';
+import 'package:lost_found_app/util/constants.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/item_tile.dart';
-import 'dart:async';
+
 import '../main.dart';
-import 'package:async/async.dart';
 
 class MyAdScreen extends StatefulWidget {
   @override
@@ -23,16 +24,23 @@ class _MyAdScreenState extends State<MyAdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
         elevation: 1,
-        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(30.0),
+            bottomLeft: Radius.circular(30.0),
+          ),
+        ),
+        backgroundColor: primaryColour,
         iconTheme: IconThemeData(
           color: Color.fromRGBO(44, 62, 80, 1),
         ),
         title: Text(
-          " My Ads ",
-          style: GoogleFonts.roboto(
-              color: Color.fromRGBO(44, 62, 80, 1),
-              fontSize: 20,
+          "My Ads ",
+          style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
               fontWeight: FontWeight.w600),
         ),
       ),
@@ -58,6 +66,13 @@ class _MyListState extends State<MyList> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            if (snapshot.data.docs.length == 0) {
+              return Center(
+                child: Text(
+                  "No Ads to Display",
+                ),
+              );
+            }
             return ListView.builder(
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
@@ -114,11 +129,40 @@ class _MyListState extends State<MyList> {
                         color: Colors.white,
                       ),
                     ),
-                    child: ItemTile(
-                      imageUrl: snapshot.data.docs[index].get('image_url'),
-                      title: snapshot.data.docs[index].get('heading'),
-                      description: snapshot.data.docs[index].get('description'),
-                      status: snapshot.data.docs[index].get('status'),
+                    child: GestureDetector(
+                      onTap: () {
+                        String postId = snapshot.data.docs[index].get('postId');
+                        if (snapshot.data.docs[index].get('status') == "Lost")
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LostItemDetailScreen(
+                                ownerId: user.userId,
+                                postId: postId,
+                                type: "Lost",
+                              ),
+                            ),
+                          );
+                        else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LostItemDetailScreen(
+                                ownerId: user.userId,
+                                postId: postId,
+                                type: "Found",
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: ItemTile(
+                        imageUrl: snapshot.data.docs[index].get('image_url'),
+                        title: snapshot.data.docs[index].get('heading'),
+                        description:
+                            snapshot.data.docs[index].get('description'),
+                        status: snapshot.data.docs[index].get('status'),
+                      ),
                     ),
                   );
                 else

@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/constants.dart';
@@ -72,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Icons.arrow_back,
             ),
           ),
-          toolbarHeight: 80,
+          toolbarHeight: 80 * ScreenSize.heightMultiplyingFactor,
           backgroundColor: primaryColour,
           title: Text(
             "Edit Profile",
@@ -103,7 +103,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ],
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(top: 20.0),
+                    padding: EdgeInsets.only(
+                        top: 20.0 * ScreenSize.heightMultiplyingFactor),
                     child: new Stack(
                       fit: StackFit.loose,
                       children: <Widget>[
@@ -112,8 +113,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             new Container(
-                                width: 180.0,
-                                height: 180.0,
+                                width:
+                                    180.0 * ScreenSize.widthMultiplyingFactor,
+                                height:
+                                    180.0 * ScreenSize.widthMultiplyingFactor,
                                 decoration: new BoxDecoration(
                                   boxShadow: <BoxShadow>[
                                     BoxShadow(
@@ -180,7 +183,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 //   ),
                 // ),
                 Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 0.0),
+                  padding: EdgeInsets.only(
+                      left: 25.0 * ScreenSize.widthMultiplyingFactor,
+                      right: 25.0 * ScreenSize.widthMultiplyingFactor,
+                      top: 0.0),
                   child: new Row(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
@@ -222,7 +228,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   height: 20.0 * ScreenSize.heightMultiplyingFactor,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 0.0),
+                  padding: EdgeInsets.only(
+                      left: 25.0 * ScreenSize.widthMultiplyingFactor,
+                      right: 25.0 * ScreenSize.widthMultiplyingFactor,
+                      top: 0.0),
                   child: new Row(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
@@ -395,7 +404,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Widget _getActionButtons(_scaffoldKey) {
     return Padding(
-      padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
+      padding: EdgeInsets.only(
+          left: 25.0 * ScreenSize.widthMultiplyingFactor,
+          right: 25.0 * ScreenSize.widthMultiplyingFactor,
+          top: 45.0 * ScreenSize.heightMultiplyingFactor),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -408,7 +420,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: new Text(
                   "Save",
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                   ),
                 ),
                 textColor: Colors.white,
@@ -434,9 +446,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       });
                     }
                   } else {
-                    _scaffoldKey.currentState.showSnackBar(
-                      SnackBar(content: Text("Nothing To Update!")),
-                    );
+                    Flushbar(
+                      title: "Nothing To Update!",
+                      margin: EdgeInsets.all(8),
+                      borderRadius: 8,
+                      message: " ",
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 3),
+                    )..show(context);
                   }
 
                   setState(() {
@@ -458,7 +475,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: new Text(
                   "Cancel",
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                   ),
                 ),
                 textColor: Colors.white,

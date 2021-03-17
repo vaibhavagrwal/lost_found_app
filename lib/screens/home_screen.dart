@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,7 @@ import 'package:lost_found_app/main.dart';
 import 'package:lost_found_app/screens/drawer_screen.dart';
 import 'package:lost_found_app/screens/found_items_screen.dart';
 import 'package:lost_found_app/screens/lost_items_screen.dart';
+import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: DrawerScreen(),
         appBar: AppBar(
           elevation: 1,
+          toolbarHeight: 110 * ScreenSize.heightMultiplyingFactor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(30.0),
@@ -32,12 +35,35 @@ class _HomeScreenState extends State<HomeScreen> {
           iconTheme: IconThemeData(
             color: Color.fromRGBO(44, 62, 80, 1),
           ),
-          title: Text(
-            " Home ",
-            style: GoogleFonts.roboto(
-                color: Color.fromRGBO(44, 62, 80, 1),
-                fontSize: 20,
-                fontWeight: FontWeight.w600),
+          // title: Text(
+          //   " Mila Kya ? ",
+          //   style: GoogleFonts.poppins(
+          //       color: Color.fromRGBO(44, 62, 80, 1),
+          //       fontSize: 25 * ScreenSize.heightMultiplyingFactor,
+          //       fontWeight: FontWeight.w600),
+          // ),
+          title: SizedBox(
+            width: 250.0,
+            child: TyperAnimatedTextKit(
+              onTap: () {},
+              text: [
+                "Mila Kya",
+              ],
+              displayFullTextOnTap: true,
+
+              // totalRepeatCount: 2,
+              repeatForever: true,
+              curve: Curves.easeInCirc,
+              speed: Duration(milliseconds: 200),
+              pause: Duration(milliseconds: 6000),
+              textStyle: GoogleFonts.italiana(
+                color: primaryColour,
+                fontSize: 28 * ScreenSize.heightMultiplyingFactor,
+                fontWeight: FontWeight.bold,
+                // letterSpacing: 2.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.values[1],
@@ -61,8 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Tab(
                 child: Text(
                   'LOST',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -70,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Tab(
                 child: Text(
                   'FOUND',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -81,12 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                navigatorKey.currentState.push(MaterialPageRoute(
-                    builder: (context) => ChatRoom()));
+                navigatorKey.currentState
+                    .push(MaterialPageRoute(builder: (context) => ChatRoom()));
               },
               icon: FaIcon(
                 FontAwesomeIcons.facebookMessenger,
-                size: 20,
+                size: 20 * ScreenSize.heightMultiplyingFactor,
                 color: Color.fromRGBO(44, 62, 80, 1),
               ),
             ),

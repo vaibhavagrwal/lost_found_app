@@ -8,12 +8,14 @@ class ReviewTile extends StatefulWidget {
   final String imageUrl;
   final String status;
   final VoidCallback onPressed;
+  final VoidCallback onPressed2;
   const ReviewTile({
     Key key,
     this.title,
     this.imageUrl,
     this.status,
     this.onPressed,
+    this.onPressed2,
   }) : super(key: key);
 
   @override
@@ -76,13 +78,31 @@ class _ReviewTileState extends State<ReviewTile> {
                   fontWeight: FontWeight.normal,
                 ),
               ),
-              trailing: MaterialButton(
-                onPressed: widget.onPressed,
-                color: primaryColour,
-                child: Text('Accept',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
+              trailing: Container(
+                width: 180,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    MaterialButton(
+                      onPressed: widget.onPressed2,
+                      color: primaryColour,
+                      child: Text('View',
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                    ),
+                    MaterialButton(
+                      onPressed: widget.onPressed,
+                      color: primaryColour,
+                      child: Text(
+                        'Accept',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -62,7 +62,7 @@ class FirebaseRepository {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String user1 = jsonEncode(user);
       pref.setString('userData', user1);
-      showSuccessFlushbar("Sucess", "Profile Updated", context);
+      showSuccessFlushbar("Success", "Profile Updated", context);
 
       // Navigator.of(context, rootNavigator: true).pushReplacement(
       //   MaterialPageRoute(
@@ -178,8 +178,12 @@ class FirebaseRepository {
         case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
           errorMessage = "Network error..!!.";
           break;
+        case 'com.google.firebase.FirebaseException: An internal error has occurred. [ Unable to resolve host "www.googleapis.com":No address associated with hostname ]':
+          errorMessage = "Network Error!";
+          break;
+
         default:
-          errorMessage = "An undefined Error happened.";
+          errorMessage = "An undefined Error occured.";
       }
       print(error);
       // _scaffoldKey.currentState.showSnackBar(
@@ -234,6 +238,9 @@ class FirebaseRepository {
         case "invalid-email":
           errorMessage = "Email address is invalid.";
           break;
+        case 'com.google.firebase.FirebaseException: An internal error has occurred. [ Unable to resolve host "www.googleapis.com":No address associated with hostname ]':
+          errorMessage = "Network Error!";
+          break;
         default:
           errorMessage = "Login failed. Please try again.";
           break;
@@ -254,7 +261,7 @@ class FirebaseRepository {
       borderRadius: 8,
       icon: Icon(
         Icons.error,
-        color: Colors.redAccent,
+        color: Colors.white,
       ),
       backgroundColor: Colors.red,
       duration: Duration(seconds: 3),
@@ -338,16 +345,7 @@ class FirebaseRepository {
       }
     } catch (error) {
       String errorMessage;
-      switch (error.code) {
-        case "ERROR_EMAIL_ALREADY_IN_USE":
-        case "account-exists-with-different-credential":
-        case "email-already-in-use":
-          errorMessage = "Email already used. Go to login page.";
-          break;
-        case "ERROR_WRONG_PASSWORD":
-        case "wrong-password":
-          errorMessage = "Wrong email/password combination.";
-          break;
+      switch (error.message) {
         case "ERROR_USER_NOT_FOUND":
         case "user-not-found":
           errorMessage = "No user found with this email.";
@@ -368,10 +366,17 @@ class FirebaseRepository {
         case "invalid-email":
           errorMessage = "Email address is invalid.";
           break;
+        case 'com.google.firebase.FirebaseException: An internal error has occurred. [ Unable to resolve host "www.googleapis.com":No address associated with hostname ]':
+          errorMessage = "Network Error!";
+          break;
+        case 'field does not exist within the DocumentSnapshotPlatform':
+          errorMessage = "Email already SignedUp. Please SignIn.";
+          break;
         default:
-          errorMessage = "Login failed. Please try again.";
+          errorMessage = error.message.toString();
           break;
       }
+      print(errorMessage);
 
       showErrorFlushbar("Error", errorMessage, context);
     }
@@ -613,6 +618,8 @@ class FirebaseRepository {
       }
       return 0;
     } catch (e) {
+      print(e.toString());
+
       return 1;
     }
   }
@@ -787,31 +794,32 @@ class FirebaseRepository {
   }
 
   Future<void> signInGoogle(BuildContext context, _scaffoldKey) async {
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) return;
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    bool isNewUser = userCredential.additionalUserInfo.isNewUser;
-    if (isNewUser) {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user.uid)
-          .set({
-        'id': userCredential.user.uid,
-        'name': userCredential.user.displayName,
-        'email': userCredential.user.email,
-        'image_url': userCredential.user.photoURL,
-        'phone': userCredential.user.phoneNumber ?? "",
-        'isModerator': false,
-      });
-    }
     try {
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      bool isNewUser = userCredential.additionalUserInfo.isNewUser;
+      if (isNewUser) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user.uid)
+            .set({
+          'id': userCredential.user.uid,
+          'name': userCredential.user.displayName,
+          'email': userCredential.user.email,
+          'image_url': userCredential.user.photoURL,
+          'phone': userCredential.user.phoneNumber ?? "",
+          'isModerator': false,
+        });
+      }
+
       SharedPreferences pref = await SharedPreferences.getInstance();
 
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
@@ -854,13 +862,16 @@ class FirebaseRepository {
         case "ERROR_TOO_MANY_REQUESTS":
           errorMessage = "Too many requests. Try again later.";
           break;
-        case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
+        case 'com.google.android.gms.common.api.ApiException: 7:':
           errorMessage = "Network error..!!.";
           break;
+        case 'com.google.firebase.FirebaseException: An internal error has occurred. [ Unable to resolve host "www.googleapis.com":No address associated with hostname ]':
+          errorMessage = "Network Error!";
+          break;
         default:
-          errorMessage = "An undefined Error happened.";
+          errorMessage = "An undefined Error occured.";
       }
-      print(error);
+      print("Message " + error.message);
       // _scaffoldKey.currentState.showSnackBar(
       //   SnackBar(content: Text(errorMessage)),
       // );
