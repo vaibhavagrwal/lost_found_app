@@ -116,15 +116,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Image(
                                 width: double.infinity,
                                 height:
-                                    130 * ScreenSize.heightMultiplyingFactor,
+                                    200 * ScreenSize.heightMultiplyingFactor,
                                 image: AssetImage(
                                   "lib/assets/logo.png",
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10 * ScreenSize.heightMultiplyingFactor,
                           ),
                           Form(
                             key: _formKey1,
@@ -236,15 +233,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Center(
                             child: Image(
                               // width: double.infinity,
-                              height: 120 * ScreenSize.heightMultiplyingFactor,
+                              height: 200 * ScreenSize.heightMultiplyingFactor,
                               image: AssetImage(
                                 "lib/assets/logo.png",
                               ),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10 * ScreenSize.heightMultiplyingFactor,
                           ),
                           Form(
                             key: _formKey,

@@ -88,6 +88,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       userName,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.roboto(
                         //fontFamily: 'Poppins-Medium',
                         fontWeight: FontWeight.bold,

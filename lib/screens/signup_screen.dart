@@ -126,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Center(
                       child: Image(
                         width: double.infinity,
-                        height: 120 * ScreenSize.heightMultiplyingFactor,
+                        height: 160 * ScreenSize.heightMultiplyingFactor,
                         image: AssetImage(
                           "lib/assets/logo.png",
                         ),
@@ -467,7 +467,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
                               ),
-                              children: <TextSpan>[
+                              children: [
                                 TextSpan(
                                   text: 'Term And Conditions',
                                   style: GoogleFonts.roboto(

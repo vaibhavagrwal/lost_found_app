@@ -38,8 +38,13 @@ class _ChatRoomState extends State<ChatRoom> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? snapshot.data.docs.length == 0
-                ? Center(
-                    child: Text("No Chats Yet..!"),
+                ? Container(
+                    height: 600 * ScreenSize.heightMultiplyingFactor,
+                    child: Center(
+                      child: Text(
+                        "No Chats Yet..!",
+                      ),
+                    ),
                   )
                 : ListView.builder(
                     physics: BouncingScrollPhysics(),
