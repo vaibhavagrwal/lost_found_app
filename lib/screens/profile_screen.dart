@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/models/user_model.dart';
 import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/util/constants.dart';
@@ -65,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    /*CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 50.0,
                       backgroundImage: CachedNetworkImageProvider(
@@ -73,15 +74,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ? "https://i.pinimg.com/474x/67/c3/d6/67c3d63e215e034e01d45c8256d720d3.jpg"
                             : user.imageUrl,
                       ),
+                    ),*/
+                    ClipOval(
+                      child: Image.asset(
+                        "lib/assets/face1.gif",
+                        width: 120 * ScreenSize.widthMultiplyingFactor,
+                        height: 120 * ScreenSize.heightMultiplyingFactor,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     SizedBox(
                       height: 11.0 * ScreenSize.heightMultiplyingFactor,
                     ),
                     Text(
                       userName,
-                      style: TextStyle(
-                        fontFamily: 'Poppins-Medium',
-                        fontSize: 18.0 * ScreenSize.heightMultiplyingFactor,
+                      style: GoogleFonts.roboto(
+                        //fontFamily: 'Poppins-Medium',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25.0 * ScreenSize.heightMultiplyingFactor,
                       ),
                     ),
                   ],
@@ -191,13 +201,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(
             width: 13.0 * ScreenSize.widthMultiplyingFactor,
           ),
-          Text(
+          Flexible(
+              child: Text(
             title,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontFamily: 'Poppins-Regular',
               fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
             ),
-          ),
+          )),
         ],
       ),
     );

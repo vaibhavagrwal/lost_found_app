@@ -51,7 +51,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       fontWeight: FontWeight.w600),
                 ),
                 currentAccountPicture: Container(
-                  child: CircleAvatar(
+                  width: 200 * ScreenSize.widthMultiplyingFactor,
+                  height: 200 * ScreenSize.heightMultiplyingFactor,
+                  child: ClipOval(
+                    child: Image.asset(
+                      "lib/assets/face1.gif",
+                      fit: BoxFit.fill,
+                    ),
+                  ), /*CircleAvatar(
                     radius: 150,
                     backgroundImage: CachedNetworkImageProvider(
                       user.imageUrl == ""
@@ -65,7 +72,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     //   useDiskCache: true,
                     //   cacheRule: CacheRule(maxAge: const Duration(days: 2)),
                     // ),
-                  ),
+                  ),*/
                 ),
               ),
             ),

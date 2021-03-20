@@ -54,7 +54,7 @@ dependencies:
   animated_text_kit: ^4.0.0
   esys_flutter_share: ^1.0.2
   slimy_card:
-    git:
+    git:                               
       url: https://github.com/sxmeer-ahmed/SlimyCard-Animated-Flutter-Package
 
 dev_dependencies:

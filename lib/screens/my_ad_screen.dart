@@ -136,7 +136,7 @@ class _MyListState extends State<MyList> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LostItemDetailScreen(
+                              builder: (context) => ItemDetailScreen(
                                 ownerId: user.userId,
                                 postId: postId,
                                 type: "Lost",
@@ -147,7 +147,7 @@ class _MyListState extends State<MyList> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LostItemDetailScreen(
+                              builder: (context) => ItemDetailScreen(
                                 ownerId: user.userId,
                                 postId: postId,
                                 type: "Found",

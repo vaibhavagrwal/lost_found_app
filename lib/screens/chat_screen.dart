@@ -10,14 +10,21 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'chat_rooms_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
   final String username;
   final String personID;
   final String personName;
+  final String img;
 
-  Chat({this.chatRoomId, this.username, this.personID, this.personName});
+  Chat(
+      {this.chatRoomId,
+      this.username,
+      this.personID,
+      this.personName,
+      this.img});
 
   @override
   _ChatState createState() => _ChatState();
@@ -66,6 +73,7 @@ class _ChatState extends State<Chat> {
                     index: snapshot.data.docs.length - index - 1,
                     personName: widget.personName,
                     read: snapshot.data.docs[index].data()["read"],
+                    img: widget.img,
                   );
                 })
             : Container();
@@ -142,16 +150,19 @@ class _ChatState extends State<Chat> {
           ),
           title: Row(children: [
             ClipOval(
-              child: Image.asset(
-                "lib/assets/face2.jpg",
+              child: Image(
+                image: CachedNetworkImageProvider(widget.img),
                 width: 50 * ScreenSize.widthMultiplyingFactor,
                 height: 50 * ScreenSize.heightMultiplyingFactor,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
             SizedBox(width: 20),
             Text(
-              widget.personName.toUpperCase(),
+              widget.personName.length > 16
+                  ? widget.personName.substring(0, 13) + "..."
+                  : widget.personName[0].toUpperCase() +
+                      widget.personName.substring(1),
               style: GoogleFonts.roboto(
                   color: Color.fromRGBO(44, 62, 80, 1),
                   fontSize: 18 * ScreenSize.heightMultiplyingFactor,
@@ -324,6 +335,7 @@ class MessageTile extends StatelessWidget {
   final Timestamp prevtime;
   final int read;
   final Timestamp curtime;
+  final String img;
 
   MessageTile(
       {@required this.message,
@@ -333,19 +345,32 @@ class MessageTile extends StatelessWidget {
       this.index,
       this.personName,
       this.prevtime,
-      this.curtime});
+      this.curtime,
+      this.img});
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       index == 0
+          ? Padding(
+              padding: EdgeInsetsDirectional.only(
+                  bottom: 20 * ScreenSize.heightMultiplyingFactor),
+              child: Container(
+                color: Colors.redAccent.withOpacity(0.5),
+                child: Text(
+                  "NOTE : You are only allowed to send 50 messages to a particular user. Please switch to other platform for contact if you want to talk further.",
+                  style: GoogleFonts.roboto(fontWeight: FontWeight.bold),
+                ),
+              ))
+          : Container(),
+      index == 0
           ? Center(
               child: ClipOval(
-              child: Image.asset(
-                "lib/assets/face2.jpg",
+              child: Image(
+                image: CachedNetworkImageProvider(img),
                 width: 100 * ScreenSize.widthMultiplyingFactor,
                 height: 100 * ScreenSize.heightMultiplyingFactor,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ))
           : Container(),
@@ -353,7 +378,9 @@ class MessageTile extends StatelessWidget {
           ? Padding(
               padding: EdgeInsetsDirectional.only(top: 10, bottom: 10),
               child: Text(
-                personName.toUpperCase(),
+                personName.length > 16
+                    ? personName.substring(0, 13) + "..."
+                    : personName[0].toUpperCase() + personName.substring(1),
                 style: GoogleFonts.poppins(
                     color: Color(0xff505C6B),
                     fontSize: 25 * ScreenSize.heightMultiplyingFactor,
@@ -376,11 +403,11 @@ class MessageTile extends StatelessWidget {
                 : Container(),
             !sendByMe
                 ? ClipOval(
-                    child: Image.asset(
-                      "lib/assets/face2.jpg",
+                    child: Image(
+                      image: CachedNetworkImageProvider(img),
                       width: 60 * ScreenSize.widthMultiplyingFactor,
                       height: 60 * ScreenSize.heightMultiplyingFactor,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     ),
                   )
                 : Container(),

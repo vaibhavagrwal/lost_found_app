@@ -450,31 +450,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ],
                             ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(
-                        bottom: 10 * ScreenSize.heightMultiplyingFactor,
-                      ),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'By Clicking Sign Up, You Agree To Our ',
-                          style: GoogleFonts.roboto(
-                            fontSize: 11 * ScreenSize.heightMultiplyingFactor,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                    GestureDetector(
+                        onTap: () {
+                          showDialogFunc(context);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            bottom: 10 * ScreenSize.heightMultiplyingFactor,
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Term And Conditions',
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'By Clicking Sign Up, You Agree To Our ',
                               style: GoogleFonts.roboto(
                                 fontSize:
                                     11 * ScreenSize.heightMultiplyingFactor,
                                 fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(19, 60, 109, 1),
+                                color: Colors.black,
                               ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Term And Conditions',
+                                  style: GoogleFonts.roboto(
+                                    fontSize:
+                                        11 * ScreenSize.heightMultiplyingFactor,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromRGBO(19, 60, 109, 1),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
 //                        text: Text(
 //                            'By Clicking Sign Up, You Agree To Our Term And Conditions',
 //                          style: GoogleFonts.roboto(
@@ -484,7 +489,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //                          ),
 //                        ),
 //                      ),
-                    ),
+                        )),
                   ],
                 ),
               ),
@@ -494,4 +499,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+}
+
+showDialogFunc(context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15),
+              height: 320,
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    // width: 200,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: FlatButton(
+                        onPressed: () {},
+                        color: Color.fromRGBO(19, 60, 109, 1),
+                        height: 15,
+                        minWidth: 100,
+                        child: Text("ACCEPT",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            )),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

@@ -37,21 +37,24 @@ class ItemCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              width: 15 * ScreenSize.widthMultiplyingFactor,
+              width: ScreenSize.widthMultiplyingFactor,
             ),
             Icon(
               Icons.location_on_outlined,
               color: Colors.white,
               size: 22 * ScreenSize.heightMultiplyingFactor,
             ),
-            Text(
-              location,
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 15 * ScreenSize.heightMultiplyingFactor,
+            Flexible(
+              child: Text(
+                location[0].toUpperCase() + location.substring(1),
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15 * ScreenSize.heightMultiplyingFactor,
+                ),
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
@@ -59,21 +62,24 @@ class ItemCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              width: 15 * ScreenSize.heightMultiplyingFactor,
+              width: ScreenSize.heightMultiplyingFactor,
             ),
             Icon(
               Icons.person,
               color: Colors.white,
               size: 22 * ScreenSize.heightMultiplyingFactor,
             ),
-            Text(
-              by,
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 15 * ScreenSize.heightMultiplyingFactor,
+            Flexible(
+              child: Text(
+                by[0].toUpperCase() + by.substring(1),
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15 * ScreenSize.heightMultiplyingFactor,
+                ),
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

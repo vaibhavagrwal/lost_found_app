@@ -24,21 +24,21 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import '../main.dart';
 
-class LostItemDetailScreen extends StatefulWidget {
+class ItemDetailScreen extends StatefulWidget {
   final String ownerId;
   final String postId;
   final String type;
-  const LostItemDetailScreen({
+  const ItemDetailScreen({
     Key key,
     this.ownerId,
     this.postId,
     this.type,
   }) : super(key: key);
   @override
-  _LostItemDetailScreenState createState() => _LostItemDetailScreenState();
+  _ItemDetailScreenState createState() => _ItemDetailScreenState();
 }
 
-class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
+class _ItemDetailScreenState extends State<ItemDetailScreen> {
   var myFormat = DateFormat('yMMMd');
   PostModel currentPost;
   bool isLoading = true;
@@ -69,6 +69,8 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                 username: userName,
                 personID: currentPost.ownerId,
                 personName: currentPost.ownerName,
+                img:
+                    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F66377888_242269586730532_1532890469642947208_n.jpg?alt=media&token=2cfe880d-088b-48e0-a11b-53d88482546d',
               )));
     });
   }
@@ -225,19 +227,20 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                         ),
                         child: Container(
                             height: 30 * ScreenSize.heightMultiplyingFactor,
-                            width: width / 2,
-                            child: Center(
+                            //width: width / 2,
+                            child: Flexible(
                                 child: Text(
                               widget.type == 'Lost'
-                                  ? 'Lost By : ' +
+                                  ? '    Lost By : ' +
                                       (currentPost == null
                                           ? ""
-                                          : currentPost.ownerName)
-                                  : 'Found By : ' +
+                                          : currentPost.ownerName + "   ")
+                                  : '    Found By : ' +
                                       (currentPost == null
                                           ? ""
-                                          : currentPost.ownerName),
+                                          : currentPost.ownerName + "   "),
                               textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                   fontSize:
                                       15 * ScreenSize.heightMultiplyingFactor,
@@ -266,10 +269,11 @@ class _LostItemDetailScreenState extends State<LostItemDetailScreen> {
                       ],
                     ),
                     SizedBox(height: 12.0 * height * 0.001),
-                    Row(
+                    Column(
                       children: <Widget>[
                         Text(
                           currentPost == null ? "" : currentPost.postLocation,
+                          //overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins(
                               fontSize:
                                   20 * ScreenSize.heightMultiplyingFactor),
