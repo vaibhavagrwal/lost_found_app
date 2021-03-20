@@ -28,7 +28,7 @@ class _AboutUsState extends State<AboutUs> {
                 children: [
                   Container(
                     width: 335.0 * ScreenSize.widthMultiplyingFactor,
-                    height: 250.0 * ScreenSize.heightMultiplyingFactor,
+                    height: 220.0 * ScreenSize.heightMultiplyingFactor,
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
@@ -47,7 +47,7 @@ class _AboutUsState extends State<AboutUs> {
               ),
             ),
             Positioned(
-              top: 350.0 * ScreenSize.heightMultiplyingFactor,
+              top: 310.0 * ScreenSize.heightMultiplyingFactor,
               left: 1 * ScreenSize.widthMultiplyingFactor,
               right: 1 * ScreenSize.widthMultiplyingFactor,
               child: AboutUsData(),
@@ -69,163 +69,165 @@ class AboutUsData extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           padding: EdgeInsets.fromLTRB(20.0 * ScreenSize.widthMultiplyingFactor,
               0.0, 20.0 * ScreenSize.widthMultiplyingFactor, 0.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // SizedBox(
-              //   height: 450 * ScreenSize.heightMultiplyingFactor,
-              // ),
-              Text(
-                "\nAbout the App: \n",
-                style: GoogleFonts.poppins(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16 * ScreenSize.heightMultiplyingFactor,
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // SizedBox(
+                //   height: 450 * ScreenSize.heightMultiplyingFactor,
+                // ),
+                Text(
+                  "\nAbout the App: \n",
+                  style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16 * ScreenSize.heightMultiplyingFactor,
+                  ),
                 ),
-              ),
-              Text(
-                "",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                  fontFamily: 'Poppins-Light',
+                Text(
+                  "Almost everyone of us had either lost or found any item in DTU but are unable to return it.This is app is the solution to all such problems.",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14 * ScreenSize.heightMultiplyingFactor,
+                    fontFamily: 'Poppins-Light',
+                  ),
+                  textAlign: TextAlign.left,
                 ),
-                textAlign: TextAlign.left,
-              ),
-              RichText(
-                text: TextSpan(
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "\nDevelopers of this Application:",
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontSize: 16 * ScreenSize.heightMultiplyingFactor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // ListView.builder(
+                //   physics: NeverScrollableScrollPhysics(),
+                //   shrinkWrap: true,
+                //   itemCount: names.length,
+                //   itemBuilder: (context, index) {
+                //     return Text(
+                //       names[index],
+                //       style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 14 * ScreenSize.heightMultiplyingFactor,
+                //         fontFamily: 'Poppins-Regular',
+                //       ),
+                //     );
+                //   },
+                // ),
+                Column(
                   children: [
-                    TextSpan(
-                      text: "\nDevelopers of this Application:",
-                      style: GoogleFonts.poppins(
-                        color: Colors.black,
-                        fontSize: 16 * ScreenSize.heightMultiplyingFactor,
-                        fontWeight: FontWeight.bold,
+                    ListTile(
+                      leading: Container(
+                        width: 60 * ScreenSize.widthMultiplyingFactor,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2FWhatsApp%20Image%202021-03-16%20at%2022.35.01.jpeg?alt=media&token=55746560-3f15-413f-a13b-62d8d2bb9330",
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        'Vaibhav Agarwal',
+                        style: GoogleFonts.montserrat(
+                          color: Colors.black,
+                          fontSize: 16 * ScreenSize.heightMultiplyingFactor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'SE     | DTU \'23',
+                            style: GoogleFonts.montserrat(
+                              color: Colors.black,
+                              fontSize: 14 * ScreenSize.heightMultiplyingFactor,
+                            ),
+                          ),
+                          Text(
+                            'vaibhavagarwal306@gmail.com',
+                            style: GoogleFonts.montserrat(
+                              color: Colors.black,
+                              fontSize: 14 * ScreenSize.heightMultiplyingFactor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Container(
+                        width: 60 * ScreenSize.widthMultiplyingFactor,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2FWhatsApp%20Image%202021-03-16%20at%2022.00.19.jpeg?alt=media&token=ea5a6360-dfe0-4bed-8ec6-550a654375fb",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        'Sameer Ahmed',
+                        style: GoogleFonts.montserrat(
+                          color: Colors.black,
+                          fontSize: 16 * ScreenSize.heightMultiplyingFactor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'COE | DTU \'23',
+                            style: GoogleFonts.montserrat(
+                              color: Colors.black,
+                              fontSize: 14 * ScreenSize.heightMultiplyingFactor,
+                            ),
+                          ),
+                          Text(
+                            'ahmedkhansameer50@gmail.com',
+                            style: GoogleFonts.montserrat(
+                              color: Colors.black,
+                              fontSize: 14 * ScreenSize.heightMultiplyingFactor,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ),
-              // ListView.builder(
-              //   physics: NeverScrollableScrollPhysics(),
-              //   shrinkWrap: true,
-              //   itemCount: names.length,
-              //   itemBuilder: (context, index) {
-              //     return Text(
-              //       names[index],
-              //       style: TextStyle(
-              //         color: Colors.black,
-              //         fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-              //         fontFamily: 'Poppins-Regular',
-              //       ),
-              //     );
-              //   },
-              // ),
-              Column(
-                children: [
-                  ListTile(
-                    leading: Container(
-                      width: 60 * ScreenSize.widthMultiplyingFactor,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2FWhatsApp%20Image%202021-03-16%20at%2022.35.01.jpeg?alt=media&token=55746560-3f15-413f-a13b-62d8d2bb9330",
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      'Vaibhav Agarwal',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontSize: 16 * ScreenSize.heightMultiplyingFactor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'SE     | DTU \'23',
-                          style: GoogleFonts.montserrat(
-                            color: Colors.black,
-                            fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                          ),
-                        ),
-                        Text(
-                          'vaibhavagarwal306@gmail.com',
-                          style: GoogleFonts.montserrat(
-                            color: Colors.black,
-                            fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    leading: Container(
-                      width: 60 * ScreenSize.widthMultiplyingFactor,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2FWhatsApp%20Image%202021-03-16%20at%2022.00.19.jpeg?alt=media&token=ea5a6360-dfe0-4bed-8ec6-550a654375fb",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      'Sameer Ahmed',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontSize: 16 * ScreenSize.heightMultiplyingFactor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'COE | DTU \'23',
-                          style: GoogleFonts.montserrat(
-                            color: Colors.black,
-                            fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                          ),
-                        ),
-                        Text(
-                          'ahmedkhansameer50@gmail.com',
-                          style: GoogleFonts.montserrat(
-                            color: Colors.black,
-                            fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10.0 * ScreenSize.heightMultiplyingFactor,
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "\nDeveloped with ❤ in Flutter",
-                      style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                      ),
-                    ),
-                    FlutterLogo(),
-                  ],
+                SizedBox(
+                  height: 10.0 * ScreenSize.heightMultiplyingFactor,
                 ),
-              ),
-            ],
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "\nDeveloped with ❤ in Flutter",
+                        style: GoogleFonts.montserrat(
+                          color: Colors.black,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 14 * ScreenSize.heightMultiplyingFactor,
+                        ),
+                      ),
+                      FlutterLogo(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

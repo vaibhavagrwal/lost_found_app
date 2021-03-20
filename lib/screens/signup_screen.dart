@@ -8,6 +8,9 @@ import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const _url = 'https://debugger13524.github.io/T-C/termsOfUse.html';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key key}) : super(key: key);
@@ -93,6 +96,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _confirmPasswordController.text = "";
     FocusScope.of(context).requestFocus(_nameFocusNode);
   }
+
+  void _launchURL() async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 
   @override
   Widget build(BuildContext context) {
@@ -450,36 +457,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ],
                             ),
                     ),
-                    GestureDetector(
+                    Container(
+                      padding: EdgeInsets.only(
+                        bottom: 10 * ScreenSize.heightMultiplyingFactor,
+                      ),
+                      child: GestureDetector(
                         onTap: () {
-                          showDialogFunc(context);
+                          try {
+                            _launchURL();
+                          } catch (e) {
+                            FirebaseRepository().showErrorFlushbar("Error",
+                                "An undefined error ocurred!", context);
+                          }
                         },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                            bottom: 10 * ScreenSize.heightMultiplyingFactor,
-                          ),
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'By Clicking Sign Up, You Agree To Our ',
-                              style: GoogleFonts.roboto(
-                                fontSize:
-                                    11 * ScreenSize.heightMultiplyingFactor,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: 'Term And Conditions',
-                                  style: GoogleFonts.roboto(
-                                    fontSize:
-                                        11 * ScreenSize.heightMultiplyingFactor,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(19, 60, 109, 1),
-                                  ),
-                                ),
-                              ],
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'By Clicking Sign Up, You Agree To Our ',
+                            style: GoogleFonts.roboto(
+                              fontSize: 11 * ScreenSize.heightMultiplyingFactor,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
                             ),
+                            children: [
+                              TextSpan(
+                                text: 'Term And Conditions',
+                                style: GoogleFonts.roboto(
+                                  fontSize:
+                                      11 * ScreenSize.heightMultiplyingFactor,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(19, 60, 109, 1),
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
+                      ),
 //                        text: Text(
 //                            'By Clicking Sign Up, You Agree To Our Term And Conditions',
 //                          style: GoogleFonts.roboto(
@@ -489,7 +501,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //                          ),
 //                        ),
 //                      ),
-                        )),
+                    ),
                   ],
                 ),
               ),
@@ -528,11 +540,13 @@ showDialogFunc(context) {
                         color: Color.fromRGBO(19, 60, 109, 1),
                         height: 15,
                         minWidth: 100,
-                        child: Text("ACCEPT",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            )),
+                        child: Text(
+                          "ACCEPT",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
                     ),
                   ),
