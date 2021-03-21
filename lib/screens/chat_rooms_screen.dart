@@ -146,7 +146,8 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         elevation: 1,
         shape: RoundedRectangleBorder(
@@ -172,7 +173,7 @@ class _ChatRoomState extends State<ChatRoom> {
           child: Column(children: [
             chatRoomsList(),
           ])),
-    );
+    ));
   }
 }
 
