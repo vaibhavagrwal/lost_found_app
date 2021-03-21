@@ -6,7 +6,6 @@ import 'package:lost_found_app/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login_screen.dart';
 import 'screens/root_screen.dart';
-import 'package:flutter/services.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -20,7 +19,7 @@ Future<void> main() async {
     Map json = jsonDecode(pref.getString('userData'));
     user = UserModel.fromJson(json);
   }
-  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
   runApp(MyApp(
     screen: pref.getString('userData') == null ? LoginScreen() : RootScreen(),
   ));
