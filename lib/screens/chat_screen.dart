@@ -134,7 +134,8 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.keyboard_backspace),
@@ -301,7 +302,7 @@ class _ChatState extends State<Chat> {
               : Container(),
         )
       ])),
-    );
+    ));
   }
 
   Widget buildSticker() {
