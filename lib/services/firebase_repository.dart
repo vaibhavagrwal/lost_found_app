@@ -797,12 +797,14 @@ class FirebaseRepository {
     try {
       final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) return;
+      print("1111111111");
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
       final GoogleAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+      print("122222222");
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
       bool isNewUser = userCredential.additionalUserInfo.isNewUser;
@@ -819,6 +821,7 @@ class FirebaseRepository {
           'isModerator': false,
         });
       }
+      print("3333333");
 
       SharedPreferences pref = await SharedPreferences.getInstance();
 
@@ -826,6 +829,7 @@ class FirebaseRepository {
           .collection('users')
           .doc(_auth.currentUser.uid)
           .get();
+      print("444444444");
       user = UserModel(
         userId: snapshot.data()['id'],
         name: snapshot.data()['name'],
@@ -834,6 +838,7 @@ class FirebaseRepository {
         phone: snapshot.data()['phone'],
         isModerator: snapshot.data()['isModerator'],
       );
+      print("5555555");
 
       String user1 = jsonEncode(user);
       pref.setString('userData', user1);
@@ -845,37 +850,47 @@ class FirebaseRepository {
         ),
       );
     } catch (error) {
+      print(error);
       String errorMessage;
-      switch (error.message) {
-        case "ERROR_INVALID_EMAIL":
-          errorMessage = "Your email address appears to be malformed.";
-          break;
-        case 'The password is invalid or the user does not have a password.':
-          errorMessage = "Your password is invalid.";
-          break;
-        case 'There is no user record corresponding to this identifier. The user may have been deleted.':
-          errorMessage = "User with this email doesn't exist.";
-          break;
-        case "ERROR_USER_DISABLED":
-          errorMessage = "User with this email has been disabled.";
-          break;
-        case "ERROR_TOO_MANY_REQUESTS":
-          errorMessage = "Too many requests. Try again later.";
-          break;
-        case 'com.google.android.gms.common.api.ApiException: 7:':
-          errorMessage = "Network error..!!.";
-          break;
-        case 'com.google.firebase.FirebaseException: An internal error has occurred. [ Unable to resolve host "www.googleapis.com":No address associated with hostname ]':
-          errorMessage = "Network Error!";
-          break;
-        default:
-          errorMessage = "An undefined Error occured.";
+
+      String s = "";
+      try {
+        s = error.message;
+        print(s);
+        switch (s) {
+          case "ERROR_INVALID_EMAIL":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case 'The password is invalid or the user does not have a password.':
+            errorMessage = "Your password is invalid.";
+            break;
+          case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "ERROR_USER_DISABLED":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "ERROR_TOO_MANY_REQUESTS":
+            errorMessage = "Too many requests. Try again later.";
+            break;
+          case "com.google.android.gms.common.api.ApiException: 7:":
+            errorMessage = "Network error..!!.";
+            break;
+          case 'com.google.firebase.FirebaseException: An internal error has occurred. [ Unable to resolve host "www.googleapis.com":No address associated with hostname ]':
+            errorMessage = "Network Error!";
+            break;
+          default:
+            errorMessage = "An undefined Error occured.";
+        }
+
+        print("Message " + error.message);
+        // _scaffoldKey.currentState.showSnackBar(
+        //   SnackBar(content: Text(errorMessage)),
+        // );
+        showErrorFlushbar("Error", errorMessage, context);
+      } catch (e) {
+        showErrorFlushbar("Error", "An undefined error occurred!!", context);
       }
-      print("Message " + error.message);
-      // _scaffoldKey.currentState.showSnackBar(
-      //   SnackBar(content: Text(errorMessage)),
-      // );
-      showErrorFlushbar("Error", errorMessage, context);
     }
   }
 }
