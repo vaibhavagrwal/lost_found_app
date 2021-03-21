@@ -22,6 +22,15 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   Stream ListofPeople;
   var num = [];
+  var image = [
+    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F1_6LEsoKZNNa3hif2Tu107vw.gif?alt=media&token=42029f7d-586f-4a49-ab1a-02a75552bc11',
+    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F77c5b7e9dd53143594f0663ba07b9c4c.png?alt=media&token=c7c5b4a0-a470-4a1d-b012-0cae60150ba1',
+    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F66377888_242269586730532_1532890469642947208_n.jpg?alt=media&token=2cfe880d-088b-48e0-a11b-53d88482546d',
+    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F06d0c1d123bf45368295da7e6744c186.webp?alt=media&token=c7f92b39-5afe-45a5-85f7-beb112897bb3',
+    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F11272992_1586350538290474_2098431562_n.jpg?alt=media&token=149bc158-0c5e-4ae5-aa12-adf712d511f7',
+    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F13734272_1629975600646084_1645582746_n.jpg?alt=media&token=53e2a503-e95d-4b6d-85ff-501ed7fb65fb',
+    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F2%20(1).jpg?alt=media&token=d254738f-3257-4d22-96e9-037b8ec6e2b4',
+  ];
 
   Widget chatRoomsList() {
     return StreamBuilder(
@@ -29,8 +38,13 @@ class _ChatRoomState extends State<ChatRoom> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? snapshot.data.docs.length == 0
-                ? Center(
-                    child: Text("No Chats Yet..!"),
+                ? Container(
+                    height: 600 * ScreenSize.heightMultiplyingFactor,
+                    child: Center(
+                      child: Text(
+                        "No Chats Yet..!",
+                      ),
+                    ),
                   )
                 : ListView.builder(
                     physics: BouncingScrollPhysics(),
@@ -76,6 +90,7 @@ class _ChatRoomState extends State<ChatRoom> {
                             .data.docs[snapshot.data.docs.length - index - 1]
                             .data()["lastMessage_sendBy"],
                         index: index,
+                        img: image[index % 7],
                       );
                     })
             : SizedBox(
@@ -172,6 +187,7 @@ class ChatRoomsTile extends StatelessWidget {
   int notification;
   final String lastMessageId;
   final int index;
+  final String img;
 
   ChatRoomsTile(
       {this.userName,
@@ -183,7 +199,8 @@ class ChatRoomsTile extends StatelessWidget {
       this.Unread,
       this.notification,
       this.lastMessageId,
-      this.index});
+      this.index,
+      this.img});
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +219,7 @@ class ChatRoomsTile extends StatelessWidget {
                         username: userName,
                         personID: personID,
                         personName: userName,
+                        img: img,
                       )));
             },
             child: Neumorphic(
@@ -221,10 +239,11 @@ class ChatRoomsTile extends StatelessWidget {
                       Positioned(
                         left: 0,
                         child: ClipOval(
-                          child: Image.asset(
-                            "lib/assets/face3.gif",
+                          child: Image(
+                            image: CachedNetworkImageProvider(img),
                             width: 55 * ScreenSize.widthMultiplyingFactor,
                             height: 55 * ScreenSize.heightMultiplyingFactor,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -244,7 +263,10 @@ class ChatRoomsTile extends StatelessWidget {
                           left: MediaQuery.of(context).size.width / 6,
                           top: 0,
                           child: Text(
-                              userName[0].toUpperCase() + userName.substring(1),
+                              userName.length > 16
+                                  ? userName.substring(0, 13) + "..."
+                                  : userName[0].toUpperCase() +
+                                      userName.substring(1),
                               textAlign: TextAlign.start,
                               style: GoogleFonts.poppins(
                                   color: Color(0xff505C6B),
@@ -279,9 +301,13 @@ class ChatRoomsTile extends StatelessWidget {
                                           onPressed: () {},
                                         )
                                   : Text(
-                                      senderName[0].toUpperCase() +
-                                          senderName.substring(1) +
-                                          "  :  ",
+                                      senderName.length > 16
+                                          ? senderName.substring(0, 13) +
+                                              "..." +
+                                              "  :  "
+                                          : senderName[0].toUpperCase() +
+                                              senderName.substring(1) +
+                                              "  :  ",
                                       style: GoogleFonts.poppins(
                                           fontWeight:
                                               lastMessageId == user.userId
@@ -289,7 +315,10 @@ class ChatRoomsTile extends StatelessWidget {
                                                   : notification != 0
                                                       ? FontWeight.normal
                                                       : FontWeight.bold)),
-                              Text(lastMessage,
+                              Text(
+                                  lastMessage.length > 20
+                                      ? lastMessage.substring(0, 18) + "..."
+                                      : lastMessage,
                                   style: GoogleFonts.poppins(
                                       fontWeight: lastMessageId == user.userId
                                           ? FontWeight.normal

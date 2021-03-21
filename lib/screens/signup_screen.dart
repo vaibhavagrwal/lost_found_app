@@ -8,6 +8,9 @@ import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/custom_flat_button.dart';
 import 'package:lost_found_app/widgets/round_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const _url = 'https://debugger13524.github.io/T-C/termsOfUse.html';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key key}) : super(key: key);
@@ -94,6 +97,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     FocusScope.of(context).requestFocus(_nameFocusNode);
   }
 
+  void _launchURL() async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Center(
                       child: Image(
                         width: double.infinity,
-                        height: 120 * ScreenSize.heightMultiplyingFactor,
+                        height: 160 * ScreenSize.heightMultiplyingFactor,
                         image: AssetImage(
                           "lib/assets/logo.png",
                         ),
@@ -454,25 +461,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: EdgeInsets.only(
                         bottom: 10 * ScreenSize.heightMultiplyingFactor,
                       ),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'By Clicking Sign Up, You Agree To Our ',
-                          style: GoogleFonts.roboto(
-                            fontSize: 11 * ScreenSize.heightMultiplyingFactor,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Term And Conditions',
-                              style: GoogleFonts.roboto(
-                                fontSize:
-                                    11 * ScreenSize.heightMultiplyingFactor,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(19, 60, 109, 1),
-                              ),
+                      child: GestureDetector(
+                        onTap: () {
+                          try {
+                            _launchURL();
+                          } catch (e) {
+                            FirebaseRepository().showErrorFlushbar("Error",
+                                "An undefined error ocurred!", context);
+                          }
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'By Clicking Sign Up, You Agree To Our ',
+                            style: GoogleFonts.roboto(
+                              fontSize: 11 * ScreenSize.heightMultiplyingFactor,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
                             ),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: 'Term And Conditions',
+                                style: GoogleFonts.roboto(
+                                  fontSize:
+                                      11 * ScreenSize.heightMultiplyingFactor,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(19, 60, 109, 1),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
 //                        text: Text(
@@ -494,4 +511,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+}
+
+showDialogFunc(context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15),
+              height: 320,
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    // width: 200,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: FlatButton(
+                        onPressed: () {},
+                        color: Color.fromRGBO(19, 60, 109, 1),
+                        height: 15,
+                        minWidth: 100,
+                        child: Text(
+                          "ACCEPT",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

@@ -112,7 +112,7 @@ class _FoundReviewListState extends State<FoundReviewList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LostItemDetailScreen(
+                          builder: (context) => ItemDetailScreen(
                             ownerId: ownerId,
                             postId: postId,
                             type: "Found",
@@ -223,7 +223,7 @@ class _LostReviewListState extends State<LostReviewList> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LostItemDetailScreen(
+                          builder: (context) => ItemDetailScreen(
                             ownerId: ownerId,
                             postId: postId,
                             type: "Lost",
