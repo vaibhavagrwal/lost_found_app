@@ -228,8 +228,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         child: Container(
                             height: 30 * ScreenSize.heightMultiplyingFactor,
                             //width: width / 2,
-                            child: Flexible(
-                                child: Text(
+                            child: Text(
                               widget.type == 'Lost'
                                   ? '    Lost By : ' +
                                       (currentPost == null
@@ -245,7 +244,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                   fontSize:
                                       15 * ScreenSize.heightMultiplyingFactor,
                                   fontWeight: FontWeight.bold),
-                            )))),
+                            ))),
                     Container(
                       margin:
                           EdgeInsets.symmetric(vertical: 12.0 * height * 0.002),
