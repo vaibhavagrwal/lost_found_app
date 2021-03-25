@@ -80,10 +80,10 @@ class _RootScreenState extends State<RootScreen> {
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              /*borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(34.0),
                 topRight: Radius.circular(34.0),
-              ),
+              ),*/
               child: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
                 items: <BottomNavigationBarItem>[

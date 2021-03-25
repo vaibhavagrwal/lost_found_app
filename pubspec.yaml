@@ -55,7 +55,7 @@ dependencies:
   esys_flutter_share: ^1.0.2
   url_launcher: ^6.0.2
   integration_test: ^1.0.2+2
-
+  
   slimy_card:
     git:
       url: https://github.com/sxmeer-ahmed/SlimyCard-Animated-Flutter-Package
