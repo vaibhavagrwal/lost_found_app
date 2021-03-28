@@ -36,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget profilePageAppBar() {
     return Scaffold(
-      drawer: DrawerScreen(),
+      // drawer: DrawerScreen(),
       appBar: PreferredSize(
         preferredSize:
             Size.fromHeight(221.0 * ScreenSize.heightMultiplyingFactor),
@@ -68,15 +68,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    /*CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 50.0,
-                      backgroundImage: CachedNetworkImageProvider(
-                        user.imageUrl == ""
-                            ? "https://i.pinimg.com/474x/67/c3/d6/67c3d63e215e034e01d45c8256d720d3.jpg"
-                            : user.imageUrl,
-                      ),
-                    ),*/
                     ClipOval(
                       child: Image.asset(
                         "lib/assets/face1.gif",
@@ -92,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       userName,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.roboto(
+                      style: GoogleFonts.poppins(
                         //fontFamily: 'Poppins-Medium',
                         fontWeight: FontWeight.bold,
                         fontSize: 25.0 * ScreenSize.heightMultiplyingFactor,
@@ -161,8 +152,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       "Edit Profile",
-                      style: TextStyle(
-                        fontFamily: 'Poppins-Regular',
+                      // style: TextStyle(
+                      //   fontFamily: 'Poppins-Regular',
+                      //   fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
+                      // ),
+                      style: GoogleFonts.poppins(
                         fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
                       ),
                     ),
@@ -206,14 +200,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: 13.0 * ScreenSize.widthMultiplyingFactor,
           ),
           Flexible(
-              child: Text(
-            title,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontFamily: 'Poppins-Regular',
-              fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.roboto(
+                fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
+              ),
             ),
-          )),
+          ),
         ],
       ),
     );

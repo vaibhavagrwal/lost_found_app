@@ -43,6 +43,9 @@ class _ChatRoomState extends State<ChatRoom> {
                     child: Center(
                       child: Text(
                         "No Chats Yet..!",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 15 * ScreenSize.heightMultiplyingFactor,
+                        ),
                       ),
                     ),
                   )

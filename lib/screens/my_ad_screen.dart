@@ -24,7 +24,7 @@ class _MyAdScreenState extends State<MyAdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerScreen(),
+      // drawer: DrawerScreen(),
       appBar: AppBar(
         toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
         elevation: 1,
@@ -39,11 +39,12 @@ class _MyAdScreenState extends State<MyAdScreen> {
           color: Colors.white,
         ),
         title: Text(
-          "My Ads ",
+          "    My Posts ",
           style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
-              fontWeight: FontWeight.w600),
+            color: Colors.white,
+            fontSize: 20 * ScreenSize.heightMultiplyingFactor,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: MyList(),
@@ -71,7 +72,10 @@ class _MyListState extends State<MyList> {
             if (snapshot.data.docs.length == 0) {
               return Center(
                 child: Text(
-                  "No Ads to Display",
+                  "No Posts to Display",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 15 * ScreenSize.heightMultiplyingFactor,
+                  ),
                 ),
               );
             }

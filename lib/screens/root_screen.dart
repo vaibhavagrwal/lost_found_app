@@ -14,6 +14,8 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
   int _selectedIndex = 0;
   String _currentPage = "Home";
+  final GlobalKey<ScaffoldState> _globalScaffoldkey =
+      new GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
@@ -70,6 +72,7 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
       },
       child: SafeArea(
         child: Scaffold(
+          // key: _globalScaffoldkey,
           body: Stack(children: <Widget>[
             _buildOffstageNavigator("Home"),
             _buildOffstageNavigator("CreateAd"),

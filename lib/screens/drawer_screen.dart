@@ -9,6 +9,7 @@ import 'package:lost_found_app/screens/my_ad_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import '../main.dart';
+import './root_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -71,17 +72,18 @@ class _DrawerScreenState extends State<DrawerScreen> {
           //and let's copy that and modify it
           Column(
             children: [
-              Tile(
-                "My Posts",
-                () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyAdScreen(),
-                    ),
-                  );
-                },
-              ),
+              // Tile(
+              //   "My Posts",
+              //   () {
+              //     // Navigator.push(
+              //     //   context,
+              //     //   MaterialPageRoute(
+              //     //     builder: (context) => MyAdScreen(),
+              //     //   ),
+              //     // );
+
+              //   },
+              // ),
               SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor),
               Tile(
                 "My Chats",
