@@ -8,6 +8,7 @@ import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lost_found_app/util/screen_size.dart';
+import 'drawer_screen.dart';
 
 class CreateAdScreen extends StatefulWidget {
   @override
@@ -235,6 +236,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerScreen(),
       appBar: AppBar(
         toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
         elevation: 1,
@@ -246,7 +248,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
         ),
         backgroundColor: primaryColour,
         iconTheme: IconThemeData(
-          color: Color.fromRGBO(44, 62, 80, 1),
+          color: Colors.white,
         ),
         title: Text(
           " Create Post ",
@@ -308,6 +310,11 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                                                     .height *
                                                 0.1,
                                             color: primaryColour,
+                                          ),
+                                          SizedBox(
+                                            height: 16 *
+                                                ScreenSize
+                                                    .heightMultiplyingFactor,
                                           ),
                                           Text(
                                             'Select a photo',

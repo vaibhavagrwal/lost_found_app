@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:lost_found_app/screens/tab_navigator.dart';
 import 'package:lost_found_app/util/screen_size.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class RootScreen extends StatefulWidget {
   @override
   _RootScreenState createState() => _RootScreenState();
 }
 
-class _RootScreenState extends State<RootScreen> {
+class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
   int _selectedIndex = 0;
   String _currentPage = "Home";
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   List<String> pageKeys = ["Home", "CreateAd", "MyAd", "Profile"];
 
@@ -40,6 +47,7 @@ class _RootScreenState extends State<RootScreen> {
       setState(() {
         _currentPage = pageKeys[index];
         _selectedIndex = index;
+        //_tabController.index = index;
       });
     }
   }
@@ -69,6 +77,73 @@ class _RootScreenState extends State<RootScreen> {
             _buildOffstageNavigator("Profile"),
           ]),
           bottomNavigationBar: Container(
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+            ]),
+            child: SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                child: GNav(
+                  haptic: true, // haptic feedback
+                  tabBorderRadius: 15,
+                  //tabActiveBorder: Border.all(
+                  //color: Colors.black, width: 1), // tab button border
+                  //tabBorder: Border.all(color: Colors.grey, width: 1),
+                  rippleColor: Color.fromRGBO(19, 60, 109, 1),
+                  hoverColor: Color.fromRGBO(19, 60, 109, 0.5),
+                  gap: 7,
+                  activeColor: Colors.white,
+                  iconSize: 26,
+                  color: Color.fromRGBO(19, 60, 109, 1),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  duration: Duration(milliseconds: 400),
+                  tabBackgroundColor: Color.fromRGBO(19, 60, 109, 1),
+                  tabs: [
+                    GButton(
+                      icon: Icons.home,
+                      text: 'Home',
+                    ),
+                    GButton(
+                      icon: FontAwesomeIcons.plusCircle,
+                      text: 'Create Post',
+                    ),
+                    GButton(
+                      icon: Icons.receipt,
+                      text: 'My Posts',
+                    ),
+                    GButton(
+                      icon: Icons.person,
+                      text: 'Profile',
+                    ),
+                  ],
+                  selectedIndex: _selectedIndex,
+                  onTabChange: (int index) {
+                    _onItemTapped(pageKeys[index], index);
+                  },
+                ),
+              ),
+            ),
+          ), /*MotionTabBar(
+            labels: ["HOME", "CREATE AD", "MY ADS", "PROFILE"],
+            initialSelectedTab: "HOME",
+            tabIconColor: Color.fromRGBO(19, 60, 109, 1),
+            tabSelectedColor: Color.fromRGBO(19, 60, 109, 1),
+            onTabItemSelected: (int index) {
+              _onItemTapped(pageKeys[index], index);
+            },
+            icons: [
+              FontAwesomeIcons.home,
+              FontAwesomeIcons.plusCircle,
+              Icons.receipt,
+              Icons.person
+            ],
+            textStyle: GoogleFonts.roboto(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),*/
+          /*Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(37), topLeft: Radius.circular(37)),
@@ -178,7 +253,7 @@ class _RootScreenState extends State<RootScreen> {
                 },
               ),
             ),
-          ),
+          ),*/
         ),
       ),
     );

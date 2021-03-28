@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               curve: Curves.easeInCirc,
               speed: Duration(milliseconds: 200),
               pause: Duration(milliseconds: 6000),
-              textStyle: GoogleFonts.italiana(
+              textStyle: GoogleFonts.poppins(
                 color: primaryColour,
                 fontSize: 28 * ScreenSize.heightMultiplyingFactor,
                 fontWeight: FontWeight.bold,

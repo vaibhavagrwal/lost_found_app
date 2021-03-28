@@ -144,17 +144,23 @@ class _ChatState extends State<Chat> {
                   MaterialPageRoute(builder: (context) => ChatRoom()));
             },
           ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(20.0),
+              bottomLeft: Radius.circular(20.0),
+            ),
+          ),
+          backgroundColor: Color.fromRGBO(19, 60, 109, 1),
           iconTheme: IconThemeData(
-            color: Color.fromRGBO(44, 62, 80, 1),
+            color: Colors.white,
           ),
           title: Row(children: [
             ClipOval(
               child: Image(
                 image: CachedNetworkImageProvider(widget.img),
-                width: 50 * ScreenSize.widthMultiplyingFactor,
-                height: 50 * ScreenSize.heightMultiplyingFactor,
+                width: 45 * ScreenSize.widthMultiplyingFactor,
+                height: 45 * ScreenSize.heightMultiplyingFactor,
                 fit: BoxFit.cover,
               ),
             ),
@@ -164,8 +170,8 @@ class _ChatState extends State<Chat> {
                   ? widget.personName.substring(0, 13) + "..."
                   : widget.personName[0].toUpperCase() +
                       widget.personName.substring(1),
-              style: GoogleFonts.roboto(
-                  color: Color.fromRGBO(44, 62, 80, 1),
+              style: GoogleFonts.poppins(
+                  color: Colors.white,
                   fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                   fontWeight: FontWeight.bold),
             ),
@@ -355,13 +361,20 @@ class MessageTile extends StatelessWidget {
       index == 0
           ? Padding(
               padding: EdgeInsetsDirectional.only(
-                  bottom: 20 * ScreenSize.heightMultiplyingFactor),
+                  bottom: 20 * ScreenSize.heightMultiplyingFactor,
+                  top: 10 * ScreenSize.heightMultiplyingFactor,
+                  start: 5 * ScreenSize.heightMultiplyingFactor,
+                  end: 5 * ScreenSize.heightMultiplyingFactor),
               child: Container(
                 color: Colors.redAccent.withOpacity(0.5),
-                child: Text(
-                  "NOTE : You are only allowed to send 50 messages to a particular user. Please switch to other platform for contact if you want to talk further.",
-                  style: GoogleFonts.roboto(fontWeight: FontWeight.bold),
-                ),
+                child: Padding(
+                    padding: EdgeInsetsDirectional.only(
+                        start: 5 * ScreenSize.heightMultiplyingFactor,
+                        end: 5 * ScreenSize.heightMultiplyingFactor),
+                    child: Text(
+                      "NOTE : You are only allowed to send 50 messages to a particular user. Please switch to other platform for contact if you want to talk further.",
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                    )),
               ))
           : Container(),
       index == 0

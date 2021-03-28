@@ -152,8 +152,8 @@ class _ChatRoomState extends State<ChatRoom> {
         elevation: 1,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(30.0),
-            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(20.0),
+            bottomLeft: Radius.circular(20.0),
           ),
         ),
         backgroundColor: primaryColour,

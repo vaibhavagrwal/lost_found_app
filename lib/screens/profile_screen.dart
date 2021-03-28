@@ -5,6 +5,7 @@ import 'package:lost_found_app/models/user_model.dart';
 import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
+import 'drawer_screen.dart';
 
 import '../main.dart';
 
@@ -35,6 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget profilePageAppBar() {
     return Scaffold(
+      drawer: DrawerScreen(),
       appBar: PreferredSize(
         preferredSize:
             Size.fromHeight(221.0 * ScreenSize.heightMultiplyingFactor),

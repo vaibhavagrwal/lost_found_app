@@ -46,13 +46,15 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              width: size.width,
-              child: Image(
-                image: logo,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
+            Positioned(
+                top: size.height * 0.08,
+                child: Container(
+                  width: size.width,
+                  child: Image(
+                    image: logo,
+                    fit: BoxFit.fitWidth,
+                  ),
+                )),
             Positioned(
               top: size.height * 0.68,
               child: TyperAnimatedTextKit(

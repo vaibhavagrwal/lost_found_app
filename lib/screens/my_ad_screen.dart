@@ -6,6 +6,7 @@ import 'package:lost_found_app/screens/item_detail_screen.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/item_tile.dart';
+import 'drawer_screen.dart';
 
 import '../main.dart';
 
@@ -23,6 +24,7 @@ class _MyAdScreenState extends State<MyAdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerScreen(),
       appBar: AppBar(
         toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
         elevation: 1,
@@ -34,7 +36,7 @@ class _MyAdScreenState extends State<MyAdScreen> {
         ),
         backgroundColor: primaryColour,
         iconTheme: IconThemeData(
-          color: Color.fromRGBO(44, 62, 80, 1),
+          color: Colors.white,
         ),
         title: Text(
           "My Ads ",
