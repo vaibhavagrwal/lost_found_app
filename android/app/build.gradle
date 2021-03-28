@@ -41,7 +41,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.vaibhavagarwal.lost_found_app"
+        applicationId "com.dtu.milakya"
         multiDexEnabled true
         minSdkVersion 21
         targetSdkVersion 29

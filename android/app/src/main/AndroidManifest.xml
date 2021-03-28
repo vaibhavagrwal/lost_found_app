@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lost_found_app">
+    package="com.dtu.milakya">
    <application
         android:label="Mila Kya"
         android:icon="@mipmap/launcher_icon">

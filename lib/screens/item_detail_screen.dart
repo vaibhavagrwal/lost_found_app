@@ -383,7 +383,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             bottom: height * 0.02),
                         child: AnimatedButton(
                           child: Text(
-                            widget.type == 'Lost' ? 'CLAIM' : 'CLAIM',
+                            widget.type == 'Lost' ? 'HELP' : 'CLAIM',
                             style: GoogleFonts.poppins(
                               fontSize: 22,
                               color: Colors.black,

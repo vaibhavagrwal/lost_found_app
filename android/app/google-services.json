@@ -7,12 +7,65 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1085692835161:android:9a5a05927d48d6b4bd4848",
+        "android_client_info": {
+          "package_name": "com.dtu.milakya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085692835161-h89549hrdtjr8f9543gr7ne4lck7mvus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsagEFn4MPhoNnq0nEVzGj2MCXJRqfj1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085692835161-h89549hrdtjr8f9543gr7ne4lck7mvus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1085692835161:android:b0b1606be4727c55bd4848",
         "android_client_info": {
           "package_name": "com.vaibhavagarwal.lost_found_app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1085692835161-40tis0f7d9uh3a44gokr7flv11vaan2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vaibhavagarwal.lost_found_app",
+            "certificate_hash": "e33a9524f1c4927f7c12d14396896f2e1d77441f"
+          }
+        },
+        {
+          "client_id": "1085692835161-jhh7btpisntd327n2gt8atl3kjegkqsg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vaibhavagarwal.lost_found_app",
+            "certificate_hash": "0ad25c2e372721daed7713a9f68115e34a77dbae"
+          }
+        },
+        {
+          "client_id": "1085692835161-pmk6ievf66lt0nm4jqhdib3r7r2u5q8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vaibhavagarwal.lost_found_app",
+            "certificate_hash": "2299ed6d031a3532a51645bbb5e445bf52fb5865"
+          }
+        },
         {
           "client_id": "1085692835161-ticgr926hhnusle9hgqvr1ojevb1v647.apps.googleusercontent.com",
           "client_type": 1,

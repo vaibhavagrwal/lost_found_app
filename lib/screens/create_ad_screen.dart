@@ -455,33 +455,33 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         ),
                       ),
                     ),
-                    Divider(),
-                    ListTile(
-                      leading: FaIcon(
-                        FontAwesomeIcons.listAlt,
-                        color: primaryColour,
-                      ),
-                      title: Container(
-                        width: 250.0 * ScreenSize.widthMultiplyingFactor,
-                        child: TextFormField(
-                          controller: categoryController,
-                          decoration: InputDecoration(
-                            hintText: "Write a category...",
-                            hintStyle: GoogleFonts.poppins(),
-                            border: InputBorder.none,
-                          ),
-                          validator: (val) {
-                            if (val.length == 0) {
-                              return "Category cannot be empty!";
-                            }
-                            return null;
-                          },
-                          onSaved: (val) {
-                            category = val;
-                          },
-                        ),
-                      ),
-                    ),
+                    // Divider(),
+                    // ListTile(
+                    //   leading: FaIcon(
+                    //     FontAwesomeIcons.listAlt,
+                    //     color: primaryColour,
+                    //   ),
+                    //   title: Container(
+                    //     width: 250.0 * ScreenSize.widthMultiplyingFactor,
+                    //     child: TextFormField(
+                    //       controller: categoryController,
+                    //       decoration: InputDecoration(
+                    //         hintText: "Write a category...",
+                    //         hintStyle: GoogleFonts.poppins(),
+                    //         border: InputBorder.none,
+                    //       ),
+                    //       validator: (val) {
+                    //         if (val.length == 0) {
+                    //           return "Category cannot be empty!";
+                    //         }
+                    //         return null;
+                    //       },
+                    //       onSaved: (val) {
+                    //         category = val;
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
                     Divider(),
                     ListTile(
                       leading: FaIcon(
