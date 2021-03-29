@@ -88,12 +88,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Tile(
                 "My Chats",
                 () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatRoom(),
-                    ),
-                  );
+                  navigatorKey.currentState.push(
+                      MaterialPageRoute(builder: (context) => ChatRoom()));
                 },
               ),
               SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor),

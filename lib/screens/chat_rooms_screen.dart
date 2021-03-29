@@ -93,7 +93,12 @@ class _ChatRoomState extends State<ChatRoom> {
                             .data.docs[snapshot.data.docs.length - index - 1]
                             .data()["lastMessage_sendBy"],
                         index: index,
-                        img: image[index % 7],
+                        img: image[snapshot.data
+                                .docs[snapshot.data.docs.length - index - 1]
+                                .data()["user_ID"]
+                                .toString()
+                                .codeUnitAt(1) %
+                            7],
                       );
                     })
             : SizedBox(

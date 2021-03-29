@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/screens/tab_navigator.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:jumping_bottom_nav_bar/jumping_bottom_nav_bar.dart';
 
 class RootScreen extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class RootScreen extends StatefulWidget {
 }
 
 class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   String _currentPage = "Home";
   final GlobalKey<ScaffoldState> _globalScaffoldkey =
       new GlobalKey<ScaffoldState>();
@@ -22,12 +23,13 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  List<String> pageKeys = ["Home", "CreateAd", "MyAd", "Profile"];
+  List<String> pageKeys = ["Home", "MyAd", "CreateAd", "Map", "Profile"];
 
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
     "Home": GlobalKey<NavigatorState>(),
-    "CreateAd": GlobalKey<NavigatorState>(),
     "MyAd": GlobalKey<NavigatorState>(),
+    "CreateAd": GlobalKey<NavigatorState>(),
+    "Map": GlobalKey<NavigatorState>(),
     "Profile": GlobalKey<NavigatorState>(),
   };
 
@@ -47,7 +49,7 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
       _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
     } else {
       setState(() {
-        _currentPage = pageKeys[index];
+        _currentPage = pageKeys[index - 1];
         _selectedIndex = index;
         //_tabController.index = index;
       });
@@ -62,7 +64,7 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
             !await _navigatorKeys[_currentPage].currentState.maybePop();
         if (isFirstRouteInCurrentTab) {
           if (_currentPage != "Home") {
-            _onItemTapped("Home", 0);
+            _onItemTapped("Home", 1);
 
             return false;
           }
@@ -78,8 +80,56 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
             _buildOffstageNavigator("CreateAd"),
             _buildOffstageNavigator("MyAd"),
             _buildOffstageNavigator("Profile"),
+            _buildOffstageNavigator("Map"),
           ]),
-          bottomNavigationBar: Container(
+          bottomNavigationBar: JumpingTabBar(
+            onChangeTab: (int index) {
+              print(index);
+              _onItemTapped(pageKeys[index - 1], index);
+            },
+            backgroundColor: Color.fromRGBO(19, 60, 109, 1),
+            circleGradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(19, 60, 109, 1),
+                Color.fromRGBO(19, 60, 130, 1),
+              ],
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+            ),
+            items: [
+              TabItemIcon(
+                iconData: Icons.home,
+                startColor: Colors.white,
+                endColor: Colors.white,
+                curveColor: Colors.white,
+              ),
+              TabItemIcon(
+                iconData: Icons.receipt,
+                startColor: Colors.white,
+                endColor: Colors.white,
+                curveColor: Colors.white,
+              ),
+              TabItemIcon(
+                iconData: FontAwesomeIcons.plusCircle,
+                startColor: Colors.white,
+                endColor: Colors.white,
+                curveColor: Colors.white,
+              ),
+              TabItemIcon(
+                iconData: Icons.map,
+                startColor: Colors.white,
+                endColor: Colors.white,
+                curveColor: Colors.white,
+              ),
+              TabItemIcon(
+                iconData: Icons.person,
+                startColor: Colors.white,
+                endColor: Colors.white,
+                curveColor: Colors.white,
+              ),
+            ],
+            selectedIndex: _selectedIndex,
+          ), /*Container(
             decoration: BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
             ]),
@@ -119,6 +169,10 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
                       icon: Icons.person,
                       text: 'Profile',
                     ),
+                    GButton(
+                      icon: Icons.person,
+                      text: 'M',
+                    ),
                   ],
                   selectedIndex: _selectedIndex,
                   onTabChange: (int index) {
@@ -127,7 +181,7 @@ class _RootScreenState extends State<RootScreen> with TickerProviderStateMixin {
                 ),
               ),
             ),
-          ), /*MotionTabBar(
+          ),*/ /*MotionTabBar(
             labels: ["HOME", "CREATE AD", "MY ADS", "PROFILE"],
             initialSelectedTab: "HOME",
             tabIconColor: Color.fromRGBO(19, 60, 109, 1),

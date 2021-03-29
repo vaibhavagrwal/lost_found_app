@@ -2,15 +2,17 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_found_app/models/user_model.dart';
+import 'package:lost_found_app/screens/onboarding_screen.dart';
 import 'package:lost_found_app/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/login_screen.dart';
 import 'screens/root_screen.dart';
+import 'package:flutter_google_maps/flutter_google_maps.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 UserModel user;
 Future<void> main() async {
+  GoogleMap.init('API_KEY');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences pref = await SharedPreferences.getInstance();
@@ -21,7 +23,8 @@ Future<void> main() async {
   }
 
   runApp(MyApp(
-    screen: pref.getString('userData') == null ? LoginScreen() : RootScreen(),
+    screen:
+        pref.getString('userData') == null ? OnboardingScreen() : RootScreen(),
   ));
 }
 
