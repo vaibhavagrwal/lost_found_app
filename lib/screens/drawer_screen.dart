@@ -115,12 +115,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   ? Tile(
                       "Review",
                       () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ModeratorScreen(),
-                          ),
-                        );
+                        navigatorKey.currentState.push(MaterialPageRoute(
+                            builder: (context) => ModeratorScreen()));
                       },
                     )
                   : Container(),
@@ -130,12 +126,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Tile(
                 "About Us",
                 () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AboutUs(),
-                    ),
-                  );
+                  navigatorKey.currentState
+                      .push(MaterialPageRoute(builder: (context) => AboutUs()));
                 },
               ),
               SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor),

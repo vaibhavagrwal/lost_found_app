@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,6 +24,24 @@ class _MapScreenState extends State<MapScreen> {
   bool _darkMapStyle = false;
   String _mapStyle;
   TextEditingController textController = TextEditingController();
+  bool _isSearching = false;
+  String _searchText = "";
+
+  _searchListState() {
+    textController.addListener(() {
+      if (textController.text.isEmpty) {
+        setState(() {
+          _isSearching = false;
+          _searchText = "";
+        });
+      } else {
+        setState(() {
+          _isSearching = true;
+          _searchText = textController.text;
+        });
+      }
+    });
+  }
 
   LocationData _userLoc;
   LocationService _locSer = LocationService();
@@ -108,9 +127,50 @@ class _MapScreenState extends State<MapScreen> {
     28.747722: 77.118213,
     28.750922: 77.115567,
   };
-
+  List<String> placeNames = [];
+  List<String> filteredNames = [];
   @override
   Widget build(BuildContext context) {
+    placeNames = [
+      "Ground",
+      "Library",
+      "Sports Complex",
+      "Mic Mac",
+      "Maggi Baba",
+      "Post Office",
+      "Gym",
+      "SBI",
+      "Mechanical Canteen",
+      "Amul",
+      "Juice Corner",
+      "Nescafe",
+      "Stationary",
+      "Kissing Point",
+      "Race Track",
+      "Wind Point",
+      "Science Block",
+      "Library Registration",
+      "Technology Incubator",
+      "Joint Registrar",
+      "Senate Hall ",
+      "DTU Lake",
+      "BR Ambedkar Audi",
+      "Smart Classroom",
+      "Computer Centre",
+      "Physics Lab",
+      "Chemistry Labs ",
+      "SPS 1-8",
+      "SPS 9-12",
+      "Washroom 1",
+      "Washroom 2",
+      "Mechanical Workshop",
+      "Admin Block",
+      "Girl's Hostel",
+      "Design Centre", //new places
+      "New Hostel 1",
+      "New Hostel 2",
+      "Raj Soin Hall",
+    ];
     _locSer.getLocation().then((value) => _userLoc = value);
     return Scaffold(
       key: _scaffoldKey,
@@ -177,8 +237,8 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           Positioned(
-            top: 16,
-            left: 16,
+            top: 16 * ScreenSize.heightMultiplyingFactor,
+            left: 16 * ScreenSize.widthMultiplyingFactor,
             child: FloatingActionButton(
               child: Icon(Icons.person_pin_circle),
               onPressed: () async {
@@ -215,47 +275,84 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           Positioned(
-              top: 64,
-              left: 16,
-              child: AnimSearchBar(
-                width: 300,
-                textController: textController,
-                suffixIcon: Icon(Icons.search),
-                onSuffixTap: () {
-                  final bounds = GeoCoordBounds(
-                    northeast: GeoCoord(namepoints[textController.text],
-                        latofpoint[namepoints[textController.text]]),
-                    southwest: GeoCoord(namepoints[textController.text],
-                        latofpoint[namepoints[textController.text]]),
-                  );
-                  GoogleMap.of(_key).moveCameraBounds(bounds);
-                  GoogleMap.of(_key).addMarkerRaw(
-                    GeoCoord(
-                      (bounds.northeast.latitude + bounds.southwest.latitude) /
-                          2,
-                      (bounds.northeast.longitude +
-                              bounds.southwest.longitude) /
-                          2,
+            top: 64 * ScreenSize.heightMultiplyingFactor,
+            left: 16 * ScreenSize.widthMultiplyingFactor,
+            // child: AnimSearchBar(
+            //   width: 300,
+            //   textController: textController,
+            //   suffixIcon: Icon(
+            //     Icons.search,
+            //   ),
+            //   onSuffixTap: () {
+            //     final bounds = GeoCoordBounds(
+            //       northeast: GeoCoord(namepoints[textController.text],
+            //           latofpoint[namepoints[textController.text]]),
+            //       southwest: GeoCoord(namepoints[textController.text],
+            //           latofpoint[namepoints[textController.text]]),
+            //     );
+            //     GoogleMap.of(_key).moveCameraBounds(bounds);
+            //     GoogleMap.of(_key).addMarkerRaw(
+            //       GeoCoord(
+            //         (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+            //         (bounds.northeast.longitude + bounds.southwest.longitude) /
+            //             2,
+            //       ),
+            //       onTap: (markerId) async {
+            //         await showDialog(
+            //           context: context,
+            //           builder: (context) => AlertDialog(
+            //             content: Text("Welcome to " + textController.text,
+            //                 style: GoogleFonts.poppins(
+            //                     fontSize: 24, fontWeight: FontWeight.bold)),
+            //             actions: <Widget>[
+            //               FlatButton(
+            //                 onPressed: Navigator.of(context).pop,
+            //                 child: Text('CLOSE'),
+            //               ),
+            //             ],
+            //           ),
+            //         );
+            //       },
+            //     );
+            //   },
+            // ),
+            child: Container(
+              width: 200,
+              height: double.infinity,
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: TextField(
+                      controller: textController,
+                      onChanged: (str) {
+                        _searchListState();
+                        setState(() {
+                          filteredNames = placeNames
+                              .where(
+                                (name) => (name.toLowerCase().contains(
+                                      str.toLowerCase(),
+                                    )),
+                              )
+                              .toList();
+                          print(filteredNames.length);
+                          print(_isSearching);
+                        });
+                      },
                     ),
-                    onTap: (markerId) async {
-                      await showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          content: Text("Welcome to " + textController.text,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 24, fontWeight: FontWeight.bold)),
-                          actions: <Widget>[
-                            FlatButton(
-                              onPressed: Navigator.of(context).pop,
-                              child: Text('CLOSE'),
-                            ),
-                          ],
+                  ),
+                  !_isSearching
+                      ? Container()
+                      : Expanded(
+                          child: SearchList(
+                            filter: filteredNames,
+                          ),
                         ),
-                      );
-                    },
-                  );
-                },
-              )),
+                ],
+              ),
+            ),
+          ),
           Positioned(
             top: 16,
             right: kIsWeb ? 60 : 16,
@@ -500,3 +597,34 @@ const contentString = r'''
   </div>
 </div>
 ''';
+
+class SearchList extends StatefulWidget {
+  final List filter;
+
+  const SearchList({Key key, this.filter}) : super(key: key);
+
+  @override
+  _SearchListState createState() => _SearchListState();
+}
+
+class _SearchListState extends State<SearchList> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return Container(
+          decoration: new BoxDecoration(
+              color: Colors.grey[100],
+              border: new Border(
+                  bottom: new BorderSide(color: Colors.grey, width: 0.5))),
+          child: ListTile(
+            onTap: () {},
+            title: Text(widget.filter[index],
+                style: new TextStyle(fontSize: 18.0)),
+          ),
+        );
+      },
+      itemCount: widget.filter.length,
+    );
+  }
+}

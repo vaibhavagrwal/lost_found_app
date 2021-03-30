@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const primaryColour = Color.fromRGBO(19, 60, 109, 1);
 
@@ -8,7 +9,7 @@ Widget appBarOverall(
     backgroundColor: primaryColour,
     title: Text(
       "      " + heading,
-      style: TextStyle(
+      style: GoogleFonts.poppins(
         fontWeight: FontWeight.bold,
       ),
     ),

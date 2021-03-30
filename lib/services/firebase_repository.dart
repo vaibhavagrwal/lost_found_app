@@ -137,6 +137,7 @@ class FirebaseRepository {
           imageUrl: snapshot.data()['image_url'],
           phone: snapshot.data()['phone'],
           isModerator: snapshot.data()['isModerator'],
+          not: snapshot.data()['not'],
         );
 
         String user1 = jsonEncode(user);
@@ -327,6 +328,7 @@ class FirebaseRepository {
           'image_url': "",
           'phone': "",
           'isModerator': false,
+          'not': 0
         });
         showSuccessFlushbar(
             "Success", "Please Verify your Email and Login..!.", context);
@@ -804,7 +806,7 @@ class FirebaseRepository {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      print("122222222");
+
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
       bool isNewUser = userCredential.additionalUserInfo.isNewUser;
@@ -819,9 +821,9 @@ class FirebaseRepository {
           'image_url': userCredential.user.photoURL,
           'phone': userCredential.user.phoneNumber ?? "",
           'isModerator': false,
+          'not': 0,
         });
       }
-      print("3333333");
 
       SharedPreferences pref = await SharedPreferences.getInstance();
 
@@ -829,7 +831,7 @@ class FirebaseRepository {
           .collection('users')
           .doc(_auth.currentUser.uid)
           .get();
-      print("444444444");
+
       user = UserModel(
         userId: snapshot.data()['id'],
         name: snapshot.data()['name'],
@@ -837,8 +839,8 @@ class FirebaseRepository {
         imageUrl: snapshot.data()['image_url'],
         phone: snapshot.data()['phone'],
         isModerator: snapshot.data()['isModerator'],
+        not: snapshot.data()['not'],
       );
-      print("5555555");
 
       String user1 = jsonEncode(user);
       pref.setString('userData', user1);
