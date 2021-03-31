@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     .push(MaterialPageRoute(builder: (context) => ChatRoom()));
               },
               icon: FaIcon(
-                Icons.message,
+                Icons.message_outlined,
                 size: 24 * ScreenSize.heightMultiplyingFactor,
                 color: Color.fromRGBO(19, 60, 109, 1),
               ),

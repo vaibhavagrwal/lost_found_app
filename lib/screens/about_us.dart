@@ -171,7 +171,7 @@ class AboutUsData extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           child: CachedNetworkImage(
                             imageUrl:
-                                "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2FWhatsApp%20Image%202021-03-16%20at%2022.00.19.jpeg?alt=media&token=ea5a6360-dfe0-4bed-8ec6-550a654375fb",
+                                "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F102704231_2569955783257645_3095669080032974985_n.jpg?alt=media&token=c0507fba-a32f-4174-acaf-d4aab84ca824",
                             fit: BoxFit.fill,
                           ),
                         ),

@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: TyperAnimatedTextKit(
                 onTap: () {},
                 text: [
-                  "Mila Kya",
+                  "MILA KYA",
                 ],
                 displayFullTextOnTap: true,
 
@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 curve: Curves.easeInCirc,
                 speed: Duration(milliseconds: 100),
                 isRepeatingAnimation: false,
-                textStyle: GoogleFonts.varelaRound(
+                textStyle: GoogleFonts.poppins(
                   color: Color.fromRGBO(19, 60, 130, 1),
                   fontSize: 40 * ScreenSize.heightMultiplyingFactor,
                   fontWeight: FontWeight.bold,

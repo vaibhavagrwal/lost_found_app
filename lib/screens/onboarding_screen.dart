@@ -31,18 +31,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     isShowImageOnTop: false,
                     image: 'lib/assets/lost.gif',
                     body:
-                        'One Stop Destination for all your Lost & Found items.',
+                        'One-Stop Destination for all your Lost & Found items.',
                     color: Colors.white),
                 _buildPageContent(
                     isShowImageOnTop: true,
                     image: 'lib/assets/chat.gif',
-                    body: 'Maintain youe privacy while helping out others.',
+                    body: 'Maintain your privacy while helping out others.',
                     color: Colors.white),
                 _buildPageContent(
                     isShowImageOnTop: false,
                     image: 'lib/assets/map.gif',
                     body:
-                        'The new and updated version of DTU map so you can search your belonging easily.',
+                        'The new and updated version of the DTU map so that you can easily find your stuff.',
                     color: Colors.white)
               ],
             ),

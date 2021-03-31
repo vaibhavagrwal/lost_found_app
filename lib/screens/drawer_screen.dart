@@ -45,7 +45,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     height: 5.0 * ScreenSize.heightMultiplyingFactor,
                   ),
                   Text(
-                    user.name != null ? "Hello " + user.name : "",
+                    user.name != null
+                        ? "Hello " +
+                            user.name.substring(0, spaceindex(user.name))
+                        : "",
                     style: GoogleFonts.poppins(
                       fontSize: 25,
                       color: Colors.white,
@@ -326,4 +329,12 @@ Widget Tile(String a, Function call) {
       ),
     ),
   );
+}
+
+int spaceindex(String str) {
+  for (int i = 0; i < str.length; i++) {
+    if (str[i] == ' ') {
+      return i;
+    }
+  }
 }

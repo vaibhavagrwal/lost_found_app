@@ -12,6 +12,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geopoint_location/geopoint_location.dart';
 import 'package:location/location.dart';
 import 'package:lost_found_app/services/location_service.dart';
+import 'package:flash/flash.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geocoder/geocoder.dart';
+
+import 'package:outline_search_bar/outline_search_bar.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -21,7 +26,6 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _key = GlobalKey<GoogleMapStateBase>();
-  bool _darkMapStyle = false;
   String _mapStyle;
   TextEditingController textController = TextEditingController();
   bool _isSearching = false;
@@ -39,6 +43,188 @@ class _MapScreenState extends State<MapScreen> {
           _isSearching = true;
           _searchText = textController.text;
         });
+      }
+    });
+  }
+
+  var noti = 1;
+
+  funcc() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.userId)
+        .get();
+
+    print('noti : ' + snap['not'].toString());
+    snap['not'] == 0
+        ? Future.delayed(Duration.zero, () {
+            _show(
+                margin: const EdgeInsets.only(
+                    left: 12.0, right: 12.0, bottom: 34.0),
+                location:
+                    "Swipe Up with two fingers to see the map in 3D view");
+          })
+        : () {};
+  }
+
+  @override
+  void initState() {
+    funcc();
+    super.initState();
+  }
+
+  void _show(
+      {bool persistent = true,
+      EdgeInsets margin = EdgeInsets.zero,
+      String location}) {
+    showFlash(
+      context: context,
+      persistent: persistent,
+      builder: (_, controller) {
+        return Flash(
+          controller: controller,
+          margin: margin,
+          borderRadius: BorderRadius.circular(8.0),
+          borderColor: Colors.white,
+          boxShadows: kElevationToShadow[8],
+          backgroundColor: Color.fromRGBO(19, 60, 109, 1),
+          onTap: () {
+            controller.dismiss();
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(user.userId)
+                .update({
+              'not': 1,
+            }).catchError((e) {
+              print(e);
+            });
+          },
+          forwardAnimationCurve: Curves.easeInCirc,
+          reverseAnimationCurve: Curves.bounceIn,
+          child: DefaultTextStyle(
+            style: GoogleFonts.poppins(color: Colors.white),
+            child: FlashBar(
+              title: Text(
+                location,
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 20 * ScreenSize.heightMultiplyingFactor),
+              ),
+              message: Text(""),
+              leftBarIndicatorColor: Colors.white,
+              icon: Icon(
+                Icons.info_outline,
+                color: Colors.white,
+              ),
+              primaryAction: TextButton(
+                onPressed: () {
+                  controller.dismiss();
+                  FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(user.userId)
+                      .update({
+                    'not': 1,
+                  }).catchError((e) {
+                    print(e);
+                  });
+                },
+                child: Container(),
+              ),
+            ),
+          ),
+        );
+      },
+    ).then((_) {
+      if (_ != null) {
+        if (!mounted) return;
+        showFlash(
+            context: context,
+            duration: Duration(seconds: 3),
+            builder: (_, controller) {
+              return Flash(
+                controller: controller,
+                position: FlashPosition.top,
+                style: FlashStyle.grounded,
+                child: FlashBar(
+                  icon: Icon(
+                    Icons.face,
+                    size: 36.0,
+                    color: Colors.black,
+                  ),
+                  message: Text(_.toString()),
+                ),
+              );
+            });
+      }
+    });
+  }
+
+  void _showBottomFlash(
+      {bool persistent = true,
+      EdgeInsets margin = EdgeInsets.zero,
+      var location}) {
+    showFlash(
+      context: context,
+      persistent: persistent,
+      builder: (_, controller) {
+        return Flash(
+          controller: controller,
+          margin: margin,
+          borderRadius: BorderRadius.circular(8.0),
+          borderColor: Colors.white,
+          boxShadows: kElevationToShadow[8],
+          backgroundColor: Color.fromRGBO(19, 60, 109, 1),
+          onTap: () => controller.dismiss(),
+          forwardAnimationCurve: Curves.easeInCirc,
+          reverseAnimationCurve: Curves.bounceIn,
+          child: DefaultTextStyle(
+            style: GoogleFonts.poppins(color: Colors.white),
+            child: FlashBar(
+              title: Text(
+                location.first.featureName,
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 20 * ScreenSize.heightMultiplyingFactor),
+              ),
+              message: Text(location.first.addressLine),
+              leftBarIndicatorColor: Colors.white,
+              icon: Icon(
+                Icons.info_outline,
+                color: Colors.white,
+              ),
+              primaryAction: TextButton(
+                onPressed: () {
+                  controller.dismiss();
+                },
+                child: Text('DISMISS',
+                    style: GoogleFonts.poppins(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ),
+        );
+      },
+    ).then((_) {
+      if (_ != null) {
+        if (!mounted) return;
+        showFlash(
+            context: context,
+            duration: Duration(seconds: 3),
+            builder: (_, controller) {
+              return Flash(
+                controller: controller,
+                position: FlashPosition.top,
+                style: FlashStyle.grounded,
+                child: FlashBar(
+                  icon: Icon(
+                    Icons.face,
+                    size: 36.0,
+                    color: Colors.black,
+                  ),
+                  message: Text(_.toString()),
+                ),
+              );
+            });
       }
     });
   }
@@ -201,34 +387,40 @@ class _MapScreenState extends State<MapScreen> {
           Positioned.fill(
             child: GoogleMap(
               key: _key,
-              markers: {
-                Marker(
-                  GeoCoord(28.7505, 77.1177),
-                ),
-                Marker(
-                  GeoCoord(28.7505, 77.1177),
-                ),
-              },
+
               initialZoom: 17,
 
               initialPosition: GeoCoord(28.7505, 77.1177), // DTU
               mapType: MapType.roadmap,
               mapStyle: _mapStyle,
               interactive: true,
-              onTap: (coord) {
-                print(coord.toString());
-                _scaffoldKey.currentState.showSnackBar(SnackBar(
+              onTap: (coord) async {
+                print(coord.latitude.toString());
+                final coordinates =
+                    new Coordinates(coord.latitude, coord.longitude);
+                var addresses = await Geocoder.local
+                    .findAddressesFromCoordinates(coordinates);
+                var first = addresses.first;
+                print("${first.featureName} : ${first.addressLine}");
+                // List<Placemark> newPlace = await placemarkFromCoordinates(0, 0);
+                _showBottomFlash(
+                    margin: const EdgeInsets.only(
+                        left: 12.0, right: 12.0, bottom: 34.0),
+                    location: addresses);
+
+                /*_scaffoldKey.currentState.showSnackBar(SnackBar(
                   content: Text(coord?.toString()),
                   duration: const Duration(seconds: 2),
-                ));
+                ));*/
               },
               mobilePreferences: const MobileMapPreferences(
                 trafficEnabled: true,
                 zoomControlsEnabled: true,
                 tiltGesturesEnabled: true,
                 mapToolbarEnabled: true,
-                myLocationButtonEnabled: true,
-                myLocationEnabled: true,
+                //myLocationButtonEnabled: true,
+                //myLocationEnabled: true,
+                indoorViewEnabled: true,
               ),
               webPreferences: WebMapPreferences(
                 fullscreenControl: true,
@@ -237,9 +429,51 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           Positioned(
-            top: 16 * ScreenSize.heightMultiplyingFactor,
+            bottom: 85 * ScreenSize.heightMultiplyingFactor,
             left: 16 * ScreenSize.widthMultiplyingFactor,
             child: FloatingActionButton(
+              child: Image(
+                image: AssetImage('lib/assets/dtu.png'),
+              ),
+              onPressed: () async {
+                _userLoc = await _locSer.getLocation();
+                final bounds = GeoCoordBounds(
+                  northeast: GeoCoord(28.7505, 77.1177),
+                  southwest: GeoCoord(28.7505, 77.1177),
+                );
+                GoogleMap.of(_key).moveCameraBounds(bounds);
+                GoogleMap.of(_key).addMarkerRaw(
+                  GeoCoord(
+                    (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+                    (bounds.northeast.longitude + bounds.southwest.longitude) /
+                        2,
+                  ),
+                  onTap: (markerId) async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: Text("Welcome to DTU",
+                            style: GoogleFonts.poppins(
+                                fontSize: 24, fontWeight: FontWeight.bold)),
+                        actions: <Widget>[
+                          Image(image: AssetImage('lib/assets/dtu.png')),
+                          FlatButton(
+                            onPressed: Navigator.of(context).pop,
+                            child: Text('CLOSE'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          Positioned(
+            bottom: 16 * ScreenSize.heightMultiplyingFactor,
+            left: 16 * ScreenSize.widthMultiplyingFactor,
+            child: FloatingActionButton(
+              backgroundColor: Color.fromRGBO(19, 60, 109, 1),
               child: Icon(Icons.person_pin_circle),
               onPressed: () async {
                 _userLoc = await _locSer.getLocation();
@@ -275,7 +509,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           Positioned(
-            top: 64 * ScreenSize.heightMultiplyingFactor,
+            top: 16 * ScreenSize.heightMultiplyingFactor,
             left: 16 * ScreenSize.widthMultiplyingFactor,
             // child: AnimSearchBar(
             //   width: 300,
@@ -317,14 +551,36 @@ class _MapScreenState extends State<MapScreen> {
             //   },
             // ),
             child: Container(
-              width: 200,
-              height: double.infinity,
+              width: 363 * ScreenSize.widthMultiplyingFactor,
+              //height: ,
               child: Column(
                 children: [
                   SizedBox(
-                    width: 200,
-                    height: 50,
-                    child: TextField(
+                      width: 400 * ScreenSize.widthMultiplyingFactor,
+                      height: 50 * ScreenSize.heightMultiplyingFactor,
+                      child: OutlineSearchBar(
+                        borderColor: Color.fromRGBO(19, 60, 109, 1),
+                        searchButtonIconColor: Color.fromRGBO(19, 60, 109, 1),
+                        textEditingController: textController,
+                        cursorColor: Color.fromRGBO(19, 60, 109, 1),
+                        textStyle: GoogleFonts.poppins(),
+                        hintStyle: GoogleFonts.poppins(),
+                        hintText: "Search...",
+                        onKeywordChanged: (str) {
+                          _searchListState();
+                          setState(() {
+                            filteredNames = placeNames
+                                .where(
+                                  (name) => (name.toLowerCase().contains(
+                                        str.toLowerCase(),
+                                      )),
+                                )
+                                .toList();
+                            print(filteredNames.length);
+                            print(_isSearching);
+                          });
+                        },
+                      ) /*TextField(
                       controller: textController,
                       onChanged: (str) {
                         _searchListState();
@@ -340,38 +596,17 @@ class _MapScreenState extends State<MapScreen> {
                           print(_isSearching);
                         });
                       },
-                    ),
-                  ),
+                    ),*/
+                      ),
                   !_isSearching
                       ? Container()
-                      : Expanded(
-                          child: SearchList(
-                            filter: filteredNames,
-                          ),
+                      : SearchList(
+                          filter: filteredNames,
+                          latofpoints: latofpoint,
+                          nameofpoints: namepoints,
+                          keyy: _key,
                         ),
                 ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 16,
-            right: kIsWeb ? 60 : 16,
-            child: FloatingActionButton(
-              onPressed: () {
-                if (_darkMapStyle) {
-                  GoogleMap.of(_key).changeMapStyle(null);
-                  _mapStyle = null;
-                } else {
-                  GoogleMap.of(_key).changeMapStyle(darkMapStyle);
-                  _mapStyle = darkMapStyle;
-                }
-
-                setState(() => _darkMapStyle = !_darkMapStyle);
-              },
-              backgroundColor: _darkMapStyle ? Colors.black : Colors.white,
-              child: Icon(
-                _darkMapStyle ? Icons.wb_sunny : Icons.brightness_3,
-                color: _darkMapStyle ? Colors.white : Colors.black,
               ),
             ),
           ),
@@ -381,227 +616,15 @@ class _MapScreenState extends State<MapScreen> {
   }
 }
 
-const darkMapStyle = r'''
-[
-  {
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#212121"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#212121"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.country",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.locality",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#bdbdbd"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#181818"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#1b1b1b"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#2c2c2c"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#8a8a8a"
-      }
-    ]
-  },
-  {
-    "featureType": "road.arterial",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#373737"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#3c3c3c"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway.controlled_access",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#4e4e4e"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#000000"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#3d3d3d"
-      }
-    ]
-  }
-]
-''';
-
-const contentString = r'''
-<div id="content">
-  <div id="siteNotice"></div>
-  <h1 id="firstHeading" class="firstHeading">Uluru</h1>
-  <div id="bodyContent">
-    <p>
-      <b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large 
-      sandstone rock formation in the southern part of the 
-      Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) 
-      south west of the nearest large town, Alice Springs; 450&#160;km 
-      (280&#160;mi) by road. Kata Tjuta and Uluru are the two major 
-      features of the Uluru - Kata Tjuta National Park. Uluru is 
-      sacred to the Pitjantjatjara and Yankunytjatjara, the 
-      Aboriginal people of the area. It has many springs, waterholes, 
-      rock caves and ancient paintings. Uluru is listed as a World 
-      Heritage Site.
-    </p>
-    <p>
-      Attribution: Uluru, 
-      <a href="http://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">
-        http://en.wikipedia.org/w/index.php?title=Uluru
-      </a>
-      (last visited June 22, 2009).
-    </p>
-  </div>
-</div>
-''';
-
 class SearchList extends StatefulWidget {
   final List filter;
+  final Map<double, double> latofpoints;
+  final Map<String, double> nameofpoints;
+  final Key keyy;
 
-  const SearchList({Key key, this.filter}) : super(key: key);
+  const SearchList(
+      {Key key, this.filter, this.latofpoints, this.nameofpoints, this.keyy})
+      : super(key: key);
 
   @override
   _SearchListState createState() => _SearchListState();
@@ -610,21 +633,63 @@ class SearchList extends StatefulWidget {
 class _SearchListState extends State<SearchList> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: new BoxDecoration(
-              color: Colors.grey[100],
-              border: new Border(
-                  bottom: new BorderSide(color: Colors.grey, width: 0.5))),
-          child: ListTile(
-            onTap: () {},
-            title: Text(widget.filter[index],
-                style: new TextStyle(fontSize: 18.0)),
-          ),
-        );
-      },
-      itemCount: widget.filter.length,
-    );
+    return SizedBox(
+        height: 200 * ScreenSize.heightMultiplyingFactor,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Container(
+              decoration: new BoxDecoration(
+                  color: Colors.white,
+                  border: new Border(
+                      bottom: new BorderSide(
+                          color: Color.fromRGBO(19, 60, 109, 1),
+                          width: 0.5 * ScreenSize.widthMultiplyingFactor))),
+              child: ListTile(
+                onTap: () {
+                  final bounds = GeoCoordBounds(
+                    northeast: GeoCoord(
+                        widget.nameofpoints[widget.filter[index]],
+                        widget.latofpoints[
+                            widget.nameofpoints[widget.filter[index]]]),
+                    southwest: GeoCoord(
+                        widget.nameofpoints[widget.filter[index]],
+                        widget.latofpoints[
+                            widget.nameofpoints[widget.filter[index]]]),
+                  );
+                  GoogleMap.of(widget.keyy).moveCameraBounds(bounds);
+                  GoogleMap.of(widget.keyy).addMarkerRaw(
+                    GeoCoord(
+                      (bounds.northeast.latitude + bounds.southwest.latitude) /
+                          2,
+                      (bounds.northeast.longitude +
+                              bounds.southwest.longitude) /
+                          2,
+                    ),
+                    onTap: (markerId) async {
+                      await showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          content: Text(widget.filter[index],
+                              style: GoogleFonts.poppins(
+                                  fontSize: 24, fontWeight: FontWeight.bold)),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: Navigator.of(context).pop,
+                              child: Text('CLOSE'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                title: Text(widget.filter[index],
+                    style: GoogleFonts.poppins(fontSize: 18.0)),
+              ),
+            );
+          },
+          itemCount: widget.filter.length,
+        ));
   }
 }

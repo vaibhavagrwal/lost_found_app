@@ -23,7 +23,6 @@ class _ChatRoomState extends State<ChatRoom> {
   Stream ListofPeople;
   var num = [];
   var image = [
-    'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F1_6LEsoKZNNa3hif2Tu107vw.gif?alt=media&token=42029f7d-586f-4a49-ab1a-02a75552bc11',
     'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F77c5b7e9dd53143594f0663ba07b9c4c.png?alt=media&token=c7c5b4a0-a470-4a1d-b012-0cae60150ba1',
     'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F66377888_242269586730532_1532890469642947208_n.jpg?alt=media&token=2cfe880d-088b-48e0-a11b-53d88482546d',
     'https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F06d0c1d123bf45368295da7e6744c186.webp?alt=media&token=c7f92b39-5afe-45a5-85f7-beb112897bb3',
@@ -98,7 +97,7 @@ class _ChatRoomState extends State<ChatRoom> {
                                 .data()["user_ID"]
                                 .toString()
                                 .codeUnitAt(1) %
-                            7],
+                            6],
                       );
                     })
             : SizedBox(

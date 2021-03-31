@@ -119,13 +119,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   color: Color.fromRGBO(252, 255, 300, 1),
                                   shape: BoxShape.circle,
                                   image: new DecorationImage(
-                                    image: _image == null
-                                        ? CachedNetworkImageProvider(
-                                            user.imageUrl == ""
-                                                ? "https://i.pinimg.com/474x/67/c3/d6/67c3d63e215e034e01d45c8256d720d3.jpg"
-                                                : user.imageUrl,
-                                          )
-                                        : FileImage(_image),
+                                    image: AssetImage("lib/assets/face1.gif"),
                                     fit: BoxFit.cover,
                                   ),
                                 )),
