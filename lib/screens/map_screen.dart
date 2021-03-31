@@ -271,9 +271,11 @@ class _MapScreenState extends State<MapScreen> {
     "New Hostel 1": 28.750385,
     "New Hostel 2": 28.748188,
     "Raj Soin Hall": 28.751110,
+    "Software Department": 28.749949,
   };
 
   var latofpoint = {
+    28.749949: 77.1125023,
     28.748188: 77.117073,
     28.751110: 77.114842,
     28.750385: 77.114891,
@@ -356,6 +358,7 @@ class _MapScreenState extends State<MapScreen> {
       "New Hostel 1",
       "New Hostel 2",
       "Raj Soin Hall",
+      "Software Department"
     ];
     _locSer.getLocation().then((value) => _userLoc = value);
     return Scaffold(
@@ -568,6 +571,7 @@ class _MapScreenState extends State<MapScreen> {
                         hintText: "Search...",
                         onKeywordChanged: (str) {
                           _searchListState();
+
                           setState(() {
                             filteredNames = placeNames
                                 .where(
