@@ -23,31 +23,33 @@ class _MyAdScreenState extends State<MyAdScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // drawer: DrawerScreen(),
-      appBar: AppBar(
-        toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
-        elevation: 1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(30.0),
-            bottomLeft: Radius.circular(30.0),
+    return SafeArea(
+      child: Scaffold(
+        // drawer: DrawerScreen(),
+        appBar: AppBar(
+          toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+            ),
           ),
-        ),
-        backgroundColor: primaryColour,
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        title: Text(
-          "    My Posts ",
-          style: GoogleFonts.poppins(
+          backgroundColor: primaryColour,
+          iconTheme: IconThemeData(
             color: Colors.white,
-            fontSize: 20 * ScreenSize.heightMultiplyingFactor,
-            fontWeight: FontWeight.w600,
+          ),
+          title: Text(
+            "    My Posts ",
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
+        body: MyList(),
       ),
-      body: MyList(),
     );
   }
 }

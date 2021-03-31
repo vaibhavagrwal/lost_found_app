@@ -12,47 +12,49 @@ class AboutUs extends StatefulWidget {
 class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
-        // height: 775 * ScreenSize.heightMultiplyingFactor,
-        // width: 411 * ScreenSize.widthMultiplyingFactor,
-        child: Stack(
-          children: [
-            aboutUsAppBar(),
-            Positioned(
-              top: 90.0 * ScreenSize.heightMultiplyingFactor,
-              left: 1 * ScreenSize.widthMultiplyingFactor,
-              right: 1 * ScreenSize.widthMultiplyingFactor,
-              child: Column(
-                children: [
-                  Container(
-                    width: 335.0 * ScreenSize.widthMultiplyingFactor,
-                    height: 220.0 * ScreenSize.heightMultiplyingFactor,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(25.0),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          color: Colors.white,
+          // height: 775 * ScreenSize.heightMultiplyingFactor,
+          // width: 411 * ScreenSize.widthMultiplyingFactor,
+          child: Stack(
+            children: [
+              aboutUsAppBar(),
+              Positioned(
+                top: 90.0 * ScreenSize.heightMultiplyingFactor,
+                left: 1 * ScreenSize.widthMultiplyingFactor,
+                right: 1 * ScreenSize.widthMultiplyingFactor,
+                child: Column(
+                  children: [
+                    Container(
+                      width: 335.0 * ScreenSize.widthMultiplyingFactor,
+                      height: 220.0 * ScreenSize.heightMultiplyingFactor,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(25.0),
+                          ),
+                        ),
+                        elevation: 3.0 * ScreenSize.heightMultiplyingFactor,
+                        child: Image.asset(
+                          "lib/assets/logo.png",
+                          height: 248 * ScreenSize.heightMultiplyingFactor,
+                          width: 206 * ScreenSize.widthMultiplyingFactor,
                         ),
                       ),
-                      elevation: 3.0 * ScreenSize.heightMultiplyingFactor,
-                      child: Image.asset(
-                        "lib/assets/logo.png",
-                        height: 248 * ScreenSize.heightMultiplyingFactor,
-                        width: 206 * ScreenSize.widthMultiplyingFactor,
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              top: 310.0 * ScreenSize.heightMultiplyingFactor,
-              left: 1 * ScreenSize.widthMultiplyingFactor,
-              right: 1 * ScreenSize.widthMultiplyingFactor,
-              child: AboutUsData(),
-            ),
-          ],
+              Positioned(
+                top: 310.0 * ScreenSize.heightMultiplyingFactor,
+                left: 1 * ScreenSize.widthMultiplyingFactor,
+                right: 1 * ScreenSize.widthMultiplyingFactor,
+                child: AboutUsData(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -207,7 +209,7 @@ class AboutUsData extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 10.0 * ScreenSize.heightMultiplyingFactor,
+                  height: 60.0 * ScreenSize.heightMultiplyingFactor,
                 ),
                 Center(
                   child: Row(

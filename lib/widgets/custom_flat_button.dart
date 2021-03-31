@@ -1,5 +1,6 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 
 class CustomFlatButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -12,17 +13,18 @@ class CustomFlatButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         margin: EdgeInsets.symmetric(
-          vertical: 0.0,
-          horizontal: 55,
+          vertical: 0.0 * ScreenSize.heightMultiplyingFactor,
+          horizontal: 55 * ScreenSize.widthMultiplyingFactor,
         ),
-        width: 350,
-        height: 50,
+        width: 350 * ScreenSize.widthMultiplyingFactor,
+        height: 50 * ScreenSize.heightMultiplyingFactor,
         decoration: BoxDecoration(
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Color.fromRGBO(26, 80, 152, 0.1),
-              offset: Offset(10.0, 10.0),
-              blurRadius: 6.0,
+              offset: Offset(10.0 * ScreenSize.widthMultiplyingFactor,
+                  10.0 * ScreenSize.heightMultiplyingFactor),
+              blurRadius: 6.0 * ScreenSize.heightMultiplyingFactor,
             ),
           ],
           borderRadius: BorderRadius.circular(12),
@@ -32,7 +34,7 @@ class CustomFlatButton extends StatelessWidget {
           child: Text(
             title,
             style: GoogleFonts.roboto(
-              fontSize: 16.0,
+              fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
