@@ -79,7 +79,7 @@ class AboutUsData extends StatelessWidget {
                 //   height: 450 * ScreenSize.heightMultiplyingFactor,
                 // ),
                 Text(
-                  "\nAbout the App: \n",
+                  "\nAbout the App: ",
                   style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -87,11 +87,10 @@ class AboutUsData extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Almost everyone of us had either lost or found any item in DTU but are unable to return it.This is app is the solution to all such problems.",
-                  style: TextStyle(
+                  "Almost every one of us had either lost or found an item in DTU but could not return it. This app is the solution to all such problems.",
+                  style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                    fontFamily: 'Poppins-Light',
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -149,7 +148,7 @@ class AboutUsData extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'SE     | DTU \'23',
+                            'SE | DTU \'23',
                             style: GoogleFonts.montserrat(
                               color: Colors.black,
                               fontSize: 14 * ScreenSize.heightMultiplyingFactor,
@@ -220,7 +219,6 @@ class AboutUsData extends StatelessWidget {
                         "\nDeveloped with ❤ in Flutter",
                         style: GoogleFonts.montserrat(
                           color: Colors.black,
-                          fontStyle: FontStyle.italic,
                           fontSize: 14 * ScreenSize.heightMultiplyingFactor,
                         ),
                       ),

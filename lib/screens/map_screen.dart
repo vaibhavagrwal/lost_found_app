@@ -271,11 +271,11 @@ class _MapScreenState extends State<MapScreen> {
     "New Hostel 1": 28.750385,
     "New Hostel 2": 28.748188,
     "Raj Soin Hall": 28.751110,
-    "Software Department": 28.749949,
+    "Software Department": 28.749948,
   };
 
   var latofpoint = {
-    28.749949: 77.1125023,
+    28.749948: 77.114691,
     28.748188: 77.117073,
     28.751110: 77.114842,
     28.750385: 77.114891,
@@ -501,7 +501,10 @@ class _MapScreenState extends State<MapScreen> {
                         actions: <Widget>[
                           FlatButton(
                             onPressed: Navigator.of(context).pop,
-                            child: Text('CLOSE'),
+                            child: Text(
+                              'CLOSE',
+                              style: GoogleFonts.poppins(),
+                            ),
                           ),
                         ],
                       ),
@@ -678,6 +681,10 @@ class _SearchListState extends State<SearchList> {
                               style: GoogleFonts.poppins(
                                   fontSize: 24, fontWeight: FontWeight.bold)),
                           actions: <Widget>[
+                            widget.filter[index] == "Design Centre"
+                                ? Image(
+                                    image: AssetImage('lib/assets/design.jpg'))
+                                : Container(),
                             FlatButton(
                               onPressed: Navigator.of(context).pop,
                               child: Text('CLOSE'),
