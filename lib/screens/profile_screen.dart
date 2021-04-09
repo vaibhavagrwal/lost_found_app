@@ -152,10 +152,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       "Edit Profile",
-                      // style: TextStyle(
-                      //   fontFamily: 'Poppins-Regular',
-                      //   fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
-                      // ),
                       style: GoogleFonts.poppins(
                         fontSize: 16.0 * ScreenSize.heightMultiplyingFactor,
                       ),
