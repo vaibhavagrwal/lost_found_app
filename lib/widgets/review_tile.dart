@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/util/constants.dart';
+import '../util/screen_size.dart';
 
 class ReviewTile extends StatefulWidget {
   final String title;
@@ -29,7 +30,7 @@ class _ReviewTileState extends State<ReviewTile> {
       child: Card(
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
-          height: 100,
+          height: 100 * ScreenSize.heightMultiplyingFactor,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -50,8 +51,8 @@ class _ReviewTileState extends State<ReviewTile> {
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(7),
                 child: Container(
-                  width: 70,
-                  height: 80,
+                  width: 70 * ScreenSize.widthMultiplyingFactor,
+                  height: 80 * ScreenSize.heightMultiplyingFactor,
                   child: widget.imageUrl != ""
                       ? CachedNetworkImage(
                           imageUrl: widget.imageUrl,
@@ -79,7 +80,7 @@ class _ReviewTileState extends State<ReviewTile> {
                 ),
               ),
               trailing: Container(
-                width: 180,
+                width: 180 * ScreenSize.widthMultiplyingFactor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [

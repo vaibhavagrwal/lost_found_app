@@ -6,6 +6,7 @@ import 'package:lost_found_app/screens/item_detail_screen.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import 'package:lost_found_app/widgets/item_tile.dart';
+import 'drawer_screen.dart';
 
 import '../main.dart';
 
@@ -22,29 +23,33 @@ class _MyAdScreenState extends State<MyAdScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
-        elevation: 1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(30.0),
-            bottomLeft: Radius.circular(30.0),
+    return SafeArea(
+      child: Scaffold(
+        // drawer: DrawerScreen(),
+        appBar: AppBar(
+          toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+            ),
           ),
-        ),
-        backgroundColor: primaryColour,
-        iconTheme: IconThemeData(
-          color: Color.fromRGBO(44, 62, 80, 1),
-        ),
-        title: Text(
-          "My Ads ",
-          style: GoogleFonts.poppins(
+          backgroundColor: primaryColour,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          title: Text(
+            "    My Posts ",
+            style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 20 * ScreenSize.heightMultiplyingFactor,
-              fontWeight: FontWeight.w600),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
+        body: MyList(),
       ),
-      body: MyList(),
     );
   }
 }
@@ -69,7 +74,10 @@ class _MyListState extends State<MyList> {
             if (snapshot.data.docs.length == 0) {
               return Center(
                 child: Text(
-                  "No Ads to Display",
+                  "No Posts to Display",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 15 * ScreenSize.heightMultiplyingFactor,
+                  ),
                 ),
               );
             }

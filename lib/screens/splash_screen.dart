@@ -46,19 +46,21 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              width: size.width,
-              child: Image(
-                image: logo,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
+            Positioned(
+                top: size.height * 0.08,
+                child: Container(
+                  width: size.width,
+                  child: Image(
+                    image: logo,
+                    fit: BoxFit.fitWidth,
+                  ),
+                )),
             Positioned(
               top: size.height * 0.68,
               child: TyperAnimatedTextKit(
                 onTap: () {},
                 text: [
-                  "Mila Kya",
+                  "MILA KYA",
                 ],
                 displayFullTextOnTap: true,
 
@@ -67,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 curve: Curves.easeInCirc,
                 speed: Duration(milliseconds: 100),
                 isRepeatingAnimation: false,
-                textStyle: GoogleFonts.varelaRound(
+                textStyle: GoogleFonts.poppins(
                   color: Color.fromRGBO(19, 60, 130, 1),
                   fontSize: 40 * ScreenSize.heightMultiplyingFactor,
                   fontWeight: FontWeight.bold,

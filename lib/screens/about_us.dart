@@ -12,47 +12,49 @@ class AboutUs extends StatefulWidget {
 class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
-        // height: 775 * ScreenSize.heightMultiplyingFactor,
-        // width: 411 * ScreenSize.widthMultiplyingFactor,
-        child: Stack(
-          children: [
-            aboutUsAppBar(),
-            Positioned(
-              top: 90.0 * ScreenSize.heightMultiplyingFactor,
-              left: 1 * ScreenSize.widthMultiplyingFactor,
-              right: 1 * ScreenSize.widthMultiplyingFactor,
-              child: Column(
-                children: [
-                  Container(
-                    width: 335.0 * ScreenSize.widthMultiplyingFactor,
-                    height: 220.0 * ScreenSize.heightMultiplyingFactor,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(25.0),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          color: Colors.white,
+          // height: 775 * ScreenSize.heightMultiplyingFactor,
+          // width: 411 * ScreenSize.widthMultiplyingFactor,
+          child: Stack(
+            children: [
+              aboutUsAppBar(),
+              Positioned(
+                top: 90.0 * ScreenSize.heightMultiplyingFactor,
+                left: 1 * ScreenSize.widthMultiplyingFactor,
+                right: 1 * ScreenSize.widthMultiplyingFactor,
+                child: Column(
+                  children: [
+                    Container(
+                      width: 335.0 * ScreenSize.widthMultiplyingFactor,
+                      height: 220.0 * ScreenSize.heightMultiplyingFactor,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(25.0),
+                          ),
+                        ),
+                        elevation: 3.0 * ScreenSize.heightMultiplyingFactor,
+                        child: Image.asset(
+                          "lib/assets/logo.png",
+                          height: 248 * ScreenSize.heightMultiplyingFactor,
+                          width: 206 * ScreenSize.widthMultiplyingFactor,
                         ),
                       ),
-                      elevation: 3.0 * ScreenSize.heightMultiplyingFactor,
-                      child: Image.asset(
-                        "lib/assets/logo.png",
-                        height: 248 * ScreenSize.heightMultiplyingFactor,
-                        width: 206 * ScreenSize.widthMultiplyingFactor,
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              top: 310.0 * ScreenSize.heightMultiplyingFactor,
-              left: 1 * ScreenSize.widthMultiplyingFactor,
-              right: 1 * ScreenSize.widthMultiplyingFactor,
-              child: AboutUsData(),
-            ),
-          ],
+              Positioned(
+                top: 310.0 * ScreenSize.heightMultiplyingFactor,
+                left: 1 * ScreenSize.widthMultiplyingFactor,
+                right: 1 * ScreenSize.widthMultiplyingFactor,
+                child: AboutUsData(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -77,7 +79,7 @@ class AboutUsData extends StatelessWidget {
                 //   height: 450 * ScreenSize.heightMultiplyingFactor,
                 // ),
                 Text(
-                  "\nAbout the App: \n",
+                  "\nAbout the App: ",
                   style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -85,11 +87,10 @@ class AboutUsData extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Almost everyone of us had either lost or found any item in DTU but are unable to return it.This is app is the solution to all such problems.",
-                  style: TextStyle(
+                  "Almost every one of us had either lost or found an item in DTU but could not return it. This app is the solution to all such problems.",
+                  style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontSize: 14 * ScreenSize.heightMultiplyingFactor,
-                    fontFamily: 'Poppins-Light',
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -147,7 +148,7 @@ class AboutUsData extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'SE     | DTU \'23',
+                            'SE | DTU \'23',
                             style: GoogleFonts.montserrat(
                               color: Colors.black,
                               fontSize: 14 * ScreenSize.heightMultiplyingFactor,
@@ -171,7 +172,7 @@ class AboutUsData extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           child: CachedNetworkImage(
                             imageUrl:
-                                "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2FWhatsApp%20Image%202021-03-16%20at%2022.00.19.jpeg?alt=media&token=ea5a6360-dfe0-4bed-8ec6-550a654375fb",
+                                "https://firebasestorage.googleapis.com/v0/b/lost-found-app-2408e.appspot.com/o/asset_images%2F102704231_2569955783257645_3095669080032974985_n.jpg?alt=media&token=c0507fba-a32f-4174-acaf-d4aab84ca824",
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -207,7 +208,7 @@ class AboutUsData extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 10.0 * ScreenSize.heightMultiplyingFactor,
+                  height: 60.0 * ScreenSize.heightMultiplyingFactor,
                 ),
                 Center(
                   child: Row(
@@ -218,7 +219,6 @@ class AboutUsData extends StatelessWidget {
                         "\nDeveloped with ❤ in Flutter",
                         style: GoogleFonts.montserrat(
                           color: Colors.black,
-                          fontStyle: FontStyle.italic,
                           fontSize: 14 * ScreenSize.heightMultiplyingFactor,
                         ),
                       ),

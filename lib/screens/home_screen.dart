@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(
-            color: Color.fromRGBO(44, 62, 80, 1),
+            color: Color.fromRGBO(19, 60, 109, 1),
           ),
           // title: Text(
           //   " Mila Kya ? ",
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               curve: Curves.easeInCirc,
               speed: Duration(milliseconds: 200),
               pause: Duration(milliseconds: 6000),
-              textStyle: GoogleFonts.italiana(
+              textStyle: GoogleFonts.poppins(
                 color: primaryColour,
                 fontSize: 28 * ScreenSize.heightMultiplyingFactor,
                 fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             indicatorSize: TabBarIndicatorSize.values[1],
             indicatorPadding: EdgeInsets.only(
               bottom: 10.0 * ScreenSize.heightMultiplyingFactor,
-              right: 15.0 * ScreenSize.widthMultiplyingFactor,
+              right: 10.0 * ScreenSize.widthMultiplyingFactor,
             ),
             indicatorColor: Color.fromRGBO(19, 60, 109, 1),
             labelColor: Color.fromRGBO(19, 60, 109, 1),
@@ -111,9 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     .push(MaterialPageRoute(builder: (context) => ChatRoom()));
               },
               icon: FaIcon(
-                FontAwesomeIcons.facebookMessenger,
-                size: 20 * ScreenSize.heightMultiplyingFactor,
-                color: Color.fromRGBO(44, 62, 80, 1),
+                Icons.message_outlined,
+                size: 24 * ScreenSize.heightMultiplyingFactor,
+                color: Color.fromRGBO(19, 60, 109, 1),
               ),
             ),
           ],

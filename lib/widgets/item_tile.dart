@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lost_found_app/util/screen_size.dart';
 
 class ItemTile extends StatefulWidget {
   final String title;
@@ -27,7 +28,7 @@ class _ItemTileState extends State<ItemTile> {
       child: Card(
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
-          height: 100,
+          height: 100 * ScreenSize.heightMultiplyingFactor,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -37,9 +38,11 @@ class _ItemTileState extends State<ItemTile> {
             boxShadow: [
               BoxShadow(
                   color: Color.fromRGBO(26, 80, 152, 0.1),
-                  blurRadius: 20,
+                  blurRadius: 20 * ScreenSize.heightMultiplyingFactor,
                   offset: Offset(0, 8),
-                  spreadRadius: 6 // changes position of shadow
+                  spreadRadius: 6 *
+                      ScreenSize
+                          .widthMultiplyingFactor // changes position of shadow
                   ),
             ],
           ),
@@ -48,8 +51,8 @@ class _ItemTileState extends State<ItemTile> {
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(7),
                 child: Container(
-                  width: 70,
-                  height: 80,
+                  width: 70 * ScreenSize.widthMultiplyingFactor,
+                  height: 80 * ScreenSize.heightMultiplyingFactor,
                   child: widget.imageUrl != ""
                       ? CachedNetworkImage(
                           imageUrl: widget.imageUrl,
@@ -79,7 +82,7 @@ class _ItemTileState extends State<ItemTile> {
               trailing: Text(
                 widget.status,
                 style: GoogleFonts.montserrat(
-                  fontSize: 18,
+                  fontSize: 18 * ScreenSize.heightMultiplyingFactor,
                   fontWeight: FontWeight.w700,
                 ),
               ),

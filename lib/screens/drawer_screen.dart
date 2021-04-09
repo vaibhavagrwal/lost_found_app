@@ -1,13 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lost_found_app/models/user_model.dart';
 import 'package:lost_found_app/screens/about_us.dart';
+import 'package:lost_found_app/screens/chat_rooms_screen.dart';
 import 'package:lost_found_app/screens/edit_profile_screen.dart';
 import 'package:lost_found_app/screens/moderator_screen.dart';
+import 'package:lost_found_app/screens/my_ad_screen.dart';
 import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/screen_size.dart';
 import '../main.dart';
+import './root_screen.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -17,7 +19,131 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Color.fromRGBO(
+              19, 60, 130, 1), //This will change the drawer background to blue.
+          //other styles
+        ),
+        child: Drawer(
+            child: Column(children: [
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 30.0 * ScreenSize.heightMultiplyingFactor),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: AssetImage(
+                      "lib/assets/face1.gif",
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0 * ScreenSize.heightMultiplyingFactor,
+                  ),
+                  Text(
+                    user.name != null
+                        ? "Hello " +
+                            user.name.substring(0, spaceindex(user.name))
+                        : "",
+                    style: GoogleFonts.poppins(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0 * ScreenSize.heightMultiplyingFactor,
+                  ),
+                  Text(
+                    user.email != null ? user.email : "",
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20.0 * ScreenSize.heightMultiplyingFactor,
+          ),
+          //Now let's Add the button for the Menu
+          //and let's copy that and modify it
+          Column(
+            children: [
+              // Tile(
+              //   "My Posts",
+              //   () {
+              //     // Navigator.push(
+              //     //   context,
+              //     //   MaterialPageRoute(
+              //     //     builder: (context) => MyAdScreen(),
+              //     //   ),
+              //     // );
+
+              //   },
+              // ),
+              SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor),
+              Tile(
+                "My Chats",
+                () {
+                  navigatorKey.currentState.push(
+                      MaterialPageRoute(builder: (context) => ChatRoom()));
+                },
+              ),
+              SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor),
+              Tile(
+                "Edit Profile",
+                () async {
+                  UserModel user1 = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfileScreen(),
+                    ),
+                  );
+
+                  setState(() {
+                    user.imageUrl = user1.imageUrl;
+                    user.name = user1.name;
+                    user.email = user1.email;
+                  });
+                },
+              ),
+              SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor),
+              user.isModerator == true
+                  ? Tile(
+                      "Review",
+                      () async {
+                        navigatorKey.currentState.push(MaterialPageRoute(
+                            builder: (context) => ModeratorScreen()));
+                      },
+                    )
+                  : Container(),
+              user.isModerator == true
+                  ? SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor)
+                  : Container(),
+              Tile(
+                "About Us",
+                () {
+                  navigatorKey.currentState
+                      .push(MaterialPageRoute(builder: (context) => AboutUs()));
+                },
+              ),
+              SizedBox(height: 10 * ScreenSize.heightMultiplyingFactor),
+              Tile(
+                "Logout",
+                () async {
+                  FirebaseRepository().signout(context);
+                },
+              ),
+            ],
+          )
+        ])));
+    /*Container(
       width: 250 * ScreenSize.widthMultiplyingFactor,
       child: Drawer(
         child: ListView(
@@ -177,6 +303,38 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ],
         ),
       ),
-    );
+    );*/
+  }
+}
+
+Widget Tile(String a, Function call) {
+  return ListTile(
+    leading: SizedBox(
+      width: 15.0 * ScreenSize.widthMultiplyingFactor,
+      height: 62.0 * ScreenSize.heightMultiplyingFactor,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(19, 60, 130, 1),
+        ),
+      ),
+    ),
+    onTap: call,
+    tileColor: Colors.white30,
+    title: Text(
+      a,
+      style: GoogleFonts.poppins(
+        fontSize: 20,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  );
+}
+
+int spaceindex(String str) {
+  for (int i = 0; i < str.length; i++) {
+    if (str[i] == ' ') {
+      return i;
+    }
   }
 }

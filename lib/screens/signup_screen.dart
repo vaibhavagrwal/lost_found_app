@@ -315,8 +315,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 FocusScope.of(context)
                                     .requestFocus(_nameFocusNode);
                               },
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
                                 suffixIcon: IconButton(

@@ -8,6 +8,7 @@ import 'package:lost_found_app/services/firebase_repository.dart';
 import 'package:lost_found_app/util/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lost_found_app/util/screen_size.dart';
+import 'drawer_screen.dart';
 
 class CreateAdScreen extends StatefulWidget {
   @override
@@ -37,7 +38,6 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
       int res = await _repository.createPost(_image, type, heading, category,
           description, where, selectedDate, context);
       setState(() {
-        print("11111111");
         isLoading = false;
       });
       if (res == 0) {
@@ -57,7 +57,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                     ),
                   ),
                   content: Container(
-                    height: 110 * ScreenSize.heightMultiplyingFactor,
+                    height: 130 * ScreenSize.heightMultiplyingFactor,
                     width: MediaQuery.of(context).size.width * 0.3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,7 +71,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         ),
                         Center(
                           child: Text(
-                            'Your Post has been created!',
+                            'Your Post has been sent for review! It will soon be added.',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               fontSize: 15 * ScreenSize.heightMultiplyingFactor,
@@ -209,7 +209,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
 
   Future<void> _pickImage() async {
     final pickedImage = await picker.getImage(
-        source: ImageSource.gallery, imageQuality: 50, maxWidth: 200);
+        source: ImageSource.gallery, imageQuality: 60, maxWidth: 200);
     setState(() {
       _image = File(pickedImage.path);
     });
@@ -235,6 +235,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawer: DrawerScreen(),
       appBar: AppBar(
         toolbarHeight: 60 * ScreenSize.heightMultiplyingFactor,
         elevation: 1,
@@ -246,7 +247,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
         ),
         backgroundColor: primaryColour,
         iconTheme: IconThemeData(
-          color: Color.fromRGBO(44, 62, 80, 1),
+          color: Colors.white,
         ),
         title: Text(
           " Create Post ",
@@ -303,16 +304,22 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                                         children: [
                                           Icon(
                                             Icons.camera_alt,
-                                            size: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.1,
+                                            size: 70 *
+                                                ScreenSize
+                                                    .heightMultiplyingFactor,
                                             color: primaryColour,
+                                          ),
+                                          SizedBox(
+                                            height: 16 *
+                                                ScreenSize
+                                                    .heightMultiplyingFactor,
                                           ),
                                           Text(
                                             'Select a photo',
                                             style: GoogleFonts.poppins(
-                                              fontSize: 25,
+                                              fontSize: 25 *
+                                                  ScreenSize
+                                                      .heightMultiplyingFactor,
                                               color: primaryColour,
                                             ),
                                           )
@@ -325,7 +332,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                                         color: primaryColour,
                                       ),
                                       borderRadius: BorderRadius.circular(
-                                        20,
+                                        20 * ScreenSize.heightMultiplyingFactor,
                                       ),
                                     ),
                                   )
@@ -347,14 +354,21 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            top: 90.0, right: 100.0),
+                                            top: 90.0 *
+                                                ScreenSize
+                                                    .heightMultiplyingFactor,
+                                            right: 100.0 *
+                                                ScreenSize
+                                                    .widthMultiplyingFactor),
                                         child: GestureDetector(
                                           onTap: () {
                                             clearImage();
                                           },
                                           child: new CircleAvatar(
                                             backgroundColor: primaryColour,
-                                            radius: 25.0,
+                                            radius: 25.0 *
+                                                ScreenSize
+                                                    .heightMultiplyingFactor,
                                             child: new Icon(
                                               Icons.delete,
                                               color: Colors.white,
@@ -375,7 +389,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                     Row(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.1,
+                          width: 60 * ScreenSize.widthMultiplyingFactor,
                         ),
                         Radio(
                           activeColor: primaryColour,
@@ -394,7 +408,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                           ),
                         ),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.2,
+                          width: 70 * ScreenSize.widthMultiplyingFactor,
                         ),
                         Radio(
                           activeColor: primaryColour,
@@ -441,33 +455,33 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                         ),
                       ),
                     ),
-                    Divider(),
-                    ListTile(
-                      leading: FaIcon(
-                        FontAwesomeIcons.listAlt,
-                        color: primaryColour,
-                      ),
-                      title: Container(
-                        width: 250.0 * ScreenSize.widthMultiplyingFactor,
-                        child: TextFormField(
-                          controller: categoryController,
-                          decoration: InputDecoration(
-                            hintText: "Write a category...",
-                            hintStyle: GoogleFonts.poppins(),
-                            border: InputBorder.none,
-                          ),
-                          validator: (val) {
-                            if (val.length == 0) {
-                              return "Category cannot be empty!";
-                            }
-                            return null;
-                          },
-                          onSaved: (val) {
-                            category = val;
-                          },
-                        ),
-                      ),
-                    ),
+                    // Divider(),
+                    // ListTile(
+                    //   leading: FaIcon(
+                    //     FontAwesomeIcons.listAlt,
+                    //     color: primaryColour,
+                    //   ),
+                    //   title: Container(
+                    //     width: 250.0 * ScreenSize.widthMultiplyingFactor,
+                    //     child: TextFormField(
+                    //       controller: categoryController,
+                    //       decoration: InputDecoration(
+                    //         hintText: "Write a category...",
+                    //         hintStyle: GoogleFonts.poppins(),
+                    //         border: InputBorder.none,
+                    //       ),
+                    //       validator: (val) {
+                    //         if (val.length == 0) {
+                    //           return "Category cannot be empty!";
+                    //         }
+                    //         return null;
+                    //       },
+                    //       onSaved: (val) {
+                    //         category = val;
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
                     Divider(),
                     ListTile(
                       leading: FaIcon(
@@ -502,7 +516,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                             ),
                           ),
                           validator: (val) {
-                            if (val.length <= 4) {
+                            if (val.length < 1) {
                               return "Description too short!";
                             }
                             return null;

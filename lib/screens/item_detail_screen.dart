@@ -93,13 +93,6 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         .doc(widget.postId)
         .get());
     setState(() {
-      // print(currentPost.postId);
-      // print(currentPost.postLocation);
-      // print(currentPost.postDescription);
-      // print(currentPost.postName);
-      // print(currentPost.imageUrl);
-      // print(currentPost.ownerName);
-      // print(currentPost.postDate);
       isLoading = false;
     });
     print(isLoading);
@@ -179,7 +172,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
           12.0 * width * 0.002,
           0 * 12.0 * height * 0.002,
           12.0 * width * 0.002,
-          32.0 * height * 0.002,
+          0,
         ),
         child: Stack(
           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,7 +313,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         Text(
                           currentPost == null
                               ? ""
-                              : currentPost.postDescription + "\n\n",
+                              : currentPost.postDescription + "\n",
                           style: GoogleFonts.poppins(
                               fontSize:
                                   20 * ScreenSize.heightMultiplyingFactor),
@@ -352,10 +345,11 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         ),
         title: Text(
           " Item Details ",
-          style: GoogleFonts.roboto(
-              color: Colors.white,
-              fontSize: 20 * ScreenSize.heightMultiplyingFactor,
-              fontWeight: FontWeight.w600),
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 20 * ScreenSize.heightMultiplyingFactor,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: isLoading
@@ -389,7 +383,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             bottom: height * 0.02),
                         child: AnimatedButton(
                           child: Text(
-                            'CLAIM',
+                            widget.type == 'Lost' ? 'HELP' : 'CLAIM',
                             style: GoogleFonts.poppins(
                               fontSize: 22,
                               color: Colors.black,
@@ -409,7 +403,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         onPressed: () async {
           _takeScreenshotandShare();
         },
-        tooltip: 'Increment',
+        tooltip: 'Share',
         child: Icon(Icons.share),
       ),
     );
@@ -485,11 +479,13 @@ showDialogFunc(context, img, title, desc) {
                         color: Color.fromRGBO(19, 60, 109, 1),
                         height: 15,
                         minWidth: 100,
-                        child: Text("CLAIM",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            )),
+                        child: Text(
+                          "CLAIM",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
                     ),
                   ),
