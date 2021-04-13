@@ -1,4 +1,4 @@
-package com.example.lost_found_app
+package com.dtu.milakya
 
 import io.flutter.embedding.android.FlutterActivity
 
